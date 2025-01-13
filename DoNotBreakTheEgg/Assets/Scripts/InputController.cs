@@ -11,19 +11,40 @@ public class InputController : MonoBehaviour
     [SerializeField] GameObject projectile;
     [SerializeField] Transform spawnPoint;
     [SerializeField] float speed = 10f;
+    [SerializeField] float moveSpeed = 5f;
+
+    private float input;
     
     private void Awake()
     {
 
         controls = new();
 
-        controls.PlayerControls.Shoot.performed += Shoot_performed;
+        controls.PlayerControls.Shoot.performed += ShootPerformed;
+        controls.PlayerControls.Movement.performed += MovePerformed;
+        controls.PlayerControls.Movement.canceled += MoveCanceled;
     }
 
-    private void Shoot_performed(InputAction.CallbackContext obj)
+    private void Update()
+    {
+        Vector3 movement = new Vector2(input * moveSpeed * Time.deltaTime, 0f);
+        transform.Translate(movement);
+    }
+
+    private void ShootPerformed(InputAction.CallbackContext context)
     {
         var spawnedObj = Instantiate(projectile, spawnPoint.position, spawnPoint.rotation);
         spawnedObj.GetComponent<Rigidbody2D>().velocity = speed * spawnPoint.up;
+    }
+
+    private void MovePerformed(InputAction.CallbackContext context)
+    {
+        input = context.ReadValue<Vector2>().x;
+    }
+
+    private void MoveCanceled(InputAction.CallbackContext context)
+    {
+        input = 0; // Reset input when movement is canceled
     }
 
     private void OnEnable()
