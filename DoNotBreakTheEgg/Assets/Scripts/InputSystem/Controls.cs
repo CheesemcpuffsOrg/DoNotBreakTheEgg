@@ -33,7 +33,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""id"": ""e49f1a96-41d8-4cdf-9597-cb68efa95f46"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""SlowTap(duration=0.01,pressPoint=0.01)"",
                     ""initialStateCheck"": false
                 },
                 {

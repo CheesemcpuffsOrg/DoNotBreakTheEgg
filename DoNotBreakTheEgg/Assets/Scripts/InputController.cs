@@ -10,8 +10,12 @@ public class InputController : MonoBehaviour
 
     [SerializeField] GameObject projectile;
     [SerializeField] Transform spawnPoint;
-    [SerializeField] float speed = 10f;
+    [SerializeField] float powerBase = 1f;
+    [SerializeField] float powerMax = 10f;
+    float powerCurrent;
     [SerializeField] float moveSpeed = 5f;
+
+    bool chargingShot;
 
     private float input;
     
@@ -20,6 +24,7 @@ public class InputController : MonoBehaviour
 
         controls = new();
 
+        controls.PlayerControls.Shoot.started += ShootStarted;
         controls.PlayerControls.Shoot.performed += ShootPerformed;
         controls.PlayerControls.Movement.performed += MovePerformed;
         controls.PlayerControls.Movement.canceled += MoveCanceled;
@@ -27,14 +32,48 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
+        Movement();
+        ChargeShot();
+    }
+
+    private void ChargeShot()
+    {
+        if (!chargingShot)
+        {
+            return;
+        }
+
+        powerCurrent += 0.02f;
+
+        Debug.Log(powerCurrent);
+
+        // Cap the power at powerMax
+        if (powerCurrent >= powerMax)
+        {
+            powerCurrent = powerMax;
+        }
+    }
+
+    private void Movement()
+    {
         Vector3 movement = new Vector2(input * moveSpeed * Time.deltaTime, 0f);
         transform.Translate(movement);
     }
 
+    private void ShootStarted(InputAction.CallbackContext context)
+    {
+        Debug.Log("Shoot started");
+        powerCurrent = powerBase; // Reset power to the base value
+        chargingShot = true; // Start charging
+        
+    }
+
     private void ShootPerformed(InputAction.CallbackContext context)
     {
+        Debug.Log("Shoot performed");
         var spawnedObj = Instantiate(projectile, spawnPoint.position, spawnPoint.rotation);
-        spawnedObj.GetComponent<Rigidbody2D>().velocity = speed * spawnPoint.up;
+        spawnedObj.GetComponent<Rigidbody2D>().velocity = powerCurrent * spawnPoint.up;
+        chargingShot = false;
     }
 
     private void MovePerformed(InputAction.CallbackContext context)
