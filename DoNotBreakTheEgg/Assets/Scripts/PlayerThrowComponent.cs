@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerThrow : MonoBehaviour
+public class PlayerThrowComponent : MonoBehaviour
 {
-    [SerializeField] PlayerHolding playerHolding;
-    [SerializeField] InputController controller;
+    [SerializeField] PlayerInputController controller;
 
     [SerializeField] Transform launchPoint;
 
@@ -29,13 +28,7 @@ public class PlayerThrow : MonoBehaviour
 
     public void Throw()
     {
-        var objectToThrow = playerHolding.HeldObject;
-
-        if (objectToThrow == null) return;
-
-        objectToThrow.GetComponent<Rigidbody2D>().velocity = powerCurrent * launchPoint.up;
-        objectToThrow.transform.SetParent(null);
-        playerHolding.ObjectThrown();
+        HoldingManager.Instance.ThrowHeldObject(gameObject, powerCurrent, launchPoint);
         chargingShot = false;
     }
 

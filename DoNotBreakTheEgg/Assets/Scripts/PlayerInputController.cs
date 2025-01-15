@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputController : MonoBehaviour
+public class PlayerInputController : MonoBehaviour
 {
 
     Controls controls;
+
+    [SerializeField] PlayerStateController playerStateController;
 
     [SerializeField] float moveSpeed = 5f;
 
@@ -52,11 +54,17 @@ public class InputController : MonoBehaviour
 
     private void ThrowStarted(InputAction.CallbackContext context)
     {
+        if (!playerStateController.CanThrow())
+            return;
+
         throwEventStarted?.Invoke();
     }
 
     private void ThrowPerformed(InputAction.CallbackContext context)
     {
+        if (!playerStateController.CanThrow())
+            return;
+
         throwEventPerformed?.Invoke();
     }
 

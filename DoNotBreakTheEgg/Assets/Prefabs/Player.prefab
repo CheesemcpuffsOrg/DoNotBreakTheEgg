@@ -229,8 +229,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9064841143096759055}
-  - component: {fileID: 4103313756076293729}
-  - component: {fileID: 2659708909977781519}
+  - component: {fileID: 2995124484802834411}
+  - component: {fileID: 8968032880680093689}
   - component: {fileID: 6694469969121223086}
   - component: {fileID: 7779418190739641722}
   - component: {fileID: 3299257491847243611}
@@ -260,7 +260,7 @@ Transform:
   - {fileID: 8168524748323391711}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4103313756076293729
+--- !u!114 &2995124484802834411
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -269,11 +269,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5382001462561511537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61c52b50cd9d8fe499707c435880a8dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 47ea0645f28a9b8419aa78d49255282f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStateController: {fileID: 8968032880680093689}
   moveSpeed: 5
---- !u!114 &2659708909977781519
+--- !u!114 &8968032880680093689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,11 +283,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5382001462561511537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f8a18048465abf4f98bdf5cfe578d28, type: 3}
+  m_Script: {fileID: 11500000, guid: 23966e15ad5351f46b03c3fbc451fe7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heldObject: {fileID: 0}
-  holdAnchor: {fileID: 3192593221783738279}
 --- !u!114 &6694469969121223086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,8 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488fd345b35fe624f93733ba050b1b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHolding: {fileID: 2659708909977781519}
-  controller: {fileID: 4103313756076293729}
+  controller: {fileID: 2995124484802834411}
   launchPoint: {fileID: 8136978824323319624}
   powerBase: 1
   powerMax: 10
