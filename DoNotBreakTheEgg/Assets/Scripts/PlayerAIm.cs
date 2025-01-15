@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAIm : MonoBehaviour
+public class PlayerAim : MonoBehaviour
 {
     void Update()
     {

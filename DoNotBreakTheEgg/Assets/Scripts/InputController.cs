@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,14 +9,21 @@ public class InputController : MonoBehaviour
 
     Controls controls;
 
-    [SerializeField] GameObject projectile;
-    [SerializeField] Transform spawnPoint;
-    [SerializeField] float powerBase = 1f;
-    [SerializeField] float powerMax = 10f;
-    float powerCurrent;
     [SerializeField] float moveSpeed = 5f;
 
-    bool chargingShot;
+    private event Action throwEventStarted;
+    public event Action ThrowEventStarted
+    {
+        add { throwEventStarted += value; }
+        remove { throwEventStarted -= value; }
+    }
+
+    private event Action throwEventPerformed;
+    public event Action ThrowEventPerformed
+    {
+        add { throwEventPerformed += value; }
+        remove { throwEventPerformed -= value; }
+    }
 
     private float input;
     
@@ -24,34 +32,16 @@ public class InputController : MonoBehaviour
 
         controls = new();
 
-        controls.PlayerControls.Shoot.started += ShootStarted;
-        controls.PlayerControls.Shoot.performed += ShootPerformed;
+        controls.PlayerControls.Throw.started += ThrowStarted;
+        controls.PlayerControls.Throw.performed += ThrowPerformed;
         controls.PlayerControls.Movement.performed += MovePerformed;
         controls.PlayerControls.Movement.canceled += MoveCanceled;
+        //controls.PlayerControls.Interact.performed += InteractPerformed;
     }
 
     private void Update()
     {
         Movement();
-        ChargeShot();
-    }
-
-    private void ChargeShot()
-    {
-        if (!chargingShot)
-        {
-            return;
-        }
-
-        powerCurrent += 0.02f;
-
-        Debug.Log(powerCurrent);
-
-        // Cap the power at powerMax
-        if (powerCurrent >= powerMax)
-        {
-            powerCurrent = powerMax;
-        }
     }
 
     private void Movement()
@@ -60,20 +50,14 @@ public class InputController : MonoBehaviour
         transform.Translate(movement);
     }
 
-    private void ShootStarted(InputAction.CallbackContext context)
+    private void ThrowStarted(InputAction.CallbackContext context)
     {
-        Debug.Log("Shoot started");
-        powerCurrent = powerBase; // Reset power to the base value
-        chargingShot = true; // Start charging
-        
+        throwEventStarted?.Invoke();
     }
 
-    private void ShootPerformed(InputAction.CallbackContext context)
+    private void ThrowPerformed(InputAction.CallbackContext context)
     {
-        Debug.Log("Shoot performed");
-        var spawnedObj = Instantiate(projectile, spawnPoint.position, spawnPoint.rotation);
-        spawnedObj.GetComponent<Rigidbody2D>().velocity = powerCurrent * spawnPoint.up;
-        chargingShot = false;
+        throwEventPerformed?.Invoke();
     }
 
     private void MovePerformed(InputAction.CallbackContext context)
