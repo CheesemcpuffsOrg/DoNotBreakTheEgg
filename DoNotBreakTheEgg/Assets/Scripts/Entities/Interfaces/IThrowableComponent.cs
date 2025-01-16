@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public interface IThrowable
+public interface IThrowableComponent : IEntityComponent
 {
     void Throw(float power, Transform startPoint);
 }

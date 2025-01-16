@@ -7,7 +7,7 @@ public class HoldingManager : MonoBehaviour
 
     public static HoldingManager Instance;
 
-    Dictionary<GameObject, Transform> heldObjects = new Dictionary<GameObject, Transform>();
+    Dictionary<IEntity, IEntity> heldObjects = new Dictionary<IEntity, IEntity>();
 
     private void Awake()
     {
@@ -21,29 +21,38 @@ public class HoldingManager : MonoBehaviour
         Instance = this;
     }
 
-    public bool IsPlayerHoldingObject(GameObject player)
+    public bool IsPlayerHoldingEntity(IEntity holdingEntity)
     {
-        return heldObjects.TryGetValue(player, out var heldObject) && heldObject != null;
+        return heldObjects.TryGetValue(holdingEntity, out var heldEntity) && heldEntity != null;
     }
 
-    public Transform GetHeldObject(GameObject player)
+    public IEntity GetHeldEntity(IEntity holdingEntity)
     {
-        if (!heldObjects.TryGetValue(player, out var heldObject))
+        if (!heldObjects.TryGetValue(holdingEntity, out var heldEntity))
             return null;
 
-        return heldObject;
+        return heldEntity;
     }
 
-    public void AddHeldObject(GameObject player, Transform heldObject, Transform holdAnchor)
+    public void AddHeldEntity(IEntity holdingEntity, IEntity heldEntity, Transform holdAnchor)
     {
-        if(heldObjects.ContainsValue(heldObject))
+        if(heldObjects.ContainsValue(heldEntity))
             return;
 
-        heldObjects.Add(player, heldObject);
-        heldObject.position = holdAnchor.position;
-        heldObject.SetParent(holdAnchor);
+        if (heldObjects.ContainsKey(holdingEntity))
+        {
+            heldObjects[holdingEntity] = heldEntity;
+        }
+        else
+        {
+            heldObjects.Add(holdingEntity, heldEntity);
+        }
 
-        Rigidbody2D rb = heldObject.GetComponent<Rigidbody2D>();
+        var gameObjectComponent = heldEntity.GetEntityComponent<IGameObjectComponent>();
+        gameObjectComponent.SetPosition(holdAnchor.position);
+        gameObjectComponent.SetParent(holdAnchor);
+
+        Rigidbody2D rb = gameObjectComponent.GetRigibody();
 
         // Stop the object's movement and set it to Kinematic
         rb.velocity = Vector2.zero;
@@ -51,14 +60,15 @@ public class HoldingManager : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
-    public void RemoveHeldObject(GameObject player)
+    public void RemoveHeldEntity(IEntity holdingEntity)
     {
-        if(!heldObjects.TryGetValue(player, out var heldObject))
+        if(!heldObjects.TryGetValue(holdingEntity, out var heldEntity))
             return;
 
-        heldObject.transform.SetParent(null);
-        heldObjects[player] = null;
-        heldObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        var gameObjectComponent = heldEntity.GetEntityComponent<IGameObjectComponent>();
 
+        gameObjectComponent.SetParent(null);
+        heldObjects[holdingEntity] = null;
+        gameObjectComponent.GetRigibody().bodyType = RigidbodyType2D.Dynamic;
     }
 }

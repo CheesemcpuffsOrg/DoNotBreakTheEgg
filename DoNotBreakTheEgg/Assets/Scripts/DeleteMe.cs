@@ -5,15 +5,15 @@ using UnityEngine;
 public class DeleteMe : MonoBehaviour
 {
 
-    [SerializeField] GameObject player;
+    [SerializeField] MonoEntity player;
 
-    [SerializeField] Transform objectToHold;
+    [SerializeField] MonoEntity objectToHold;
 
     [SerializeField] Transform holdAnchor;
 
     // Start is called before the first frame update
     void Start()
     {
-        HoldingManager.Instance.AddHeldObject(player, objectToHold, holdAnchor);
+        HoldingManager.Instance.AddHeldEntity(player, objectToHold, holdAnchor);
     }
 }

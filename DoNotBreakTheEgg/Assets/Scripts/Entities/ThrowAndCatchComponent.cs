@@ -2,18 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerThrowComponent : MonoBehaviour
+public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
 {
     [SerializeField] PlayerInputController controller;
+    [SerializeField] PlayerStateController stateController;
+
+    [SerializeField] Transform holdAnchor;
 
     [SerializeField] Transform launchPoint;
 
     [SerializeField] float powerBase = 1f;
     [SerializeField] float powerMax = 10f;
     [SerializeField] float powerIncrease = 0.02f;
+
+    [Header("Collision Proxies")]
+    [SerializeField] CollisionProxy collision;
+
+    [Header("Tags")]
+    [SerializeField] TagScriptableObject holdableTag;
+
+    IEntity entity;
+
     float powerCurrent;
 
     bool chargingShot;
+
+    private void Awake()
+    {
+        entity = GetComponent<IEntity>();
+    }
+
+    private void Start()
+    {
+        collision.OnTriggerEnter2D_Action += TriggerEnter;
+    }
 
     private void Update()
     {
@@ -28,10 +50,15 @@ public class PlayerThrowComponent : MonoBehaviour
 
     public void Throw()
     {
-        var heldObject = HoldingManager.Instance.GetHeldObject(gameObject);
-        heldObject.GetComponent<IThrowable>().Throw(powerCurrent, launchPoint);    
-        HoldingManager.Instance.RemoveHeldObject(gameObject);
         chargingShot = false;
+
+        if (!stateController.CanThrow())
+            return;
+
+        var heldEntity = HoldingManager.Instance.GetHeldEntity(entity);
+
+        heldEntity.GetEntityComponent<IThrowableComponent>().Throw(powerCurrent, launchPoint);
+        HoldingManager.Instance.RemoveHeldEntity(entity);
     }
 
     private void ChargeShot()
@@ -47,6 +74,16 @@ public class PlayerThrowComponent : MonoBehaviour
         if (powerCurrent >= powerMax)
         {
             powerCurrent = powerMax;
+        }
+    }
+
+    private void TriggerEnter(Collider2D collision)
+    {
+        if (collision.gameObject.HasTag(holdableTag) && stateController.CanCatch())
+        {
+            var collisionEntity = collision.gameObject.transform.root.GetComponent<IEntity>();
+
+            HoldingManager.Instance.AddHeldEntity(entity, collisionEntity, holdAnchor);
         }
     }
 

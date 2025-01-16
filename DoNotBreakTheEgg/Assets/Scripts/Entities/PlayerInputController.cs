@@ -9,8 +9,6 @@ public class PlayerInputController : MonoBehaviour
 
     Controls controls;
 
-    [SerializeField] PlayerStateController playerStateController;
-
     [SerializeField] float moveSpeed = 5f;
 
     private event Action throwEventStarted;
@@ -31,7 +29,6 @@ public class PlayerInputController : MonoBehaviour
     
     private void Awake()
     {
-
         controls = new();
 
         controls.PlayerControls.Throw.started += ThrowStarted;
@@ -54,17 +51,11 @@ public class PlayerInputController : MonoBehaviour
 
     private void ThrowStarted(InputAction.CallbackContext context)
     {
-        if (!playerStateController.CanThrow())
-            return;
-
         throwEventStarted?.Invoke();
     }
 
     private void ThrowPerformed(InputAction.CallbackContext context)
     {
-        if (!playerStateController.CanThrow())
-            return;
-
         throwEventPerformed?.Invoke();
     }
 
