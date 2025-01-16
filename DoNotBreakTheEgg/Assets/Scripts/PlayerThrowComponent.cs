@@ -28,7 +28,9 @@ public class PlayerThrowComponent : MonoBehaviour
 
     public void Throw()
     {
-        HoldingManager.Instance.ThrowHeldObject(gameObject, powerCurrent, launchPoint);
+        var heldObject = HoldingManager.Instance.GetHeldObject(gameObject);
+        heldObject.GetComponent<IThrowable>().Throw(powerCurrent, launchPoint);    
+        HoldingManager.Instance.RemoveHeldObject(gameObject);
         chargingShot = false;
     }
 

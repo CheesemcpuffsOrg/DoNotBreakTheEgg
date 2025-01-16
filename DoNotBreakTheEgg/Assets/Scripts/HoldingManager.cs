@@ -26,26 +26,39 @@ public class HoldingManager : MonoBehaviour
         return heldObjects.TryGetValue(player, out var heldObject) && heldObject != null;
     }
 
-    public void ThrowHeldObject(GameObject player, float power, Transform statrtPoint)
+    public Transform GetHeldObject(GameObject player)
     {
-        if(heldObjects.TryGetValue(player, out var heldObject))
-        {
-            heldObject.GetComponent<IThrowable>().Throw(power, statrtPoint);
-            RemoveHeldObject(player);
-            heldObject.transform.SetParent(null);
-        }
+        if (!heldObjects.TryGetValue(player, out var heldObject))
+            return null;
+
+        return heldObject;
     }
 
     public void AddHeldObject(GameObject player, Transform heldObject, Transform holdAnchor)
     {
+        if(heldObjects.ContainsValue(heldObject))
+            return;
+
         heldObjects.Add(player, heldObject);
         heldObject.position = holdAnchor.position;
         heldObject.SetParent(holdAnchor);
-        heldObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
+        Rigidbody2D rb = heldObject.GetComponent<Rigidbody2D>();
+
+        // Stop the object's movement and set it to Kinematic
+        rb.velocity = Vector2.zero;
+        rb.angularVelocity = 0f; // Also reset any angular velocity (spinning)
+        rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
-    private void RemoveHeldObject(GameObject player)
+    public void RemoveHeldObject(GameObject player)
     {
+        if(!heldObjects.TryGetValue(player, out var heldObject))
+            return;
+
+        heldObject.transform.SetParent(null);
         heldObjects[player] = null;
+        heldObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
     }
 }

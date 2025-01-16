@@ -9,7 +9,6 @@ public class ThrowableObject : MonoBehaviour, IThrowable
 
     public void Throw(float power, Transform startPoint)
     {
-        rb.bodyType = RigidbodyType2D.Dynamic;
         rb.velocity = power * startPoint.up;
     }
 }

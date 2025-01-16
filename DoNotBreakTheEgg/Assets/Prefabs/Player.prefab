@@ -43,8 +43,9 @@ GameObject:
   - component: {fileID: 6601225740595979599}
   - component: {fileID: 5693742158676626097}
   - component: {fileID: 1208271136638990722}
+  - component: {fileID: 2100045097849958069}
   m_Layer: 0
-  m_Name: CatchRadius
+  m_Name: CatchCollision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +100,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.75
 --- !u!114 &1208271136638990722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +113,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300fe20840486df40a8fd8e97d5d9599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2100045097849958069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2370969862776787936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd90699561adb164ea596ea6b6d49978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - {fileID: 11400000, guid: 4229a30bf6ea6594fbf00ff463dff398, type: 2}
 --- !u!1 &2684322885531909013
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,6 +247,7 @@ GameObject:
   - component: {fileID: 2995124484802834411}
   - component: {fileID: 8968032880680093689}
   - component: {fileID: 6694469969121223086}
+  - component: {fileID: 3631306100034168761}
   - component: {fileID: 7779418190739641722}
   - component: {fileID: 3299257491847243611}
   m_Layer: 0
@@ -303,6 +319,22 @@ MonoBehaviour:
   powerBase: 1
   powerMax: 10
   powerIncrease: 0.02
+--- !u!114 &3631306100034168761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5382001462561511537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec537008575fe64a9ec0bb34b0c7cc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStateController: {fileID: 8968032880680093689}
+  holdAnchor: {fileID: 3192593221783738279}
+  collision: {fileID: 1208271136638990722}
+  holdableTag: {fileID: 11400000, guid: 91063181999232949bbba19bcfba8473, type: 2}
 --- !u!61 &7779418190739641722
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -13,4 +13,9 @@ public class PlayerStateController : MonoBehaviour
     {
         return HoldingManager.Instance.IsPlayerHoldingObject(gameObject);
     }
+
+    public bool CanCatch()
+    {
+        return !HoldingManager.Instance.IsPlayerHoldingObject(gameObject);
+    }
 }
