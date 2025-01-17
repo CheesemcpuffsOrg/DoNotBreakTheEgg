@@ -9,14 +9,12 @@ public class PlayerInputController : MonoBehaviour
 
     Controls controls;
 
-    [SerializeField] float moveSpeed = 5f;
-
     public event Action ThrowEventStarted;
     public event Action ThrowEventPerformed;
     public event Action<Vector2> AimEventPerformed;
     public event Action AimEventCancelled;
-
-    private float input;
+    public event Action<Vector2> MoveEventPerfomed;
+    public event Action MoveEventCancelled;
     
     private void Awake()
     {
@@ -30,16 +28,7 @@ public class PlayerInputController : MonoBehaviour
         controls.PlayerControls.Aim.canceled += AimCanceled;
     }
 
-    private void Update()
-    {
-        Movement();
-    }
-
-    private void Movement()
-    {
-        Vector3 movement = new Vector2(input * moveSpeed * Time.deltaTime, 0f);
-        transform.Translate(movement);
-    }
+    
 
     private void ThrowStarted(InputAction.CallbackContext context)
     {
@@ -63,12 +52,12 @@ public class PlayerInputController : MonoBehaviour
 
     private void MovePerformed(InputAction.CallbackContext context)
     {
-        input = context.ReadValue<Vector2>().x;
+        MoveEventPerfomed?.Invoke(context.ReadValue<Vector2>());
     }
 
     private void MoveCanceled(InputAction.CallbackContext context)
     {
-        input = 0; // Reset input when movement is canceled
+        MoveEventCancelled?.Invoke();
     }
 
     private void OnEnable()

@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[AddComponentMenu("GameObject/Tags")]
-[HelpURL("")]
-public class Tags : MonoBehaviour, ITags
+public class TagComponent : MonoBehaviour, ITagComponent
 {
     [SerializeField] private List<TagScriptableObject> tags;
 
@@ -24,5 +21,10 @@ public class Tags : MonoBehaviour, ITags
     public void SetTags(params TagScriptableObject[] tags)
     {
         this.tags = tags.ToList();
+    }
+
+    public bool HasTag(TagScriptableObject tag)
+    {
+       return gameObject.HasTag(tag);
     }
 }

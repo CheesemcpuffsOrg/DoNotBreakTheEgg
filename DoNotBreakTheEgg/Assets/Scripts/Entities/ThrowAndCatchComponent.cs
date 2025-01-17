@@ -79,12 +79,12 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
 
     private void TriggerEnter(Collider2D collision)
     {
-        if (collision.gameObject.HasTag(holdableTag) && stateController.CanCatch())
-        {
-            var collisionEntity = collision.gameObject.transform.root.GetComponent<IEntity>();
+        if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity) 
+            || !stateController.CanCatch() 
+            || !collisionEntity.GetEntityComponent<ITagComponent>().HasTag(holdableTag))
+            return;
 
-            HoldingManager.Instance.AddHeldEntity(entity, collisionEntity, holdAnchor);
-        }
+        HoldingManager.Instance.AddHeldEntity(entity, collisionEntity, holdAnchor);
     }
 
     private void OnEnable()

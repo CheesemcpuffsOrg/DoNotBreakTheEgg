@@ -7,7 +7,7 @@ public static class TagExtensions
     // Automatically filled on Awake by Tags component.
     private static readonly Dictionary<TagScriptableObject, HashSet<GameObject>> allObjectsWithTag = new Dictionary<TagScriptableObject, HashSet<GameObject>>();
     // Tags component is cached per-instance when we call one of the HasTag methods.
-    private static readonly Dictionary<GameObject, Tags> cachedTags = new Dictionary<GameObject, Tags>();
+    private static readonly Dictionary<GameObject, ITags> cachedTags = new Dictionary<GameObject, ITags>();
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void Init()
@@ -192,7 +192,7 @@ public static class TagExtensions
         objectsList.Add(gameObject);
     }
 
-    private static bool TryGetTagComponent(GameObject gameObject, out Tags component)
+    private static bool TryGetTagComponent(GameObject gameObject, out ITags component)
     {
         if (!cachedTags.TryGetValue(gameObject, out component))
         {
