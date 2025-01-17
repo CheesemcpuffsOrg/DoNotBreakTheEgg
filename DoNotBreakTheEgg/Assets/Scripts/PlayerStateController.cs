@@ -14,16 +14,16 @@ public class PlayerStateController : MonoBehaviour
 
     public bool CanThrow()
     {
-        return HoldingManager.Instance.IsPlayerHoldingEntity(entity);
+        return HoldingManager.Instance.IsEntityHolding(entity);
     }
 
     public bool CanJump()
     {
-        return HoldingManager.Instance.IsPlayerHoldingEntity(entity);
+        return HoldingManager.Instance.IsEntityHolding(entity);
     }
 
     public bool CanCatch()
     {
-        return !HoldingManager.Instance.IsPlayerHoldingEntity(entity);
+        return !HoldingManager.Instance.IsEntityHolding(entity);
     }
 }

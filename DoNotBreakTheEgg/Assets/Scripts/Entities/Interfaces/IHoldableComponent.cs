@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IHoldableComponent : IEntityComponent
 {
-    
+    public void Hold(Transform anchor);
+
+    public void Release();
 }

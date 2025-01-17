@@ -31,9 +31,4 @@ public class GameObjectComponent : MonoBehaviour, IGameObjectComponent
     {
         transform.parent = parentTransform;
     }
-
-    public Rigidbody2D GetRigibody()
-    {
-        return rb;
-    }
 }

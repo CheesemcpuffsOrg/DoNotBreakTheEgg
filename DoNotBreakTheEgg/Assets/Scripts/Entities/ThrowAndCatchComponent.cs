@@ -80,7 +80,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     private void TriggerEnter(Collider2D collision)
     {
         if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity) 
-            || !stateController.CanCatch() 
+            || !stateController.CanCatch()
             || !collisionEntity.GetEntityComponent<ITagComponent>().HasTag(holdableTag))
             return;
 
