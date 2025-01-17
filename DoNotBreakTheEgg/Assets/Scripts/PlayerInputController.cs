@@ -11,19 +11,10 @@ public class PlayerInputController : MonoBehaviour
 
     [SerializeField] float moveSpeed = 5f;
 
-    private event Action throwEventStarted;
-    public event Action ThrowEventStarted
-    {
-        add { throwEventStarted += value; }
-        remove { throwEventStarted -= value; }
-    }
-
-    private event Action throwEventPerformed;
-    public event Action ThrowEventPerformed
-    {
-        add { throwEventPerformed += value; }
-        remove { throwEventPerformed -= value; }
-    }
+    public event Action ThrowEventStarted;
+    public event Action ThrowEventPerformed;
+    public event Action<Vector2> AimEventPerformed;
+    public event Action AimEventCancelled;
 
     private float input;
     
@@ -35,7 +26,8 @@ public class PlayerInputController : MonoBehaviour
         controls.PlayerControls.Throw.performed += ThrowPerformed;
         controls.PlayerControls.Movement.performed += MovePerformed;
         controls.PlayerControls.Movement.canceled += MoveCanceled;
-        //controls.PlayerControls.Interact.performed += InteractPerformed;
+        controls.PlayerControls.Aim.performed += AimPerformed;
+        controls.PlayerControls.Aim.canceled += AimCanceled;
     }
 
     private void Update()
@@ -51,12 +43,22 @@ public class PlayerInputController : MonoBehaviour
 
     private void ThrowStarted(InputAction.CallbackContext context)
     {
-        throwEventStarted?.Invoke();
+        ThrowEventStarted?.Invoke();
     }
 
     private void ThrowPerformed(InputAction.CallbackContext context)
     {
-        throwEventPerformed?.Invoke();
+        ThrowEventPerformed?.Invoke();
+    }
+
+    private void AimPerformed(InputAction.CallbackContext context)
+    {
+        AimEventPerformed?.Invoke(context.ReadValue<Vector2>());
+    }
+
+    private void AimCanceled(InputAction.CallbackContext context)
+    {
+        AimEventCancelled?.Invoke();
     }
 
     private void MovePerformed(InputAction.CallbackContext context)
