@@ -19,7 +19,7 @@ public class PlayerStateController : MonoBehaviour
 
     public bool CanJump()
     {
-        return HoldingManager.Instance.IsEntityHolding(entity);
+        return !HoldingManager.Instance.IsEntityHolding(entity);
     }
 
     public bool CanCatch()

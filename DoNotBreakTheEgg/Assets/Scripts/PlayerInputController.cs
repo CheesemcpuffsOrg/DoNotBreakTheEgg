@@ -15,6 +15,7 @@ public class PlayerInputController : MonoBehaviour
     public event Action AimEventCancelled;
     public event Action<Vector2> MoveEventPerfomed;
     public event Action MoveEventCancelled;
+    public event Action JumpEventPerformed;
     
     private void Awake()
     {
@@ -26,9 +27,13 @@ public class PlayerInputController : MonoBehaviour
         controls.PlayerControls.Movement.canceled += MoveCanceled;
         controls.PlayerControls.Aim.performed += AimPerformed;
         controls.PlayerControls.Aim.canceled += AimCanceled;
+        controls.PlayerControls.Jump.performed += JumpPerformed;
     }
 
-    
+    private void JumpPerformed(InputAction.CallbackContext context)
+    {
+        JumpEventPerformed?.Invoke();
+    }
 
     private void ThrowStarted(InputAction.CallbackContext context)
     {
