@@ -326,6 +326,10 @@ MonoBehaviour:
   powerIncrease: 0.02
   collision: {fileID: 1208271136638990722}
   holdableTag: {fileID: 11400000, guid: 91063181999232949bbba19bcfba8473, type: 2}
+  entityWeight: 1
+  gravity: 1
+  trajectorySteps: 10
+  timeStep: 0.1
 --- !u!61 &7779418190739641722
 BoxCollider2D:
   m_ObjectHideFlags: 0

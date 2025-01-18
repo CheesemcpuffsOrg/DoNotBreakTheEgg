@@ -16,6 +16,6 @@ public class ThrowableComponent : MonoBehaviour, IThrowableComponent
 
     public void Throw(float power, Transform startPoint)
     {
-        rb.velocity = power * startPoint.up / entityWeight;
+        rb.velocity = (power / entityWeight) * startPoint.up;
     }
 }

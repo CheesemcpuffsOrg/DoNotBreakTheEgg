@@ -21,6 +21,11 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     [Header("Tags")]
     [SerializeField] TagScriptableObject holdableTag;
 
+    [Header("Draw Trajectory Gizmo")]
+    [SerializeField] private float entityWeight = 1f;
+    [SerializeField] private int trajectorySteps = 10; // Number of points to simulate for the trajectory
+    [SerializeField] private float timeStep = 0.1f;
+
     IEntity entity;
 
     float powerCurrent;
@@ -98,4 +103,48 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
         controller.ThrowEventStarted -= ChargeThrow;
         controller.ThrowEventPerformed -= Throw;
     }
+
+#if UNITY_EDITOR
+
+    private void OnDrawGizmos()
+    {
+        if (chargingShot && launchPoint != null)
+        {
+            Gizmos.color = Color.red;
+            DrawTrajectory(launchPoint.position, powerCurrent);
+        }
+    }
+
+    private void DrawTrajectory(Vector3 startPosition, float power)
+    {
+        // Calculate initial velocity based on power and entity weight
+        Vector3 velocity = (power / entityWeight) * launchPoint.up;
+
+        // Get the Rigidbody2D's gravity scale and mass
+        float gravity = Physics2D.gravity.y * 1;
+
+        // Simulate the trajectory
+        Vector3 currentPosition = startPosition;
+        Vector3 currentVelocity = velocity;
+
+        for (int i = 0; i < trajectorySteps; i++)
+        {
+            // Apply gravity to the vertical velocity over time based on Rigidbody2D physics
+            currentVelocity.y += gravity * timeStep;
+
+            // Update position based on velocity
+            currentPosition += currentVelocity * timeStep;
+
+            // Draw spheres at each point
+            Gizmos.DrawSphere(currentPosition, 0.1f);
+
+            if (i > 0)
+            {
+                // Draw a line from the previous point to the current point
+                Gizmos.DrawLine(currentPosition, currentPosition - currentVelocity * timeStep);
+            }
+        }
+    }
+
+#endif 
 }
