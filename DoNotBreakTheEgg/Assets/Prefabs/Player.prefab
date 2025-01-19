@@ -152,7 +152,7 @@ Transform:
   m_GameObject: {fileID: 2684322885531909013}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -237,11 +237,11 @@ GameObject:
   - component: {fileID: 6694469969121223086}
   - component: {fileID: 7779418190739641722}
   - component: {fileID: 3299257491847243611}
-  - component: {fileID: 1687747450322129598}
   - component: {fileID: 5522167855184101424}
   - component: {fileID: 5316356889645206390}
   - component: {fileID: 2232329760135745355}
   - component: {fileID: 422898785289315171}
+  - component: {fileID: 5291628570717146814}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -281,6 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47ea0645f28a9b8419aa78d49255282f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateController: {fileID: 8968032880680093689}
 --- !u!114 &8968032880680093689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,9 +326,10 @@ MonoBehaviour:
   powerMax: 10
   powerIncrease: 0.02
   collision: {fileID: 1208271136638990722}
-  holdableTag: {fileID: 11400000, guid: 91063181999232949bbba19bcfba8473, type: 2}
+  requiredTags:
+  - {fileID: 11400000, guid: c31180bcc4c89b040bda4384202aa276, type: 2}
+  - {fileID: 11400000, guid: 91063181999232949bbba19bcfba8473, type: 2}
   entityWeight: 1
-  gravity: 1
   trajectorySteps: 10
   timeStep: 0.1
 --- !u!61 &7779418190739641722
@@ -402,19 +404,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1687747450322129598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5382001462561511537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ce8f8c841509ff4c86fa19f0d57731b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entityWeight: 1
 --- !u!114 &5522167855184101424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,17 +455,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352a8715dec95e54d943fb9b8d4ef9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 2995124484802834411}
-  stateController: {fileID: 8968032880680093689}
+  playerStateController: {fileID: 8968032880680093689}
   moveSpeed: 5
   jumpHeight: 2
-  gravity: -20
+  gravity: -9.81
   canJump:
     serializedVersion: 2
     m_Bits: 8
   groundCheck: {fileID: 7982101961614932401}
   groundCheckRadius: {x: 1, y: 0.01}
   jumpBufferTime: 0.2
+--- !u!114 &5291628570717146814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5382001462561511537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e075f6552658b4e4295cab956280dff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliders:
+  - {fileID: 8933668129807429666}
+  - {fileID: 5693742158676626097}
+  - {fileID: 7779418190739641722}
 --- !u!1 &6447130475722892646
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     [SerializeField] CollisionProxy collision;
 
     [Header("Tags")]
-    [SerializeField] TagScriptableObject holdableTag;
+    [SerializeField] TagScriptableObject[] requiredTags;
 
     [Header("Draw Trajectory Gizmo")]
     [SerializeField] private float entityWeight = 1f;
@@ -35,11 +35,6 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     private void Awake()
     {
         entity = GetComponent<IEntity>();
-    }
-
-    private void Start()
-    {
-        collision.OnTriggerEnter2D_Action += TriggerEnter;
     }
 
     private void Update()
@@ -60,10 +55,15 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
         if (!stateController.CanThrow())
             return;
 
-        var heldEntity = HoldingManager.Instance.GetHeldEntity(entity);
+        var heldEntity = HoldEntityManager.Instance.GetHeldEntity(entity);
 
-        heldEntity.GetEntityComponent<IThrowableComponent>().Throw(powerCurrent, launchPoint);
-        HoldingManager.Instance.RemoveHeldEntity(entity);
+        //heldEntity.GetEntityComponent<IThrowableComponent>().Throw(powerCurrent, launchPoint);
+        
+        HoldEntityManager.Instance.RemoveHeldEntity(entity);
+
+        var velocity = powerCurrent * (Vector2)launchPoint.up;
+
+        ThrowEntityManager.Instance.AddEntityToThrow(heldEntity, new ThrowEntityManager.ThrowData(velocity, -9.81f, heldEntity.GetEntityComponent<IGameObjectComponent>().GetTransform()));
     }
 
     private void ChargeShot()
@@ -86,22 +86,28 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     {
         if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity) 
             || !stateController.CanCatch()
-            || !collisionEntity.GetEntityComponent<ITagComponent>().HasTag(holdableTag))
+            || collisionEntity.GetEntityComponent<ITagComponent>()?.HasAllTags(requiredTags) != true)
             return;
 
-        HoldingManager.Instance.AddHeldEntity(entity, collisionEntity, holdAnchor);
+        if(ThrowEntityManager.Instance.IsEntityBeingThrown(collisionEntity))
+            ThrowEntityManager.Instance.RemoveThrownEntity(collisionEntity);
+            
+
+        HoldEntityManager.Instance.AddHeldEntity(entity, collisionEntity, holdAnchor);
     }
 
     private void OnEnable()
     {
         controller.ThrowEventStarted += ChargeThrow;
         controller.ThrowEventPerformed += Throw;
+        collision.OnTriggerEnter2D_Action += TriggerEnter;
     }
 
     private void OnDisable()
     {
         controller.ThrowEventStarted -= ChargeThrow;
         controller.ThrowEventPerformed -= Throw;
+        collision.OnTriggerEnter2D_Action -= TriggerEnter;
     }
 
 #if UNITY_EDITOR

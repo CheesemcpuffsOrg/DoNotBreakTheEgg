@@ -27,4 +27,9 @@ public class TagComponent : MonoBehaviour, ITagComponent
     {
        return gameObject.HasTag(tag);
     }
+
+    public bool HasAllTags(TagScriptableObject[] tags)
+    {
+        return gameObject.HasAllTags(tags);
+    }
 }

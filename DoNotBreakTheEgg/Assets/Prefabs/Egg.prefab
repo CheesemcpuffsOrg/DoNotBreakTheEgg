@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5081964290428512808}
   - component: {fileID: 9040234461396159724}
+  - component: {fileID: 2101802133023683639}
   m_Layer: 0
   m_Name: EggCollider
   m_TagString: Untagged
@@ -151,6 +152,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &2101802133023683639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3621517791376640039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300fe20840486df40a8fd8e97d5d9599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6805014060619456806
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,10 +176,10 @@ GameObject:
   - component: {fileID: 839048617890838217}
   - component: {fileID: 5496237139265520922}
   - component: {fileID: 954366866584538315}
-  - component: {fileID: 8912973159421375993}
   - component: {fileID: 2433748345124272763}
   - component: {fileID: 4214937836499164063}
   - component: {fileID: 28718426000266360}
+  - component: {fileID: 4976031343907318434}
   m_Layer: 0
   m_Name: Egg
   m_TagString: Untagged
@@ -230,7 +243,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -242,19 +255,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &8912973159421375993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6805014060619456806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ce8f8c841509ff4c86fa19f0d57731b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entityWeight: 1
 --- !u!114 &2433748345124272763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,7 +279,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e075f6552658b4e4295cab956280dff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 9040234461396159724}
+  colliders:
+  - {fileID: 9040234461396159724}
 --- !u!114 &28718426000266360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,3 +295,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tags:
   - {fileID: 11400000, guid: 91063181999232949bbba19bcfba8473, type: 2}
+  - {fileID: 11400000, guid: c31180bcc4c89b040bda4384202aa276, type: 2}
+--- !u!114 &4976031343907318434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805014060619456806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f70bde0c080966c489921fcd4fb46d07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collision: {fileID: 2101802133023683639}

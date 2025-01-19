@@ -5,7 +5,7 @@ using UnityEngine;
 public class CollisionComponent : MonoBehaviour, ICollisionComponent
 {
 
-    [SerializeField] Collider2D collider;
+    [SerializeField] List<Collider2D> colliders;
 
     IEntity entity;
 
@@ -14,6 +14,9 @@ public class CollisionComponent : MonoBehaviour, ICollisionComponent
     {
         entity = GetComponent<IEntity>();
 
-        EntityCollisionService.RegisterEntityCollider(collider, entity);
+        foreach (var collider in colliders)
+        {
+            EntityCollisionService.RegisterEntityCollider(collider, entity);
+        }
     }
 }

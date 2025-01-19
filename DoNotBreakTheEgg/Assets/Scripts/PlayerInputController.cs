@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 public class PlayerInputController : MonoBehaviour
 {
 
+    [SerializeField] PlayerStateController stateController;
+
     Controls controls;
 
     public event Action ThrowEventStarted;
@@ -16,7 +18,11 @@ public class PlayerInputController : MonoBehaviour
     public event Action<Vector2> MoveEventPerfomed;
     public event Action MoveEventCancelled;
     public event Action JumpEventPerformed;
-    
+
+    IEntity entity;
+    IMovementComponent movementComponent;
+    IAimComponent aimComponent;
+
     private void Awake()
     {
         controls = new();
@@ -30,9 +36,21 @@ public class PlayerInputController : MonoBehaviour
         controls.PlayerControls.Jump.performed += JumpPerformed;
     }
 
+    private void Start()
+    {
+        entity = GetComponent<IEntity>();
+
+        movementComponent = entity.GetEntityComponent<IMovementComponent>();
+        aimComponent = entity.GetEntityComponent<IAimComponent>();
+        
+    }
+
     private void JumpPerformed(InputAction.CallbackContext context)
     {
-        JumpEventPerformed?.Invoke();
+        if (!stateController.CanJump())
+            return;
+
+        movementComponent.Jump();
     }
 
     private void ThrowStarted(InputAction.CallbackContext context)
@@ -47,22 +65,22 @@ public class PlayerInputController : MonoBehaviour
 
     private void AimPerformed(InputAction.CallbackContext context)
     {
-        AimEventPerformed?.Invoke(context.ReadValue<Vector2>());
+        aimComponent.MoveAim(context.ReadValue<Vector2>());
     }
 
     private void AimCanceled(InputAction.CallbackContext context)
     {
-        AimEventCancelled?.Invoke();
+        aimComponent.StopAim();
     }
 
     private void MovePerformed(InputAction.CallbackContext context)
     {
-        MoveEventPerfomed?.Invoke(context.ReadValue<Vector2>());
+        movementComponent.MoveAlongXAxis(context.ReadValue<Vector2>().x);
     }
 
     private void MoveCanceled(InputAction.CallbackContext context)
     {
-        MoveEventCancelled?.Invoke();
+        movementComponent.StopXAxisMovement();
     }
 
     private void OnEnable()

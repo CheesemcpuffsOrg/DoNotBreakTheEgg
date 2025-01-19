@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HoldingManager : MonoBehaviour
+public class HoldEntityManager : MonoBehaviour
 {
 
-    public static HoldingManager Instance;
+    public static HoldEntityManager Instance;
 
     Dictionary<IEntity, IEntity> heldObjects = new Dictionary<IEntity, IEntity>();
 
@@ -14,7 +14,7 @@ public class HoldingManager : MonoBehaviour
         // Check if there's already an instance of this class
         if (Instance != null && Instance != this)
         {
-            Debug.LogError($"Another instance of the singleton {nameof(HoldingManager)} exists. Please make sure there is only one");
+            Debug.LogError($"Another instance of the singleton {nameof(HoldEntityManager)} exists. Please make sure there is only one");
             return;
         }
 
@@ -24,6 +24,11 @@ public class HoldingManager : MonoBehaviour
     public bool IsEntityHolding(IEntity holdingEntity)
     {
         return heldObjects.TryGetValue(holdingEntity, out var heldEntity) && heldEntity != null;
+    }
+
+    public bool IsEntityHeld(IEntity entity)
+    {
+        return heldObjects.ContainsValue(entity);
     }
 
     public IEntity GetHeldEntity(IEntity holdingEntity)

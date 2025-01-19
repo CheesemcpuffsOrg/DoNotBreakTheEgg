@@ -11,4 +11,6 @@ public interface IGameObjectComponent : IEntityComponent
     public void SetPosition(Vector3 position);
 
     public void SetParent(Transform parentTransform);
+
+    public void Destroy();
 }

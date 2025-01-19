@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class MovementComponent : MonoBehaviour, IEntityComponent
+public class MovementComponent : MonoBehaviour, IMovementComponent
 {
-    [SerializeField] PlayerInputController controller;
-    [SerializeField] PlayerStateController stateController;
+
+    [SerializeField] PlayerStateController playerStateController;
 
     [Header("Movement")]
     [SerializeField] float moveSpeed = 5f;
@@ -18,17 +19,57 @@ public class MovementComponent : MonoBehaviour, IEntityComponent
     [SerializeField] Vector2 groundCheckRadius = new Vector2(0.5f, 0.5f); // Ground check radius
     [SerializeField] float jumpBufferTime = 0.2f; // Time to buffer jump input
 
-    private float input;
+    private float localDirection;
     private float verticalVelocity;
     private bool isGrounded;
     private bool isJumping;
     private float jumpBufferCounter; // Tracks remaining buffer time
+
+    IEntity entity;
+
+    private void Start()
+    {
+        entity = GetComponent<IEntity>();
+    }
 
     private void Update()
     {
         CheckGrounded();
         Movement();
         ProcessJumpBuffer();
+    }
+
+    public void MoveAlongXAxis(float direction)
+    {
+        localDirection = direction; // Capture horizontal movement input
+    }
+
+    public void StopXAxisMovement()
+    {
+        localDirection = 0f; // Reset input when movement is cancelled
+    }
+
+    public void Jump()
+    {
+        if (isGrounded)
+        {
+            // Calculate jump velocity and reset vertical velocity
+            verticalVelocity = Mathf.Sqrt(-2f * gravity * jumpHeight); // Calculate initial jump velocity
+            isJumping = true; // Set jumping state
+            jumpBufferCounter = 0; // Clear the jump buffer after jump
+        }
+        else
+        {
+            // Buffer jump if not grounded
+            jumpBufferCounter = jumpBufferTime;
+        }
+    }
+
+    public void StopAllMovement()
+    {
+        StopXAxisMovement();
+        playerStateController.IsThrown(false);
+        verticalVelocity = 0f;
     }
 
     private void ProcessJumpBuffer()
@@ -47,42 +88,32 @@ public class MovementComponent : MonoBehaviour, IEntityComponent
     private void Movement()
     {
         // Horizontal movement
-        Vector3 horizontalMovement = new Vector2(input * moveSpeed * Time.deltaTime, 0f);
+        Vector3 horizontalMovement = new Vector2(localDirection * moveSpeed * Time.deltaTime, 0f);
+
+        bool test = false;
 
         // Vertical movement (gravity is applied only if airborne)
         if (isJumping || !isGrounded)
         {
-            verticalVelocity += gravity * Time.deltaTime; // Apply gravity if airborne
+            if (!HoldEntityManager.Instance.IsEntityHeld(entity))
+            {
+                verticalVelocity += gravity * Time.deltaTime; // Apply gravity if airborne
+            } 
         }
         else
         {
             verticalVelocity = 0f; // Stop vertical movement when grounded
+
+            if (ThrowEntityManager.Instance.IsEntityBeingThrown(entity))
+            {
+                ThrowEntityManager.Instance.RemoveThrownEntity(entity);
+            }    
         }
 
         Vector3 verticalMovement = new Vector3(0f, verticalVelocity * Time.deltaTime, 0f);
 
         // Apply combined movement (horizontal + vertical)
         transform.Translate(horizontalMovement + verticalMovement);
-    }
-
-    private void Jump()
-    {
-
-        if (!stateController.CanJump())
-            return;
-
-        if (isGrounded)
-        {
-            // Calculate jump velocity and reset vertical velocity
-            verticalVelocity = Mathf.Sqrt(-2f * gravity * jumpHeight); // Calculate initial jump velocity
-            isJumping = true; // Set jumping state
-            jumpBufferCounter = 0; // Clear the jump buffer after jump
-        }
-        else
-        {
-            // Buffer jump if not grounded
-            jumpBufferCounter = jumpBufferTime;
-        }
     }
 
     private void CheckGrounded()
@@ -101,30 +132,6 @@ public class MovementComponent : MonoBehaviour, IEntityComponent
                 Jump(); // Trigger buffered jump when landing
             }
         }
-    }
-
-    private void MovePerformed(Vector2 context)
-    {
-        input = context.x; // Capture horizontal movement input
-    }
-
-    private void MoveCancelled()
-    {
-        input = 0f; // Reset input when movement is cancelled
-    }
-
-    private void OnEnable()
-    {
-        controller.MoveEventPerfomed += MovePerformed;
-        controller.MoveEventCancelled += MoveCancelled;
-        controller.JumpEventPerformed += Jump;
-    }
-
-    private void OnDisable()
-    {
-        controller.MoveEventPerfomed -= MovePerformed;
-        controller.MoveEventCancelled -= MoveCancelled;
-        controller.JumpEventPerformed -= Jump;
     }
 
 #if UNITY_EDITOR

@@ -14,6 +14,6 @@ public class DeleteMe : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HoldingManager.Instance.AddHeldEntity(player, objectToHold, holdAnchor);
+        HoldEntityManager.Instance.AddHeldEntity(player, objectToHold, holdAnchor);
     }
 }

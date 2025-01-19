@@ -53,6 +53,16 @@ public class AimComponent : MonoBehaviour, IAimComponent
         }
     }
 
+    public void MoveAim(Vector2 direction)
+    {
+        aimInput = direction;
+    }
+
+    public void StopAim()
+    {
+        aimInput = Vector2.zero;
+    }
+
     private Vector2 ApplyDeadzone(Vector2 input, float deadzone = 0.15f)
     {
         if (input.sqrMagnitude < deadzone * deadzone)
@@ -60,41 +70,5 @@ public class AimComponent : MonoBehaviour, IAimComponent
         return input;
     }
 
-    private void OnAimPerformed(Vector2 context)
-    {
-        aimInput = context;
-    }
-
-    private void OnAimCanceled()
-    {
-        aimInput = Vector2.zero;
-    }
-
-    private void OnEnable()
-    {
-        controller.AimEventPerformed += OnAimPerformed;
-        controller.AimEventCancelled += OnAimCanceled;
-    }
-
-    private void OnDisable()
-    {
-        controller.AimEventPerformed -= OnAimPerformed;
-        controller.AimEventCancelled -= OnAimCanceled;
-    }
-
-    /*void Update()
-    {
-        // Get the mouse position in world space
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0f; // Ensure z-axis is zero for 2D
-
-        // Calculate the direction from the object to the mouse
-        Vector3 direction = mousePosition - transform.position;
-
-        // Calculate the angle in degrees and apply rotation
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
-    }*/
-
-
+    
 }

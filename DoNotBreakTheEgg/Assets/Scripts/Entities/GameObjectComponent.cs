@@ -31,4 +31,9 @@ public class GameObjectComponent : MonoBehaviour, IGameObjectComponent
     {
         transform.parent = parentTransform;
     }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }
