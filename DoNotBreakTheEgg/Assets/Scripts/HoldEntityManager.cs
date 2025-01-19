@@ -53,6 +53,8 @@ public class HoldEntityManager : MonoBehaviour
             heldObjects.Add(holdingEntity, heldEntity);
         }
 
+        EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, true);
+
         heldEntity.GetEntityComponent<IHoldableComponent>().Hold(holdAnchor);
 
     }
@@ -64,8 +66,15 @@ public class HoldEntityManager : MonoBehaviour
 
         heldObjects[holdingEntity] = null;
 
-        heldEntity.GetEntityComponent<IHoldableComponent>().Release();
-
+        heldEntity.GetEntityComponent<IHoldableComponent>().Release();  
         
+        StartCoroutine(EnableEntityCollisions(heldEntity, holdingEntity));
+    }
+
+    IEnumerator EnableEntityCollisions(IEntity heldEntity, IEntity holdingEntity)
+    {
+        yield return new WaitForSeconds(.5f);
+
+        EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, false);
     }
 }

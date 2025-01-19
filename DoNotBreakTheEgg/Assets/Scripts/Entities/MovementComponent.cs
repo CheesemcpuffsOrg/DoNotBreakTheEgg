@@ -16,7 +16,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [SerializeField] float gravity = -20f; // Simulated gravity
     [SerializeField] LayerMask canJump;
     [SerializeField] Transform groundCheck; // Ground check position
-    [SerializeField] Vector2 groundCheckRadius = new Vector2(0.5f, 0.5f); // Ground check radius
+    [SerializeField] Vector2 groundCheckSize = new Vector2(0.5f, 0.5f); // Ground check radius
     [SerializeField] float jumpBufferTime = 0.2f; // Time to buffer jump input
 
     private float localDirection;
@@ -93,12 +93,9 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         bool test = false;
 
         // Vertical movement (gravity is applied only if airborne)
-        if (isJumping || !isGrounded)
+        if ((isJumping || !isGrounded) && playerStateController.CanFall())
         {
-            if (!HoldEntityManager.Instance.IsEntityHeld(entity))
-            {
-                verticalVelocity += gravity * Time.deltaTime; // Apply gravity if airborne
-            } 
+            verticalVelocity += gravity * Time.deltaTime; // Apply gravity if airborne    
         }
         else
         {
@@ -118,9 +115,28 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     private void CheckGrounded()
     {
+
         // Check if the player is grounded
         bool wasGrounded = isGrounded;
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, groundCheckRadius, 0f, canJump);
+
+        // OverlapBox to detect colliders in the ground layer
+        Collider2D[] groundColliders = Physics2D.OverlapBoxAll(groundCheck.position, groundCheckSize, 0f, canJump);
+
+        // Ensure the ground is below the player
+        isGrounded = false;
+        foreach (var collider in groundColliders)
+        {
+            if (collider != null)
+            {
+                // Get the bottom-most point of the player and compare it to the collider's position
+                float playerBottomY = groundCheck.position.y;
+                if (collider.bounds.max.y <= playerBottomY) // Collider is below the player
+                {
+                    isGrounded = true;
+                    break;
+                }
+            }
+        }
 
         if (isGrounded && !wasGrounded)
         {
@@ -140,7 +156,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         if (groundCheck != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(groundCheck.position, groundCheckRadius);
+            Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
         }
     }
 #endif

@@ -19,7 +19,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     [SerializeField] CollisionProxy collision;
 
     [Header("Tags")]
-    [SerializeField] TagScriptableObject[] requiredTags;
+    [SerializeField] TagFilter tagFilter;
 
     [Header("Draw Trajectory Gizmo")]
     [SerializeField] private float entityWeight = 1f;
@@ -86,7 +86,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     {
         if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity) 
             || !stateController.CanCatch()
-            || collisionEntity.GetEntityComponent<ITagComponent>()?.HasAllTags(requiredTags) != true)
+            || !tagFilter.PassTagFilterCheck(collisionEntity.GetEntityComponent<IGameObjectComponent>()?.GetTransform()))
             return;
 
         if(ThrowEntityManager.Instance.IsEntityBeingThrown(collisionEntity))

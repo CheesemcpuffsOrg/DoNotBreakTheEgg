@@ -22,14 +22,4 @@ public class TagComponent : MonoBehaviour, ITagComponent
     {
         this.tags = tags.ToList();
     }
-
-    public bool HasTag(TagScriptableObject tag)
-    {
-       return gameObject.HasTag(tag);
-    }
-
-    public bool HasAllTags(TagScriptableObject[] tags)
-    {
-        return gameObject.HasAllTags(tags);
-    }
 }

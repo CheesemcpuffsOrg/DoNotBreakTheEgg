@@ -19,4 +19,6 @@ public class CollisionComponent : MonoBehaviour, ICollisionComponent
             EntityCollisionService.RegisterEntityCollider(collider, entity);
         }
     }
+
+    
 }
