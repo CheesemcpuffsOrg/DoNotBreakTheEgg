@@ -192,6 +192,14 @@ public static class TagExtensions
         objectsList.Add(gameObject);
     }
 
+    internal static void UnregisterGameObjectWithTag(this GameObject gameObject, TagScriptableObject tag)
+    {
+        if (allObjectsWithTag.TryGetValue(tag, out var objectsList))
+        {
+            objectsList.Remove(gameObject);
+        }
+    }
+
     private static bool TryGetTagComponent(GameObject gameObject, out ITags component)
     {
         if (!cachedTags.TryGetValue(gameObject, out component))

@@ -34,6 +34,9 @@ public class GameObjectComponent : MonoBehaviour, IGameObjectComponent
 
     public void Destroy()
     {
+
+        gameObject.GetComponent<ITagComponent>().RemoveAllTags();
+
         Destroy(gameObject);
     }
 }

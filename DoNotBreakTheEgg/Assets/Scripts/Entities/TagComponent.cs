@@ -22,4 +22,30 @@ public class TagComponent : MonoBehaviour, ITagComponent
     {
         this.tags = tags.ToList();
     }
+
+    public void AddTag(TagScriptableObject tag)
+    {
+        gameObject.RegisterGameObjectWithTag(tag);
+    }
+
+    public void AddTags(TagScriptableObject[] tagsToAdd)
+    {
+        foreach (var tag in tagsToAdd)
+            gameObject.RegisterGameObjectWithTag(tag);
+    }
+
+    public void RemoveTag(TagScriptableObject tag)
+    {
+        gameObject.UnregisterGameObjectWithTag(tag);
+    }
+
+    public void RemoveAllTags()
+    {
+        var reversedList = tags;
+
+        reversedList.Reverse();
+
+        foreach (var tag in reversedList)
+            gameObject.UnregisterGameObjectWithTag(tag);
+    }
 }
