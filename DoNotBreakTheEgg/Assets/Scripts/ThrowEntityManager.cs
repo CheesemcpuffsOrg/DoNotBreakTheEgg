@@ -7,23 +7,23 @@ public class ThrowEntityManager : MonoBehaviour
     public class ThrowData
     {
 
-        private Vector2 velocity;
-        public Vector2 Velocity => velocity;
+        private Vector2 distance;
+        public Vector2 Distance => distance;
 
         public float Gravity { get; }
 
         public Transform EntityTransform { get; }
 
-        public ThrowData(Vector2 velocity, float gravity, Transform entityTransform)
+        public ThrowData(Vector2 distance, float gravity, Transform entityTransform)
         {
-            this.velocity = velocity;
+            this.distance = distance;
             Gravity = gravity;
             EntityTransform = entityTransform;
         }
 
         public void UpdateYVelocity(float yVelocity)
         {
-            velocity.y = yVelocity;
+            distance.y = yVelocity;
         }
     }
 
@@ -42,12 +42,12 @@ public class ThrowEntityManager : MonoBehaviour
         {
             // Apply gravity
 
-            var entityYVelocity = thrownEntity.Value.Velocity.y;
+            var entityYVelocity = thrownEntity.Value.Distance.y;
 
             thrownEntity.Value.UpdateYVelocity(entityYVelocity += thrownEntity.Value.Gravity * Time.fixedDeltaTime);
 
             // Update position
-            thrownEntity.Value.EntityTransform.position += (Vector3)(thrownEntity.Value.Velocity * Time.fixedDeltaTime);
+            thrownEntity.Value.EntityTransform.position += (Vector3)(thrownEntity.Value.Distance * Time.fixedDeltaTime);
         }
     }
 

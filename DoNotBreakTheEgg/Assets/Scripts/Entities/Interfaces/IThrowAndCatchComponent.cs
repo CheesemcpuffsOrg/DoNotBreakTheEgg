@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IThrowAndCatchComponent : IEntityComponent
 {
-    
+    public void ChargeThrow();
+
+    public void Throw();
 }

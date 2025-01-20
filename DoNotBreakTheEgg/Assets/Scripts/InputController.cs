@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputController : MonoBehaviour
+public class InputController : MonoBehaviour
 {
-
-    [SerializeField] PlayerStateController stateController;
 
     Controls controls;
 
@@ -18,10 +16,6 @@ public class PlayerInputController : MonoBehaviour
     public event Action<Vector2> MoveEventPerfomed;
     public event Action MoveEventCancelled;
     public event Action JumpEventPerformed;
-
-    IEntity entity;
-    IMovementComponent movementComponent;
-    IAimComponent aimComponent;
 
     private void Awake()
     {
@@ -36,18 +30,9 @@ public class PlayerInputController : MonoBehaviour
         controls.PlayerControls.Jump.performed += JumpPerformed;
     }
 
-    private void Start()
-    {
-        entity = GetComponent<IEntity>();
-
-        movementComponent = entity.GetEntityComponent<IMovementComponent>();
-        aimComponent = entity.GetEntityComponent<IAimComponent>();
-        
-    }
-
     private void JumpPerformed(InputAction.CallbackContext context)
     {
-        movementComponent.Jump();
+        JumpEventPerformed?.Invoke();
     }
 
     private void ThrowStarted(InputAction.CallbackContext context)
@@ -62,22 +47,22 @@ public class PlayerInputController : MonoBehaviour
 
     private void AimPerformed(InputAction.CallbackContext context)
     {
-        aimComponent.MoveAim(context.ReadValue<Vector2>());
+        AimEventPerformed?.Invoke(context.ReadValue<Vector2>());
     }
 
     private void AimCanceled(InputAction.CallbackContext context)
     {
-        aimComponent.StopAim();
+        AimEventCancelled?.Invoke();
     }
 
     private void MovePerformed(InputAction.CallbackContext context)
     {
-        movementComponent.MoveAlongXAxis(context.ReadValue<Vector2>().x);
+        MoveEventPerfomed?.Invoke(context.ReadValue<Vector2>());
     }
 
     private void MoveCanceled(InputAction.CallbackContext context)
     {
-        movementComponent.StopXAxisMovement();
+        MoveEventCancelled?.Invoke();
     }
 
     private void OnEnable()

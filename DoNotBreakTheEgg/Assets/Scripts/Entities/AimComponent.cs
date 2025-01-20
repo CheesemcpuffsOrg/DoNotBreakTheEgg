@@ -11,7 +11,7 @@ public class AimComponent : MonoBehaviour, IAimComponent
         Mouse
     }
 
-    [SerializeField] PlayerInputController controller;
+    [SerializeField] InputController controller;
     [SerializeField] Transform transformToRotate;
     [SerializeField] ControllerType controllerType;
 

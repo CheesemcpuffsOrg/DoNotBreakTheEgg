@@ -56,7 +56,6 @@ public class HoldEntityManager : MonoBehaviour
         EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, true);
 
         heldEntity.GetEntityComponent<IHoldableComponent>().Hold(holdAnchor);
-
     }
 
     public void RemoveHeldEntity(IEntity holdingEntity)

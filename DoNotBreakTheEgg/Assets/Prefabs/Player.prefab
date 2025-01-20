@@ -231,8 +231,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9064841143096759055}
-  - component: {fileID: 2995124484802834411}
-  - component: {fileID: 8968032880680093689}
   - component: {fileID: 1308331829959012018}
   - component: {fileID: 6694469969121223086}
   - component: {fileID: 7779418190739641722}
@@ -270,31 +268,6 @@ Transform:
   - {fileID: 7982101961614932401}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2995124484802834411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5382001462561511537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47ea0645f28a9b8419aa78d49255282f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateController: {fileID: 8968032880680093689}
---- !u!114 &8968032880680093689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5382001462561511537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23966e15ad5351f46b03c3fbc451fe7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1308331829959012018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,12 +292,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488fd345b35fe624f93733ba050b1b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 2995124484802834411}
-  stateController: {fileID: 8968032880680093689}
   holdAnchor: {fileID: 3192593221783738279}
   launchPoint: {fileID: 8136978824323319624}
   powerBase: 1
-  powerMax: 10
+  powerMax: 15
   powerIncrease: 0.02
   collision: {fileID: 1208271136638990722}
   isHeldTag: {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
@@ -343,6 +314,11 @@ MonoBehaviour:
     mustHaveAny: []
     cannotHaveAny:
     - {fileID: 11400000, guid: 342baf6bc2d8e544d9a1bd8890fa61d5, type: 2}
+  throwFilter:
+    mustHaveAll:
+    - {fileID: 11400000, guid: 342baf6bc2d8e544d9a1bd8890fa61d5, type: 2}
+    mustHaveAny: []
+    cannotHaveAny: []
   entityWeight: 1
   trajectorySteps: 10
   timeStep: 0.1
@@ -416,7 +392,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &5522167855184101424
 MonoBehaviour:
@@ -454,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9842d06e71c50f8408351d2e4766d1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 2995124484802834411}
+  controller: {fileID: 0}
   transformToRotate: {fileID: 3619819734028530941}
   controllerType: 0
 --- !u!114 &422898785289315171
@@ -469,9 +445,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352a8715dec95e54d943fb9b8d4ef9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStateController: {fileID: 8968032880680093689}
   moveSpeed: 5
-  jumpHeight: 1
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 9
+  colliderSize: {x: 1, y: 1}
+  colliders: []
+  skinWidth: 0.01
+  jumpHeight: 2
   gravity: -9.81
   canJump:
     serializedVersion: 2

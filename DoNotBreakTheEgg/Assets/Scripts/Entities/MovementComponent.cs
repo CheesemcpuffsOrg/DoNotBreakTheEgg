@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class MovementComponent : MonoBehaviour, IMovementComponent
 {
 
-    [SerializeField] PlayerStateController playerStateController;
-
     [Header("Movement")]
     [SerializeField] float moveSpeed = 5f;
+
+    [SerializeField] private LayerMask collisionLayer; // Layers to check for collisions
+    [SerializeField] private Vector2 colliderSize = new Vector2(1f, 1f); // Size of your character's collider
+    [SerializeField] private Collider2D[] colliders;
+    [SerializeField] float skinWidth = 0.01f;
 
     [Header("Jump")]
     [SerializeField] float jumpHeight = 2f;
@@ -44,12 +48,12 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         ProcessJumpBuffer();
     }
 
-    public void MoveAlongXAxis(float direction)
+    public void SetTarget(Vector2 position)
     {
-        localDirection = direction; // Capture horizontal movement input
+        localDirection = position.x; // Capture horizontal movement input
     }
 
-    public void StopXAxisMovement()
+    public void StopMovement()
     {
         localDirection = 0f; // Reset input when movement is cancelled
     }
@@ -70,20 +74,13 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         }
     }
 
-    public void StopAllMovement()
-    {
-        StopXAxisMovement();
-        playerStateController.IsThrown(false);
-        verticalVelocity = 0f;
-    }
-
     private void ProcessJumpBuffer()
     {
         // Decrease buffer time, and trigger jump when grounded
         if (jumpBufferCounter > 0)
         {
             jumpBufferCounter -= Time.deltaTime;
-            if (jumpBufferCounter <= 0 && isGrounded)
+            if (jumpBufferCounter <= 0 && isGrounded && jumpFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
             {
                 Jump(); // Execute buffered jump when grounded
             }
@@ -94,14 +91,13 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     {
         // Horizontal movement
         Vector3 horizontalMovement = new Vector2(localDirection * moveSpeed * Time.deltaTime, 0f);
-
-        bool test = false;
+        Vector2 newPosition = transform.position + horizontalMovement;
 
         // Vertical movement (gravity is applied only if airborne)
         if ((isJumping || !isGrounded) && fallFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
         {
             verticalVelocity += gravity * Time.deltaTime; // Apply gravity if airborne
-            entity.GetEntityComponent<ITagComponent>().RemoveTag(isGroundedTag);                                              
+            entity.GetEntityComponent<ITagComponent>().RemoveTag(isGroundedTag);
         }
         else
         {
@@ -117,11 +113,36 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         Vector3 verticalMovement = new Vector3(0f, verticalVelocity * Time.deltaTime, 0f);
 
-        // Apply combined movement (horizontal + vertical)
-        transform.Translate(horizontalMovement + verticalMovement);
+        // Adjust collider size for skin width
+        Vector2 adjustedColliderSize = colliderSize - new Vector2(skinWidth * 2, skinWidth * 2);
 
-        transform.Translate(horizontalMovement);
-        transform.Translate(verticalMovement);
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.SetLayerMask(collisionLayer);
+        filter.useTriggers = false; // Ignore triggers, if needed
+
+        Collider2D[] results = new Collider2D[10];
+        int count = Physics2D.OverlapBox(newPosition, adjustedColliderSize, 0f, filter, results);
+
+        // Combine horizontal and vertical movement
+        Vector3 totalMovement = horizontalMovement + verticalMovement;
+
+        // Resolve collisions
+        for (int i = 0; i < count; i++)
+        {
+            Collider2D hitCollider = results[i];
+
+            if (!colliders.Any(c => c == hitCollider))
+            {
+                // Calculate collision normal
+                Vector2 collisionNormal = (Vector2)transform.position - hitCollider.ClosestPoint(transform.position);
+
+                // Project total movement onto the plane perpendicular to the collision normal
+                totalMovement -= Vector3.Project(totalMovement, collisionNormal);
+            }
+        }
+
+        // Apply the resolved movement
+        transform.Translate(totalMovement, Space.World);
     }
 
     private void CheckGrounded()
@@ -169,6 +190,15 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
         }
+
+        Gizmos.color = Color.red; // Set the color for the box
+
+        // Calculate the box's position based on the player's position
+        Vector3 boxPosition = transform.position;
+
+        // Draw the wireframe box in the Scene view
+        Gizmos.DrawWireCube(boxPosition, colliderSize);
     }
+
 #endif
 }

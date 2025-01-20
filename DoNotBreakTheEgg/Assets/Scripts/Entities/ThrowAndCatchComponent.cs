@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
 {
-    [SerializeField] PlayerInputController controller;
-    [SerializeField] PlayerStateController stateController;
-
     [SerializeField] Transform holdAnchor;
 
     [SerializeField] Transform launchPoint;
@@ -24,6 +21,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     [SerializeField] TagScriptableObject isHoldingTag;
     [SerializeField] TagFilter catchFilter;
     [SerializeField] TagFilter catchFilter2;
+    [SerializeField] TagFilter throwFilter;
 
 
     [Header("Draw Trajectory Gizmo")]
@@ -57,12 +55,10 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     {
         chargingShot = false;
 
-        if (!stateController.CanThrow())
+        if (!throwFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
             return;
 
         var heldEntity = HoldEntityManager.Instance.GetHeldEntity(entity);
-
-        //heldEntity.GetEntityComponent<IThrowableComponent>().Throw(powerCurrent, launchPoint);
         
         HoldEntityManager.Instance.RemoveHeldEntity(entity);
 
@@ -107,15 +103,11 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
 
     private void OnEnable()
     {
-        controller.ThrowEventStarted += ChargeThrow;
-        controller.ThrowEventPerformed += Throw;
         collision.OnTriggerEnter2D_Action += TriggerEnter;
     }
 
     private void OnDisable()
     {
-        controller.ThrowEventStarted -= ChargeThrow;
-        controller.ThrowEventPerformed -= Throw;
         collision.OnTriggerEnter2D_Action -= TriggerEnter;
     }
 

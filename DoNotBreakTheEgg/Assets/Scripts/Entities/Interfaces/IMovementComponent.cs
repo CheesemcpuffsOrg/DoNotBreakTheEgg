@@ -4,9 +4,9 @@ using UnityEngine;
 
 public interface IMovementComponent : IEntityComponent
 {
-    public void MoveAlongXAxis(float direction);
+    public void SetTarget(Vector2 position);
 
-    public void StopXAxisMovement();
+    public void StopMovement();
 
     public void Jump();
 }

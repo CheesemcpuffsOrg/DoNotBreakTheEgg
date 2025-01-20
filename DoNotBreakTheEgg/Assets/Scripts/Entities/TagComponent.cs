@@ -74,7 +74,6 @@ public class TagComponent : MonoBehaviour, ITagComponent
         // Remove from the local tags list
         if (tags.Remove(tag))
         {
-            Debug.Log($"Tag '{tag.name}' removed from {gameObject.name}.");
             // Unregister the GameObject globally from the tag
             gameObject.UnregisterGameObjectWithTag(tag);
         }  
