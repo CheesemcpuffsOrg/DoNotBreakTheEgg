@@ -53,12 +53,20 @@ public class ThrowEntityManager : MonoBehaviour
 
     public void AddEntityToThrow(IEntity entity, ThrowData throwData)
     {
+        if (thrownEntities.ContainsKey(entity))
+        {
+            return;
+        }
+
         thrownEntities.Add(entity, throwData);
     }
 
     public void RemoveThrownEntity(IEntity entity)
     {
-        thrownEntities.Remove(entity);
+        if(thrownEntities.ContainsKey(entity))
+        {
+            thrownEntities.Remove(entity);
+        }
     }
 
     public bool IsEntityBeingThrown(IEntity entity)

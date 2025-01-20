@@ -21,14 +21,7 @@ public class BreakableComponent : MonoBehaviour, IBreakableComponent
 
         ThrowEntityManager.Instance.RemoveThrownEntity(entity);
 
-        StartCoroutine(DestroyEntity());
-    }
-
-    IEnumerator DestroyEntity()
-    {
-        yield return new WaitForSeconds(1f);
-
-        entity.GetEntityComponent<IGameObjectComponent>().Destroy();
+        entity.GetEntityComponent<IGameObjectComponent>().Destroy(1);
     }
 
     private void OnEnable()

@@ -19,6 +19,11 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [SerializeField] Vector2 groundCheckSize = new Vector2(0.5f, 0.5f); // Ground check radius
     [SerializeField] float jumpBufferTime = 0.2f; // Time to buffer jump input
 
+    [Header("Tags")]
+    [SerializeField] TagScriptableObject isGroundedTag;
+    [SerializeField] TagFilter fallFilter;
+    [SerializeField] TagFilter jumpFilter;
+
     private float localDirection;
     private float verticalVelocity;
     private bool isGrounded;
@@ -51,7 +56,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     public void Jump()
     {
-        if (isGrounded)
+        if (isGrounded && jumpFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
         {
             // Calculate jump velocity and reset vertical velocity
             verticalVelocity = Mathf.Sqrt(-2f * gravity * jumpHeight); // Calculate initial jump velocity
@@ -93,9 +98,10 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         bool test = false;
 
         // Vertical movement (gravity is applied only if airborne)
-        if ((isJumping || !isGrounded) && playerStateController.CanFall())
+        if ((isJumping || !isGrounded) && fallFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
         {
-            verticalVelocity += gravity * Time.deltaTime; // Apply gravity if airborne    
+            verticalVelocity += gravity * Time.deltaTime; // Apply gravity if airborne
+            entity.GetEntityComponent<ITagComponent>().RemoveTag(isGroundedTag);                                              
         }
         else
         {
@@ -104,13 +110,18 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
             if (ThrowEntityManager.Instance.IsEntityBeingThrown(entity))
             {
                 ThrowEntityManager.Instance.RemoveThrownEntity(entity);
-            }    
+            }
+
+            entity.GetEntityComponent<ITagComponent>().AddTag(isGroundedTag);
         }
 
         Vector3 verticalMovement = new Vector3(0f, verticalVelocity * Time.deltaTime, 0f);
 
         // Apply combined movement (horizontal + vertical)
         transform.Translate(horizontalMovement + verticalMovement);
+
+        transform.Translate(horizontalMovement);
+        transform.Translate(verticalMovement);
     }
 
     private void CheckGrounded()

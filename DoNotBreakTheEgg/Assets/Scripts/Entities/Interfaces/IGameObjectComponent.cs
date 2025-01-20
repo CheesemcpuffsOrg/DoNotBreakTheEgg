@@ -12,5 +12,5 @@ public interface IGameObjectComponent : IEntityComponent
 
     public void SetParent(Transform parentTransform);
 
-    public void Destroy();
+    public void Destroy(float time);
 }

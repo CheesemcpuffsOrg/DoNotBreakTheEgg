@@ -47,9 +47,6 @@ public class PlayerInputController : MonoBehaviour
 
     private void JumpPerformed(InputAction.CallbackContext context)
     {
-        if (!stateController.CanJump())
-            return;
-
         movementComponent.Jump();
     }
 

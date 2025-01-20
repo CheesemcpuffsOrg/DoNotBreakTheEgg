@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
@@ -19,7 +20,11 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     [SerializeField] CollisionProxy collision;
 
     [Header("Tags")]
-    [SerializeField] TagFilter tagFilter;
+    [SerializeField] TagScriptableObject isHeldTag;
+    [SerializeField] TagScriptableObject isHoldingTag;
+    [SerializeField] TagFilter catchFilter;
+    [SerializeField] TagFilter catchFilter2;
+
 
     [Header("Draw Trajectory Gizmo")]
     [SerializeField] private float entityWeight = 1f;
@@ -64,6 +69,8 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
         var velocity = powerCurrent * (Vector2)launchPoint.up;
 
         ThrowEntityManager.Instance.AddEntityToThrow(heldEntity, new ThrowEntityManager.ThrowData(velocity, -9.81f, heldEntity.GetEntityComponent<IGameObjectComponent>().GetTransform()));
+        heldEntity.GetEntityComponent<ITagComponent>().RemoveTag(isHeldTag);
+        entity.GetEntityComponent<ITagComponent>().RemoveTag(isHoldingTag);
     }
 
     private void ChargeShot()
@@ -85,15 +92,17 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     private void TriggerEnter(Collider2D collision)
     {
         if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity) 
-            || !stateController.CanCatch()
-            || !tagFilter.PassTagFilterCheck(collisionEntity.GetEntityComponent<IGameObjectComponent>()?.GetTransform()))
+            || !catchFilter.PassTagFilterCheck(collisionEntity.GetEntityComponent<IGameObjectComponent>()?.GetTransform())
+            || !catchFilter2.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>()?.GetTransform()))
             return;
-
+        
         if(ThrowEntityManager.Instance.IsEntityBeingThrown(collisionEntity))
             ThrowEntityManager.Instance.RemoveThrownEntity(collisionEntity);
             
 
         HoldEntityManager.Instance.AddHeldEntity(entity, collisionEntity, holdAnchor);
+        collisionEntity.GetEntityComponent<ITagComponent>().AddTag(isHeldTag);
+        entity.GetEntityComponent<ITagComponent>().AddTag(isHoldingTag);
     }
 
     private void OnEnable()

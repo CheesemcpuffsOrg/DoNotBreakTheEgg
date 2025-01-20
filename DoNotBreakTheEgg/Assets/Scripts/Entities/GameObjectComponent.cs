@@ -32,11 +32,11 @@ public class GameObjectComponent : MonoBehaviour, IGameObjectComponent
         transform.parent = parentTransform;
     }
 
-    public void Destroy()
+    public void Destroy(float time)
     {
 
         gameObject.GetComponent<ITagComponent>().RemoveAllTags();
 
-        Destroy(gameObject);
+        Destroy(gameObject, time);
     }
 }

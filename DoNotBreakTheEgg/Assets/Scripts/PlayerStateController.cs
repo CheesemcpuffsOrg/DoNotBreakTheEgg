@@ -24,16 +24,6 @@ public class PlayerStateController : MonoBehaviour
         return !HoldEntityManager.Instance.IsEntityHolding(entity) && !isThrown;
     }
 
-    public bool CanCatch()
-    {
-        return !HoldEntityManager.Instance.IsEntityHolding(entity) && !isThrown;
-    }
-
-    public bool CanFall()
-    {
-        return !HoldEntityManager.Instance.IsEntityHeld(entity) && !isThrown;
-    }
-
     public void IsThrown(bool isThrown)
     {
         this.isThrown = isThrown;
