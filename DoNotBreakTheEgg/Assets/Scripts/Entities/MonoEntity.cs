@@ -9,15 +9,19 @@ public class MonoEntity : MonoBehaviour, IEntity
 
     private void Awake()
     {
+        GetComponents();
+    }
 
+    private void GetComponents()
+    {
         // Get all components attached to this GameObject
         Component[] allComponents = GetComponents<Component>();
 
         // Filter components that implement the desired interface
-        
+
         foreach (Component component in allComponents)
         {
-            if (component is IEntityComponent myInterface)
+            if (component is IEntityComponent myInterface && !entityComponents.Contains(myInterface))
             {
                 entityComponents.Add(myInterface);
             }
@@ -33,6 +37,12 @@ public class MonoEntity : MonoBehaviour, IEntity
                 return targetComponent;
             }
         }
+
         return null;
+    }
+
+    public void RegisterEntityComponent(IEntityComponent entityComponent)
+    {
+        entityComponents.Add(entityComponent);
     }
 }
