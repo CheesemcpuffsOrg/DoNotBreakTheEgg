@@ -19,8 +19,8 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     [Header("Tags")]
     [SerializeField] TagScriptableObject isHeldTag;
     [SerializeField] TagScriptableObject isHoldingTag;
-    [SerializeField] TagFilter catchFilter;
-    [SerializeField] TagFilter catchFilter2;
+    [SerializeField] TagFilter catchableEntityFilter;
+    [SerializeField] TagFilter catchingFilter;
     [SerializeField] TagFilter throwFilter;
 
 
@@ -88,8 +88,8 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     private void TriggerEnter(Collider2D collision)
     {
         if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity) 
-            || !catchFilter.PassTagFilterCheck(collisionEntity.GetEntityComponent<IGameObjectComponent>()?.GetTransform())
-            || !catchFilter2.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>()?.GetTransform()))
+            || !catchableEntityFilter.PassTagFilterCheck(collisionEntity.GetEntityComponent<IGameObjectComponent>()?.GetTransform())
+            || !catchingFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>()?.GetTransform()))
             return;
         
         if(ThrowEntityManager.Instance.IsEntityBeingThrown(collisionEntity))
