@@ -9,7 +9,11 @@ public static class EntityCollisionService
 
     public static void RegisterEntityCollider(Collider2D collider, IEntity entity)
     {
-        entityColliders.Add(collider, entity);
+        if (!entityColliders.ContainsKey(collider))
+        {
+            entityColliders.Add(collider, entity);
+            Debug.Log($"Registered collider: {collider.name} for entity: {entity}");
+        }
     }
 
     public static bool TryGetEntity(Collider2D collider, out IEntity entity)
@@ -48,6 +52,7 @@ public static class EntityCollisionService
         {
             foreach (var collider2 in entity2Colliders)
             {
+                Debug.Log($"Setting collision ignore between {collider1.name} and {collider2.name} to {setActive}");
                 Physics2D.IgnoreCollision(collider1, collider2, setActive);
             }
         }

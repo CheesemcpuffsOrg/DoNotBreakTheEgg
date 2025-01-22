@@ -17,10 +17,5 @@ public class DeleteMe : MonoBehaviour
     void Start()
     {
         HoldEntityManager.Instance.AddHeldEntity(player, objectToHold, holdAnchor);
-        objectToHold.GetEntityComponent<ITagComponent>().AddTag(isHeldTag);
-        player.GetEntityComponent<ITagComponent>().AddTag(isHoldingTag);
-
-        // Log the player's tags after adding the tag
-        var playerTags = player.GetEntityComponent<ITagComponent>().GetTags();
     }
 }

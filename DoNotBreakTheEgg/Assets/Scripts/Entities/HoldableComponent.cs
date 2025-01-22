@@ -12,6 +12,8 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
     private void Start()
@@ -28,14 +30,15 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent
         // Stop the object's movement and set it to Kinematic
         rb.velocity = Vector2.zero;
         rb.angularVelocity = 0f; // Also reset any angular velocity (spinning)
-        rb.bodyType = RigidbodyType2D.Kinematic;
+        /*
+        rb.bodyType = RigidbodyType2D.Kinematic;*/
     }
 
     public void Release()
     {
         transform.SetParent (null);
         
-        rb.bodyType = RigidbodyType2D.Dynamic;
+       // rb.bodyType = RigidbodyType2D.Dynamic;
     }
 
 }

@@ -10,6 +10,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [Header("Movement")]
     [SerializeField] float moveSpeed = 5f;
 
+    [Header("Wall Collisions")]
     [SerializeField] private LayerMask collisionLayer; // Layers to check for collisions
     [SerializeField] private Vector2 colliderSize = new Vector2(1f, 1f); // Size of your character's collider
     [SerializeField] private Collider2D[] colliders;
@@ -25,7 +26,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     [Header("Tags")]
     [SerializeField] TagScriptableObject isGroundedTag;
-    [SerializeField] TagFilter fallFilter;
+    [SerializeField] TagFilter moveFilter;
     [SerializeField] TagFilter jumpFilter;
 
     private float localDirection;
@@ -44,7 +45,15 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     private void Update()
     {
         CheckGrounded();
-        Movement();
+
+        bool canMove = moveFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform());
+        Debug.Log($"Move filter result: {canMove} for entity {entity}");
+
+        if (moveFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
+        {
+            Movement();
+        }
+            
         ProcessJumpBuffer();
     }
 
@@ -94,7 +103,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         Vector2 newPosition = transform.position + horizontalMovement;
 
         // Vertical movement (gravity is applied only if airborne)
-        if ((isJumping || !isGrounded) && fallFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
+        if (isJumping || !isGrounded)
         {
             verticalVelocity += gravity * Time.deltaTime; // Apply gravity if airborne
             entity.GetEntityComponent<ITagComponent>().RemoveTag(isGroundedTag);
@@ -109,9 +118,21 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
             }
 
             entity.GetEntityComponent<ITagComponent>().AddTag(isGroundedTag);
+            
         }
 
         Vector3 verticalMovement = new Vector3(0f, verticalVelocity * Time.deltaTime, 0f);
+
+        Vector3 totalMovement = CollisionHandling(horizontalMovement, verticalMovement, newPosition);
+
+        // Apply the resolved movement
+        transform.Translate(totalMovement, Space.World);
+        //transform.Translate(horizontalMovement + verticalMovement);
+    }
+
+    private Vector3 CollisionHandling(Vector3 horizontalMovement, Vector3 verticalMovement, Vector2 newPosition)
+    {
+        
 
         // Adjust collider size for skin width
         Vector2 adjustedColliderSize = colliderSize - new Vector2(skinWidth * 2, skinWidth * 2);
@@ -131,6 +152,12 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         {
             Collider2D hitCollider = results[i];
 
+            if (HoldEntityManager.Instance.IsEntityHeld(entity) &&
+           HoldEntityManager.Instance.GetHeldEntity(entity).GetEntityComponent<IGameObjectComponent>().GetTransform().GetComponent<Collider2D>() == hitCollider)
+            {
+                continue; // Skip collision resolution for held entity
+            }
+
             if (!colliders.Any(c => c == hitCollider))
             {
                 // Calculate collision normal
@@ -138,11 +165,10 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
                 // Project total movement onto the plane perpendicular to the collision normal
                 totalMovement -= Vector3.Project(totalMovement, collisionNormal);
-            }
+            }  
         }
 
-        // Apply the resolved movement
-        transform.Translate(totalMovement, Space.World);
+        return totalMovement;
     }
 
     private void CheckGrounded()

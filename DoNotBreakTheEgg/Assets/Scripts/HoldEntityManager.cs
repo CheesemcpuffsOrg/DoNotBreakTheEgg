@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class HoldEntityManager : MonoBehaviour
 {
+    [Header("Tags")]
+    [SerializeField] TagScriptableObject isHeldTag;
+    [SerializeField] TagScriptableObject isHoldingTag;
 
     public static HoldEntityManager Instance;
 
@@ -41,7 +44,7 @@ public class HoldEntityManager : MonoBehaviour
 
     public void AddHeldEntity(IEntity holdingEntity, IEntity heldEntity, Transform holdAnchor)
     {
-        if(heldObjects.ContainsValue(heldEntity) || IsEntityHolding(holdingEntity))
+        if (heldObjects.ContainsValue(heldEntity) || IsEntityHolding(holdingEntity) || holdingEntity == heldEntity)
             return;
 
         if (heldObjects.ContainsKey(holdingEntity))
@@ -53,7 +56,10 @@ public class HoldEntityManager : MonoBehaviour
             heldObjects.Add(holdingEntity, heldEntity);
         }
 
-        EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, true);
+        // EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, true);
+
+        heldEntity.GetEntityComponent<ITagComponent>().AddTag(isHeldTag);
+        holdingEntity.GetEntityComponent<ITagComponent>().AddTag(isHoldingTag);
 
         heldEntity.GetEntityComponent<IHoldableComponent>().Hold(holdAnchor);
     }
@@ -63,10 +69,13 @@ public class HoldEntityManager : MonoBehaviour
         if(!heldObjects.TryGetValue(holdingEntity, out var heldEntity))
             return;
 
-        heldObjects[holdingEntity] = null;
+        heldObjects.Remove(holdingEntity);
 
-        heldEntity.GetEntityComponent<IHoldableComponent>().Release();  
-        
+        heldEntity.GetEntityComponent<IHoldableComponent>().Release();
+
+        heldEntity.GetEntityComponent<ITagComponent>().RemoveTag(isHeldTag);
+        holdingEntity.GetEntityComponent<ITagComponent>().RemoveTag(isHoldingTag);
+
         StartCoroutine(EnableEntityCollisions(heldEntity, holdingEntity));
     }
 
@@ -74,6 +83,6 @@ public class HoldEntityManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
 
-        EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, false);
+       // EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, false);
     }
 }

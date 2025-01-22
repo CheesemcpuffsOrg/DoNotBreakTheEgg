@@ -232,6 +232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9064841143096759055}
   - component: {fileID: 1308331829959012018}
+  - component: {fileID: 7406739636721491151}
   - component: {fileID: 6694469969121223086}
   - component: {fileID: 3299257491847243611}
   - component: {fileID: 5522167855184101424}
@@ -239,7 +240,6 @@ GameObject:
   - component: {fileID: 2232329760135745355}
   - component: {fileID: 422898785289315171}
   - component: {fileID: 5291628570717146814}
-  - component: {fileID: 7406739636721491151}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -279,6 +279,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b20c2bc38ed313140bfffab3cbb4b43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7406739636721491151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5382001462561511537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a550a0004e71e4abe690e497793aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - {fileID: 11400000, guid: 91063181999232949bbba19bcfba8473, type: 2}
+  - {fileID: 11400000, guid: 4229a30bf6ea6594fbf00ff463dff398, type: 2}
 --- !u!114 &6694469969121223086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,7 +326,8 @@ MonoBehaviour:
   catchingFilter:
     mustHaveAll: []
     mustHaveAny: []
-    cannotHaveAny: []
+    cannotHaveAny:
+    - {fileID: 11400000, guid: 342baf6bc2d8e544d9a1bd8890fa61d5, type: 2}
   throwFilter:
     mustHaveAll:
     - {fileID: 11400000, guid: 342baf6bc2d8e544d9a1bd8890fa61d5, type: 2}
@@ -328,7 +344,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5382001462561511537}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -403,8 +419,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 9
   colliderSize: {x: 1, y: 1}
-  colliders: []
-  skinWidth: 0.01
+  colliders:
+  - {fileID: 8933668129807429666}
+  skinWidth: 0.02
   jumpHeight: 2
   gravity: -9.81
   canJump:
@@ -414,7 +431,7 @@ MonoBehaviour:
   groundCheckSize: {x: 0.9, y: 0.01}
   jumpBufferTime: 0.2
   isGroundedTag: {fileID: 11400000, guid: 2088cac3207fc3d4fad1e1519fe2a3e2, type: 2}
-  fallFilter:
+  moveFilter:
     mustHaveAll: []
     mustHaveAny: []
     cannotHaveAny:
@@ -440,21 +457,6 @@ MonoBehaviour:
   colliders:
   - {fileID: 8933668129807429666}
   - {fileID: 5693742158676626097}
---- !u!114 &7406739636721491151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5382001462561511537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10a550a0004e71e4abe690e497793aef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tags:
-  - {fileID: 11400000, guid: 91063181999232949bbba19bcfba8473, type: 2}
-  - {fileID: 11400000, guid: 4229a30bf6ea6594fbf00ff463dff398, type: 2}
 --- !u!1 &6447130475722892646
 GameObject:
   m_ObjectHideFlags: 0
