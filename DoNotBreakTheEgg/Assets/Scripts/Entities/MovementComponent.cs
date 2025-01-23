@@ -2,12 +2,226 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class MovementComponent : MonoBehaviour, IMovementComponent
 {
+    struct RaycastOrigins
+    {
+        public Vector2 topleft;
+        public Vector2 topright;
+        public Vector2 bottomLeft;
+        public Vector2 bottomRight;
+    }
 
-    [Header("Movement")]
+    struct CollisionInfo
+    {
+        public bool above;
+        public bool below;
+        public bool left;
+        public bool right;
+
+        public void Reset()
+        {
+            above = below = false;
+            right = left = false;
+        }
+    }
+
+    [SerializeField] LayerMask collisionMask;
+
+    [SerializeField] float jumpHeight = 4;
+    [SerializeField] float timeToJumpApex = 0.4f;
+    float accelerationTimeAirborne = 0.2f;
+    float accelerationTimeGrounded = 0.1f;
+
+    //[SerializeField] float gravityModifier = 1f;
+    [SerializeField] float moveSpeed = 5f;
+    
+    float gravity;
+    float jumpVelocity;
+    Vector3 velocity;
+    float VelocityXSmoothing;
+
+    Vector2 input;
+    bool jumpFired;
+
+    float jumpBufferTime = 0.2f;
+    private float jumpBufferCounter;
+
+    const float skinWidth = 0.015f;
+
+    [SerializeField] int horizontalRayCount = 4;
+    [SerializeField] int verticalRayCount = 4;
+
+    float horizontalRaySpacing;
+    float verticalRaySpacing;
+
+    [SerializeField] BoxCollider2D playerCollider;
+    RaycastOrigins raycastOrigins;
+    CollisionInfo collisionInfo;
+
+    private void Start()
+    {
+       // gravity = Physics2D.gravity.y;
+
+        CalculateRaySpacing();
+
+        gravity = (-2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
+        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        Debug.Log($"Gravity: " + gravity + "Jump Velocity: " +  jumpVelocity);
+    }
+
+    
+
+    private void Update()
+    {
+        if (collisionInfo.above || collisionInfo.below)
+        {
+            velocity.y = 0;
+        }
+
+        ProcessJump();
+
+        var targetVelocityX = input.x * moveSpeed;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX,  ref VelocityXSmoothing, (collisionInfo.below)?accelerationTimeGrounded : accelerationTimeAirborne);
+        velocity.y += gravity * Time.deltaTime;
+
+        Move(velocity * Time.deltaTime);
+    }
+
+    private void ProcessJump()
+    {
+        if (jumpFired)
+        {
+            if (collisionInfo.below)
+            {
+                velocity.y = jumpVelocity;
+                jumpFired = false;
+            }
+            else
+            {
+                jumpBufferCounter -= Time.deltaTime;
+                if (jumpBufferCounter < 0)
+                {
+                    jumpFired = false;
+                }
+            }
+        }
+    }
+
+    void Move(Vector3 velocity)
+    {
+        UpdateRaycastOrigins();
+        collisionInfo.Reset();
+
+        if (velocity.x != 0)
+        {
+            HorizontalCollisions(ref velocity);
+        }
+
+        if (velocity.y != 0)
+        {
+            VerticalCollisions(ref velocity);
+        }
+
+
+        transform.Translate(velocity);
+        Physics2D.SyncTransforms();
+    }
+
+
+    void UpdateRaycastOrigins()
+    {
+        var bounds = playerCollider.bounds;
+        bounds.Expand(skinWidth * -2);
+
+        raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
+        raycastOrigins.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
+        raycastOrigins.topleft = new Vector2(bounds.min.x, bounds.max.y);
+        raycastOrigins.topright = new Vector2(bounds.max.x, bounds.max.y);
+    }
+
+    void CalculateRaySpacing()
+    {
+        var bounds = playerCollider.bounds;
+        bounds.Expand(skinWidth * -2);
+
+        horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
+        verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
+
+        horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
+        verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
+    }
+
+    void HorizontalCollisions(ref Vector3 velocity)
+    {
+        var directionX = Mathf.Sign(velocity.x);
+        var rayLength = Mathf.Abs(velocity.x) + skinWidth;
+
+        for (int i = 0; i < horizontalRayCount; i++)
+        {
+            var rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
+            rayOrigin += Vector2.up * (horizontalRaySpacing * i);
+            var hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+
+            Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
+
+            if (hit)
+            {
+                velocity.x = (hit.distance - skinWidth) * directionX;
+                rayLength = hit.distance;
+
+                collisionInfo.left = directionX == -1;
+                collisionInfo.right = directionX == 1;
+            }
+        }
+    }
+
+    void VerticalCollisions(ref Vector3 velocity)
+    {
+        var directionY = Mathf.Sign(velocity.y);
+        var rayLength = Mathf.Abs(velocity.y) + skinWidth;
+
+        for (int i = 0; i < verticalRayCount; i++)
+        {
+            var rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topleft;
+            rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
+            var hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+
+            //Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
+            Debug.DrawRay(raycastOrigins.bottomLeft + Vector2.right * verticalRaySpacing * i, Vector2.up * -2, Color.red);
+
+            if (hit)
+            {
+                velocity.y = (hit.distance - skinWidth) * directionY;
+                rayLength = hit.distance;
+
+                collisionInfo.below = directionY == -1;
+                collisionInfo.above = directionY == 1;
+            }
+        }
+    }
+
+    public void Jump()
+    {
+        jumpFired = true;
+        jumpBufferCounter = jumpBufferTime;
+    }
+
+    public void SetTarget(Vector2 target)
+    {
+         input = target;
+    }
+
+    public void StopMovement()
+    {
+        input = Vector2.zero;
+    }
+
+
+    /*[Header("Movement")]
     [SerializeField] float moveSpeed = 5f;
 
     [Header("Wall Collisions")]
@@ -226,5 +440,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         Gizmos.DrawWireCube(boxPosition, colliderSize);
     }
 
-#endif
+#endif*/
+
 }

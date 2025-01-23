@@ -12,8 +12,6 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
     private void Start()

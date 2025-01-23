@@ -12,7 +12,6 @@ public static class EntityCollisionService
         if (!entityColliders.ContainsKey(collider))
         {
             entityColliders.Add(collider, entity);
-            Debug.Log($"Registered collider: {collider.name} for entity: {entity}");
         }
     }
 

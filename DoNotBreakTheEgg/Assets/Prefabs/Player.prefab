@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8168524748323391711}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Anchors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 5693742158676626097}
   - component: {fileID: 1208271136638990722}
   - component: {fileID: 2100045097849958069}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CatchCollision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2370969862776787936}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -136,7 +136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3192593221783738279}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HoldAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3619819734028530941}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8136978824323319624}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LaunchPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,13 +234,13 @@ GameObject:
   - component: {fileID: 1308331829959012018}
   - component: {fileID: 7406739636721491151}
   - component: {fileID: 6694469969121223086}
-  - component: {fileID: 3299257491847243611}
   - component: {fileID: 5522167855184101424}
   - component: {fileID: 5316356889645206390}
   - component: {fileID: 2232329760135745355}
   - component: {fileID: 422898785289315171}
   - component: {fileID: 5291628570717146814}
-  m_Layer: 0
+  - component: {fileID: 8324024084581114720}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,33 +336,6 @@ MonoBehaviour:
   entityWeight: 1
   trajectorySteps: 10
   timeStep: 0.1
---- !u!50 &3299257491847243611
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5382001462561511537}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!114 &5522167855184101424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,34 +387,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352a8715dec95e54d943fb9b8d4ef9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 9
-  colliderSize: {x: 1, y: 1}
-  colliders:
-  - {fileID: 8933668129807429666}
-  skinWidth: 0.02
-  jumpHeight: 2
-  gravity: -9.81
-  canJump:
+  collisionMask:
     serializedVersion: 2
     m_Bits: 8
-  groundCheck: {fileID: 7982101961614932401}
-  groundCheckSize: {x: 0.9, y: 0.01}
-  jumpBufferTime: 0.2
-  isGroundedTag: {fileID: 11400000, guid: 2088cac3207fc3d4fad1e1519fe2a3e2, type: 2}
-  moveFilter:
-    mustHaveAll: []
-    mustHaveAny: []
-    cannotHaveAny:
-    - {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
-  jumpFilter:
-    mustHaveAll: []
-    mustHaveAny: []
-    cannotHaveAny:
-    - {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
-    - {fileID: 11400000, guid: 342baf6bc2d8e544d9a1bd8890fa61d5, type: 2}
+  jumpHeight: 2
+  timeToJumpApex: 0.3
+  moveSpeed: 10
+  horizontalRayCount: 4
+  verticalRayCount: 4
+  playerCollider: {fileID: 8933668129807429666}
 --- !u!114 &5291628570717146814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,6 +411,33 @@ MonoBehaviour:
   colliders:
   - {fileID: 8933668129807429666}
   - {fileID: 5693742158676626097}
+--- !u!50 &8324024084581114720
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5382001462561511537}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &6447130475722892646
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +447,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7982101961614932401}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +478,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7781959172608742802}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -531,7 +512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9114117381976654366}
   - component: {fileID: 8933668129807429666}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: PlayerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -608,7 +589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 604481485335272054}
   - component: {fileID: 6454145600469608726}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -692,7 +673,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5093136107009673492}
   - component: {fileID: 4848433930548909381}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
