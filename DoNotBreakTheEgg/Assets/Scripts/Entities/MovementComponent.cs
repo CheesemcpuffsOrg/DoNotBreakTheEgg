@@ -7,15 +7,7 @@ using UnityEngine;
 
 public class MovementComponent : MonoBehaviour, IMovementComponent
 {
-    struct RaycastOrigins
-    {
-        public Vector2 topleft;
-        public Vector2 topright;
-        public Vector2 bottomLeft;
-        public Vector2 bottomRight;
-    }
-
-    struct CollisionInfo
+    private struct CollisionInfoStruct
     {
         public bool above;
         public bool below;
@@ -50,30 +42,26 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
 
-    const float skinWidth = 0.015f;
+    IEntity entity;
 
-    [SerializeField] int horizontalRayCount = 4;
-    [SerializeField] int verticalRayCount = 4;
+    CollisionInfoStruct collisionInfo;
 
-    float horizontalRaySpacing;
-    float verticalRaySpacing;
+    float skinWidth;
 
-    [SerializeField] BoxCollider2D playerCollider;
-    RaycastOrigins raycastOrigins;
-    CollisionInfo collisionInfo;
+    ICollisionComponent collisionComponent;
 
     private void Start()
     {
-       // gravity = Physics2D.gravity.y;
+        entity = GetComponent<IEntity>();
 
-        CalculateRaySpacing();
+        collisionComponent = entity.GetEntityComponent<ICollisionComponent>();
+
+        skinWidth = collisionComponent.SkinWidth;
 
         gravity = (-2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         Debug.Log($"Gravity: " + gravity + "Jump Velocity: " +  jumpVelocity);
     }
-
-    
 
     private void Update()
     {
@@ -113,7 +101,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void Move(Vector3 velocity)
     {
-        UpdateRaycastOrigins();
+        collisionComponent.UpdateRaycastOrigins();
         collisionInfo.Reset();
 
         if (velocity.x != 0)
@@ -131,51 +119,39 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         Physics2D.SyncTransforms();
     }
 
-
-    void UpdateRaycastOrigins()
-    {
-        var bounds = playerCollider.bounds;
-        bounds.Expand(skinWidth * -2);
-
-        raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
-        raycastOrigins.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
-        raycastOrigins.topleft = new Vector2(bounds.min.x, bounds.max.y);
-        raycastOrigins.topright = new Vector2(bounds.max.x, bounds.max.y);
-    }
-
-    void CalculateRaySpacing()
-    {
-        var bounds = playerCollider.bounds;
-        bounds.Expand(skinWidth * -2);
-
-        horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
-        verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
-
-        horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
-        verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
-    }
-
     void HorizontalCollisions(ref Vector3 velocity)
     {
         var directionX = Mathf.Sign(velocity.x);
         var rayLength = Mathf.Abs(velocity.x) + skinWidth;
 
-        for (int i = 0; i < horizontalRayCount; i++)
+        for (int i = 0; i < collisionComponent.HorizontalRayCount; i++)
         {
-            var rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
-            rayOrigin += Vector2.up * (horizontalRaySpacing * i);
-            var hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+            var rayOrigin = (directionX == -1) ? collisionComponent.RaycastOrigins.bottomLeft : collisionComponent.RaycastOrigins.bottomRight;
+            rayOrigin += Vector2.up * (collisionComponent.HorizontalRaySpacing * i);
+            var hits = Physics2D.RaycastAll(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
             Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
 
-            if (hit)
-            {
-                velocity.x = (hit.distance - skinWidth) * directionX;
-                rayLength = hit.distance;
 
-                collisionInfo.left = directionX == -1;
-                collisionInfo.right = directionX == 1;
-            }
+            foreach(var hit in hits)
+            {
+                if (collisionComponent.AllPlayerColliders.Contains(hit.collider))
+                {
+                    continue;
+                }
+
+                // Check if the raycast hit something
+                if (hit)
+                {
+                    // Process the valid hit (e.g., other players or ground)
+                    velocity.x = (hit.distance - skinWidth) * directionX;
+                    rayLength = hit.distance;
+
+
+                    collisionInfo.left = directionX == -1;
+                    collisionInfo.right = directionX == 1;
+                }
+            }   
         }
     }
 
@@ -184,22 +160,30 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         var directionY = Mathf.Sign(velocity.y);
         var rayLength = Mathf.Abs(velocity.y) + skinWidth;
 
-        for (int i = 0; i < verticalRayCount; i++)
+        for (int i = 0; i < collisionComponent.VerticalRayCount; i++)
         {
-            var rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topleft;
-            rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
-            var hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+            var rayOrigin = (directionY == -1) ? collisionComponent.RaycastOrigins.bottomLeft : collisionComponent.RaycastOrigins.topleft;
+            rayOrigin += Vector2.right * (collisionComponent.VerticalRaySpacing * i + velocity.x);
+            var hits = Physics2D.RaycastAll(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
-            //Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
-            Debug.DrawRay(raycastOrigins.bottomLeft + Vector2.right * verticalRaySpacing * i, Vector2.up * -2, Color.red);
+            Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
+            //Debug.DrawRay(collisionComponent.RaycastOrigins.bottomLeft + Vector2.right * collisionComponent.VerticalRaySpacing * i, Vector2.up * -2, Color.red);
 
-            if (hit)
+            foreach (var hit in hits)
             {
+                if (collisionComponent.AllPlayerColliders.Contains(hit.collider))
+                {
+                    continue;
+                }
+                
+                // Process the valid hit
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
 
                 collisionInfo.below = directionY == -1;
                 collisionInfo.above = directionY == 1;
+
+                break;
             }
         }
     }

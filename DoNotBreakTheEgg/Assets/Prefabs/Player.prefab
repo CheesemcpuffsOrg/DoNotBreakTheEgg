@@ -73,7 +73,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2370969862776787936}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -390,12 +390,12 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 8
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   jumpHeight: 2
   timeToJumpApex: 0.3
   moveSpeed: 10
-  horizontalRayCount: 4
-  verticalRayCount: 4
-  playerCollider: {fileID: 8933668129807429666}
 --- !u!114 &5291628570717146814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,9 +408,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e075f6552658b4e4295cab956280dff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colliders:
+  allPlayerColliders:
   - {fileID: 8933668129807429666}
   - {fileID: 5693742158676626097}
+  playerCollider: {fileID: 8933668129807429666}
+  horizontalRayCount: 4
+  verticalRayCount: 4
 --- !u!50 &8324024084581114720
 Rigidbody2D:
   serializedVersion: 4
@@ -512,7 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9114117381976654366}
   - component: {fileID: 8933668129807429666}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: PlayerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
