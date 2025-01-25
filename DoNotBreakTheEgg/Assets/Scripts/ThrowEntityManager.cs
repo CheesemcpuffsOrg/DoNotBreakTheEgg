@@ -27,6 +27,8 @@ public class ThrowEntityManager : MonoBehaviour
         }
     }
 
+    [SerializeField] TagFilter stopThrowingFilter;
+
     public static ThrowEntityManager Instance;
 
     Dictionary<IEntity, ThrowData> thrownEntities = new();
@@ -42,12 +44,19 @@ public class ThrowEntityManager : MonoBehaviour
         {
             // Apply gravity
 
-            var entityYVelocity = thrownEntity.Value.Distance.y;
+            var throwData = thrownEntity.Value;
 
-            thrownEntity.Value.UpdateYVelocity(entityYVelocity += thrownEntity.Value.Gravity * Time.fixedDeltaTime);
+            var entityYVelocity = throwData.Distance.y;
+
+            throwData.UpdateYVelocity(entityYVelocity += throwData.Gravity * Time.fixedDeltaTime);
 
             // Update position
-            thrownEntity.Value.EntityTransform.position += (Vector3)(thrownEntity.Value.Distance * Time.fixedDeltaTime);
+            throwData.EntityTransform.position += (Vector3)(throwData.Distance * Time.fixedDeltaTime);
+
+            if (stopThrowingFilter.PassTagFilterCheck(thrownEntity.Key.GetEntityComponent<IGameObjectComponent>().GetTransform()))
+            {
+                throwData.EntityTransform.position = throwData.EntityTransform.position;
+            }
         }
     }
 

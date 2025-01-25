@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,14 @@ using UnityEngine.Rendering;
 
 public class GameObjectComponent : MonoBehaviour, IGameObjectComponent
 {
-    Rigidbody2D rb;
-
-    private void Awake()
+    [Serializable]
+    private class AnchorMapping
     {
-        rb = GetComponent<Rigidbody2D>();
+        public AnchorScriptableObject anchorScriptableObject;
+        public Transform anchor;
     }
+
+    [SerializeField] List<AnchorMapping> anchorMappings;
 
     public Transform GetTransform()
     {
@@ -38,5 +41,18 @@ public class GameObjectComponent : MonoBehaviour, IGameObjectComponent
         gameObject.GetComponent<ITagComponent>().RemoveAllTags();
 
         Destroy(gameObject, time);
+    }
+
+    public Transform GetAnchor(AnchorScriptableObject anchor)
+    {
+        foreach (AnchorMapping mapping in anchorMappings)
+        {
+            if(mapping.anchorScriptableObject == anchor)
+            {
+                return mapping.anchor;
+            }
+        }
+
+        return null;
     }
 }

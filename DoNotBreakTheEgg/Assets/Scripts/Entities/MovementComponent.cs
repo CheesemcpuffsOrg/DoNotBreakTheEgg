@@ -1,70 +1,106 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
+
 
 public class MovementComponent : MonoBehaviour, IMovementComponent
 {
-    private struct CollisionInfoStruct
+    private struct CollisionInfo
     {
         public bool above;
         public bool below;
         public bool left;
         public bool right;
 
+        public bool climbingSlope;
+        public bool descendingSlope;
+        public float slopeAngle;
+        public float oldSlopeAngle;
+
+        public Vector3 velocityOld;
+
         public void Reset()
         {
             above = below = false;
             right = left = false;
+            climbingSlope = false;
+            descendingSlope = false;
+
+            oldSlopeAngle = slopeAngle;
+            slopeAngle = 0;
         }
     }
 
-    [SerializeField] LayerMask collisionMask;
+    public struct RaycastOrigins
+    {
+        public Vector2 topleft;
+        public Vector2 topright;
+        public Vector2 bottomLeft;
+        public Vector2 bottomRight;
+    }
 
     [SerializeField] float jumpHeight = 4;
     [SerializeField] float timeToJumpApex = 0.4f;
+    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float maxClimbAngle = 80;
+    [SerializeField] float maxDescendAngle = 80;
     float accelerationTimeAirborne = 0.2f;
     float accelerationTimeGrounded = 0.1f;
-
-    //[SerializeField] float gravityModifier = 1f;
-    [SerializeField] float moveSpeed = 5f;
     
+
     float gravity;
     float jumpVelocity;
     Vector3 velocity;
     float VelocityXSmoothing;
 
-    Vector2 input;
-    bool jumpFired;
-
     float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
 
+    [Header("Tags")]
+    [SerializeField] TagScriptableObject isGroundedTag;
+    [SerializeField] TagFilter jumpFilter;
+    [SerializeField] TagFilter moveFilter;
+    //is grounded filter
+
+    [Header("Raycasting")]
+    [SerializeField] int horizontalRayCount = 4;
+    [SerializeField] int verticalRayCount = 4;
+    [SerializeField] LayerMask collisionMask;
+
+    const float skinWidth = 0.015f;
+    float horizontalRaySpacing;
+    float verticalRaySpacing;
+    
+
+    RaycastOrigins raycastOrigins;
+    CollisionInfo collisionInfo;
+
+    Vector2 input;
+    bool jumpFired;
+
     IEntity entity;
-
-    CollisionInfoStruct collisionInfo;
-
-    float skinWidth;
-
     ICollisionComponent collisionComponent;
+    ITagComponent tagComponent;
+    IGameObjectComponent gameObjectComponent;
 
     private void Start()
     {
         entity = GetComponent<IEntity>();
-
         collisionComponent = entity.GetEntityComponent<ICollisionComponent>();
+        tagComponent = entity.GetEntityComponent<ITagComponent>();
+        gameObjectComponent = entity.GetEntityComponent<IGameObjectComponent>();
 
-        skinWidth = collisionComponent.SkinWidth;
+        CalculateRaySpacing();
 
         gravity = (-2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
-        Debug.Log($"Gravity: " + gravity + "Jump Velocity: " +  jumpVelocity);
     }
 
     private void Update()
     {
+
+        CheckIfGrounded();
+
         if (collisionInfo.above || collisionInfo.below)
         {
             velocity.y = 0;
@@ -73,10 +109,42 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         ProcessJump();
 
         var targetVelocityX = input.x * moveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX,  ref VelocityXSmoothing, (collisionInfo.below)?accelerationTimeGrounded : accelerationTimeAirborne);
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref VelocityXSmoothing, (collisionInfo.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
 
         Move(velocity * Time.deltaTime);
+    }
+
+    public void Jump()
+    {
+        if (!jumpFilter.PassTagFilterCheck(gameObjectComponent.GetTransform())) return;
+
+        jumpFired = true;
+        jumpBufferCounter = jumpBufferTime;
+    }
+
+    public void SetTarget(Vector2 target)
+    {
+        if (!moveFilter.PassTagFilterCheck(gameObjectComponent.GetTransform())) return;
+
+        input = target;
+    }
+
+    public void StopMovement()
+    {
+        input = Vector2.zero;
+    }
+
+    private void CheckIfGrounded()
+    {
+        if (collisionInfo.below)
+        {
+            tagComponent.AddTag(isGroundedTag);
+        }
+        else
+        {
+            tagComponent.RemoveTag(isGroundedTag);
+        }
     }
 
     private void ProcessJump()
@@ -101,8 +169,14 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void Move(Vector3 velocity)
     {
-        collisionComponent.UpdateRaycastOrigins();
+        UpdateRaycastOrigins();
         collisionInfo.Reset();
+        collisionInfo.velocityOld = velocity;
+
+        if(velocity.y < 0)
+        {
+            DescendSlope(ref velocity);
+        }
 
         if (velocity.x != 0)
         {
@@ -114,9 +188,8 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
             VerticalCollisions(ref velocity);
         }
 
-
         transform.Translate(velocity);
-        Physics2D.SyncTransforms();
+        Physics2D.SyncTransforms(); //sync all child objects with parent object
     }
 
     void HorizontalCollisions(ref Vector3 velocity)
@@ -124,18 +197,18 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         var directionX = Mathf.Sign(velocity.x);
         var rayLength = Mathf.Abs(velocity.x) + skinWidth;
 
-        for (int i = 0; i < collisionComponent.HorizontalRayCount; i++)
+        for (int i = 0; i < horizontalRayCount; i++)
         {
-            var rayOrigin = (directionX == -1) ? collisionComponent.RaycastOrigins.bottomLeft : collisionComponent.RaycastOrigins.bottomRight;
-            rayOrigin += Vector2.up * (collisionComponent.HorizontalRaySpacing * i);
+            var rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
+            rayOrigin += Vector2.up * (horizontalRaySpacing * i);
             var hits = Physics2D.RaycastAll(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
             Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
 
-
             foreach(var hit in hits)
             {
-                if (collisionComponent.AllPlayerColliders.Contains(hit.collider))
+                //ignore colliders if they are entities own colliders
+                if (collisionComponent.IsEntityCollider(hit.collider))
                 {
                     continue;
                 }
@@ -143,13 +216,42 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                 // Check if the raycast hit something
                 if (hit)
                 {
-                    // Process the valid hit (e.g., other players or ground)
-                    velocity.x = (hit.distance - skinWidth) * directionX;
-                    rayLength = hit.distance;
+                    var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
+                    if (i == 0 && slopeAngle <= maxClimbAngle)
+                    {
 
-                    collisionInfo.left = directionX == -1;
-                    collisionInfo.right = directionX == 1;
+                        if (collisionInfo.descendingSlope)
+                        {
+                            collisionInfo.descendingSlope = false;
+                            velocity = collisionInfo.velocityOld;
+                        }
+
+                        var distanceToSlopeStart = 0f;
+
+                        if(slopeAngle != collisionInfo.oldSlopeAngle)
+                        {
+                            distanceToSlopeStart = hit.distance - skinWidth;
+                            velocity.x -= distanceToSlopeStart * directionX;
+                        }
+
+                        ClimbSlope(ref velocity, slopeAngle);
+                        velocity.x += distanceToSlopeStart * directionX;
+                    }
+
+                    if(!collisionInfo.climbingSlope || slopeAngle > maxClimbAngle)
+                    {
+                        velocity.x = (hit.distance - skinWidth) * directionX;
+                        rayLength = hit.distance;
+
+                        if (collisionInfo.climbingSlope)
+                        {
+                            velocity.y = Mathf.Tan(collisionInfo.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x);
+                        }
+
+                        collisionInfo.left = directionX == -1;
+                        collisionInfo.right = directionX == 1;
+                    }   
                 }
             }   
         }
@@ -160,18 +262,18 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         var directionY = Mathf.Sign(velocity.y);
         var rayLength = Mathf.Abs(velocity.y) + skinWidth;
 
-        for (int i = 0; i < collisionComponent.VerticalRayCount; i++)
+        for (int i = 0; i < verticalRayCount; i++)
         {
-            var rayOrigin = (directionY == -1) ? collisionComponent.RaycastOrigins.bottomLeft : collisionComponent.RaycastOrigins.topleft;
-            rayOrigin += Vector2.right * (collisionComponent.VerticalRaySpacing * i + velocity.x);
+            var rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topleft;
+            rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
             var hits = Physics2D.RaycastAll(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
             Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
-            //Debug.DrawRay(collisionComponent.RaycastOrigins.bottomLeft + Vector2.right * collisionComponent.VerticalRaySpacing * i, Vector2.up * -2, Color.red);
 
             foreach (var hit in hits)
             {
-                if (collisionComponent.AllPlayerColliders.Contains(hit.collider))
+                //ignore colliders if they are entities own colliders
+                if (collisionComponent.IsEntityCollider(hit.collider))
                 {
                     continue;
                 }
@@ -180,250 +282,130 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
 
+                if (collisionInfo.climbingSlope)
+                {
+                    velocity.x = velocity.y / Mathf.Tan(collisionInfo.slopeAngle * Mathf.Deg2Rad) * Mathf.Sign(velocity.x);
+                }
+
                 collisionInfo.below = directionY == -1;
                 collisionInfo.above = directionY == 1;
 
                 break;
             }
         }
-    }
 
-    public void Jump()
-    {
-        jumpFired = true;
-        jumpBufferCounter = jumpBufferTime;
-    }
-
-    public void SetTarget(Vector2 target)
-    {
-         input = target;
-    }
-
-    public void StopMovement()
-    {
-        input = Vector2.zero;
-    }
-
-
-    /*[Header("Movement")]
-    [SerializeField] float moveSpeed = 5f;
-
-    [Header("Wall Collisions")]
-    [SerializeField] private LayerMask collisionLayer; // Layers to check for collisions
-    [SerializeField] private Vector2 colliderSize = new Vector2(1f, 1f); // Size of your character's collider
-    [SerializeField] private Collider2D[] colliders;
-    [SerializeField] float skinWidth = 0.01f;
-
-    [Header("Jump")]
-    [SerializeField] float jumpHeight = 2f;
-    [SerializeField] float gravity = -20f; // Simulated gravity
-    [SerializeField] LayerMask canJump;
-    [SerializeField] Transform groundCheck; // Ground check position
-    [SerializeField] Vector2 groundCheckSize = new Vector2(0.5f, 0.5f); // Ground check radius
-    [SerializeField] float jumpBufferTime = 0.2f; // Time to buffer jump input
-
-    [Header("Tags")]
-    [SerializeField] TagScriptableObject isGroundedTag;
-    [SerializeField] TagFilter moveFilter;
-    [SerializeField] TagFilter jumpFilter;
-
-    private float localDirection;
-    private float verticalVelocity;
-    private bool isGrounded;
-    private bool isJumping;
-    private float jumpBufferCounter; // Tracks remaining buffer time
-
-    IEntity entity;
-
-    private void Start()
-    {
-        entity = GetComponent<IEntity>();
-    }
-
-    private void Update()
-    {
-        CheckGrounded();
-
-        bool canMove = moveFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform());
-        Debug.Log($"Move filter result: {canMove} for entity {entity}");
-
-        if (moveFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
+        if (collisionInfo.climbingSlope)
         {
-            Movement();
-        }
-            
-        ProcessJumpBuffer();
-    }
+            var directionX = Mathf.Sign(velocity.x);
+            rayLength = Mathf.Abs(velocity.x) + skinWidth;
+            var rayOrigin = ((directionX == -1)?raycastOrigins.bottomLeft : raycastOrigins.bottomRight) + Vector2.up * velocity.y;
 
-    public void SetTarget(Vector2 position)
-    {
-        localDirection = position.x; // Capture horizontal movement input
-    }
+            var hits = Physics2D.RaycastAll(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
-    public void StopMovement()
-    {
-        localDirection = 0f; // Reset input when movement is cancelled
-    }
-
-    public void Jump()
-    {
-        if (isGrounded && jumpFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
-        {
-            // Calculate jump velocity and reset vertical velocity
-            verticalVelocity = Mathf.Sqrt(-2f * gravity * jumpHeight); // Calculate initial jump velocity
-            isJumping = true; // Set jumping state
-            jumpBufferCounter = 0; // Clear the jump buffer after jump
-        }
-        else
-        {
-            // Buffer jump if not grounded
-            jumpBufferCounter = jumpBufferTime;
-        }
-    }
-
-    private void ProcessJumpBuffer()
-    {
-        // Decrease buffer time, and trigger jump when grounded
-        if (jumpBufferCounter > 0)
-        {
-            jumpBufferCounter -= Time.deltaTime;
-            if (jumpBufferCounter <= 0 && isGrounded && jumpFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
+            foreach (var hit in hits) 
             {
-                Jump(); // Execute buffered jump when grounded
-            }
-        }
-    }
 
-    private void Movement()
-    {
-        // Horizontal movement
-        Vector3 horizontalMovement = new Vector2(localDirection * moveSpeed * Time.deltaTime, 0f);
-        Vector2 newPosition = transform.position + horizontalMovement;
-
-        // Vertical movement (gravity is applied only if airborne)
-        if (isJumping || !isGrounded)
-        {
-            verticalVelocity += gravity * Time.deltaTime; // Apply gravity if airborne
-            entity.GetEntityComponent<ITagComponent>().RemoveTag(isGroundedTag);
-        }
-        else
-        {
-            verticalVelocity = 0f; // Stop vertical movement when grounded
-
-            if (ThrowEntityManager.Instance.IsEntityBeingThrown(entity))
-            {
-                ThrowEntityManager.Instance.RemoveThrownEntity(entity);
-            }
-
-            entity.GetEntityComponent<ITagComponent>().AddTag(isGroundedTag);
-            
-        }
-
-        Vector3 verticalMovement = new Vector3(0f, verticalVelocity * Time.deltaTime, 0f);
-
-        Vector3 totalMovement = CollisionHandling(horizontalMovement, verticalMovement, newPosition);
-
-        // Apply the resolved movement
-        transform.Translate(totalMovement, Space.World);
-        //transform.Translate(horizontalMovement + verticalMovement);
-    }
-
-    private Vector3 CollisionHandling(Vector3 horizontalMovement, Vector3 verticalMovement, Vector2 newPosition)
-    {
-        
-
-        // Adjust collider size for skin width
-        Vector2 adjustedColliderSize = colliderSize - new Vector2(skinWidth * 2, skinWidth * 2);
-
-        ContactFilter2D filter = new ContactFilter2D();
-        filter.SetLayerMask(collisionLayer);
-        filter.useTriggers = false; // Ignore triggers, if needed
-
-        Collider2D[] results = new Collider2D[10];
-        int count = Physics2D.OverlapBox(newPosition, adjustedColliderSize, 0f, filter, results);
-
-        // Combine horizontal and vertical movement
-        Vector3 totalMovement = horizontalMovement + verticalMovement;
-
-        // Resolve collisions
-        for (int i = 0; i < count; i++)
-        {
-            Collider2D hitCollider = results[i];
-
-            if (HoldEntityManager.Instance.IsEntityHeld(entity) &&
-           HoldEntityManager.Instance.GetHeldEntity(entity).GetEntityComponent<IGameObjectComponent>().GetTransform().GetComponent<Collider2D>() == hitCollider)
-            {
-                continue; // Skip collision resolution for held entity
-            }
-
-            if (!colliders.Any(c => c == hitCollider))
-            {
-                // Calculate collision normal
-                Vector2 collisionNormal = (Vector2)transform.position - hitCollider.ClosestPoint(transform.position);
-
-                // Project total movement onto the plane perpendicular to the collision normal
-                totalMovement -= Vector3.Project(totalMovement, collisionNormal);
-            }  
-        }
-
-        return totalMovement;
-    }
-
-    private void CheckGrounded()
-    {
-
-        // Check if the player is grounded
-        bool wasGrounded = isGrounded;
-
-        // OverlapBox to detect colliders in the ground layer
-        Collider2D[] groundColliders = Physics2D.OverlapBoxAll(groundCheck.position, groundCheckSize, 0f, canJump);
-
-        // Ensure the ground is below the player
-        isGrounded = false;
-        foreach (var collider in groundColliders)
-        {
-            if (collider != null)
-            {
-                // Get the bottom-most point of the player and compare it to the collider's position
-                float playerBottomY = groundCheck.position.y;
-                if (collider.bounds.max.y <= playerBottomY) // Collider is below the player
+                //ignore colliders if they are entities own colliders
+                if (collisionComponent.IsEntityCollider(hit.collider))
                 {
-                    isGrounded = true;
-                    break;
+                    continue;
+                }
+
+                if (hit)
+                {
+                    var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                    if (slopeAngle != collisionInfo.slopeAngle)
+                    {
+                        velocity.x = (hit.distance - skinWidth) * directionX;
+                        collisionInfo.slopeAngle = slopeAngle;
+
+                        break;
+                    }
+                }
+            }
+
+            
+        }
+    }
+
+    void ClimbSlope(ref Vector3 velocity, float slopeAngle)
+    {
+        var moveDistance = Mathf.Abs(velocity.x);
+        var climbVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+
+        if (velocity.y > climbVelocityY) return;
+        
+        velocity.y = climbVelocityY;
+        velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+        collisionInfo.below = true;
+        collisionInfo.climbingSlope = true;
+        collisionInfo.slopeAngle = slopeAngle;
+    }
+
+    void DescendSlope(ref Vector3 velocity)
+    {
+        var directionX = Mathf.Sign(velocity.x);
+
+        var rayOrigin = (directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
+        var hits = Physics2D.RaycastAll(rayOrigin, Vector2.down, Mathf.Infinity, collisionMask);
+
+        foreach (var hit in hits)
+        {
+            //ignore colliders if they are entities own colliders
+            if (collisionComponent.IsEntityCollider(hit.collider))
+            {
+                continue;
+            }
+
+            if (hit)
+            {
+                var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                if (slopeAngle != 0 && slopeAngle <= maxDescendAngle)
+                {
+                    if (Mathf.Sign(hit.normal.x) == directionX)
+                    {
+                        if (hit.distance - skinWidth <= Mathf.Tan(slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x))
+                        {
+                            var moveDistance = Mathf.Abs(velocity.x);
+                            var descendVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+
+                            velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+                            velocity.y -= descendVelocityY;
+
+                            collisionInfo.slopeAngle = slopeAngle;
+                            collisionInfo.descendingSlope = true;
+                            collisionInfo.below = true;
+
+                            break;
+                        }
+                    }
                 }
             }
         }
 
-        if (isGrounded && !wasGrounded)
-        {
-            // Player just landed
-            isJumping = false; // Reset jumping state on landing
-            verticalVelocity = 0f; // Stop vertical velocity to avoid bobbing
-            if (jumpBufferCounter > 0)
-            {
-                Jump(); // Trigger buffered jump when landing
-            }
-        }
+            
     }
 
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
+    void CalculateRaySpacing()
     {
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
-        }
+        var bounds = collisionComponent.GetMainPlayerColliderBounds();
+        bounds.Expand(skinWidth * -2);
 
-        Gizmos.color = Color.red; // Set the color for the box
+        horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
+        verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
 
-        // Calculate the box's position based on the player's position
-        Vector3 boxPosition = transform.position;
-
-        // Draw the wireframe box in the Scene view
-        Gizmos.DrawWireCube(boxPosition, colliderSize);
+        horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
+        verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
     }
 
-#endif*/
+    void UpdateRaycastOrigins()
+    {
+        var bounds = collisionComponent.GetMainPlayerColliderBounds();
+        bounds.Expand(skinWidth * -2);
 
+        raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
+        raycastOrigins.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
+        raycastOrigins.topleft = new Vector2(bounds.min.x, bounds.max.y);
+        raycastOrigins.topright = new Vector2(bounds.max.x, bounds.max.y);
+    }
 }

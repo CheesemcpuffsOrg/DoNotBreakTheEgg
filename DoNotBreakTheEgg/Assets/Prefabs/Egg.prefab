@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 2433748345124272763}
   - component: {fileID: 28718426000266360}
   - component: {fileID: 4976031343907318434}
+  - component: {fileID: 209267930390857747}
   m_Layer: 0
   m_Name: Egg
   m_TagString: Untagged
@@ -235,9 +236,9 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6805014060619456806}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -300,3 +301,18 @@ MonoBehaviour:
     mustHaveAny: []
     cannotHaveAny:
     - {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
+--- !u!114 &209267930390857747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805014060619456806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e075f6552658b4e4295cab956280dff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainEntityCollider: {fileID: 9040234461396159724}
+  allEntityColliders:
+  - {fileID: 9040234461396159724}

@@ -7,7 +7,7 @@ public class DeleteMe : MonoBehaviour
 
     [SerializeField] MonoEntity objectToHold;
 
-    [SerializeField] Transform holdAnchor;
+    [SerializeField] AnchorScriptableObject holdAnchor;
 
     [Header("Tags")]
     [SerializeField] TagScriptableObject isHeldTag;
@@ -16,6 +16,6 @@ public class DeleteMe : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HoldEntityManager.Instance.AddHeldEntity(player, objectToHold, holdAnchor);
+        HoldEntityManager.Instance.AddHeldEntity(player, objectToHold, player.GetComponent<IGameObjectComponent>().GetAnchor(holdAnchor));
     }
 }
