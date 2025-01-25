@@ -17,9 +17,9 @@ public class InputController : MonoBehaviour
     public event Action MoveEventCancelled;
     public event Action JumpEventPerformed;
 
-    private void Awake()
+    public void InitializeControls(IInputActionCollection2 inputActions)
     {
-        controls = new();
+        controls = (Controls)inputActions;
 
         controls.PlayerControls.Throw.started += ThrowStarted;
         controls.PlayerControls.Throw.performed += ThrowPerformed;
@@ -65,13 +65,26 @@ public class InputController : MonoBehaviour
         MoveEventCancelled?.Invoke();
     }
 
+    public void EnableAllInputs()
+    {
+        controls.Enable();
+    }
+
+    public void DisableAllInputs()
+    {
+        controls.Disable();
+    }
+
     private void OnEnable()
     {
-        controls.Enable();  
+        if(controls != null)
+        {
+            EnableAllInputs();
+        }  
     }
 
     private void OnDisable()
     {
-        controls.Disable();
+        DisableAllInputs();
     }
 }

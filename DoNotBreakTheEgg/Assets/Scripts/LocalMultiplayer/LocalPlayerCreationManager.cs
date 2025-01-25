@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
 
 public class LocalPlayerCreationManager : MonoBehaviour
 {
@@ -23,8 +21,8 @@ public class LocalPlayerCreationManager : MonoBehaviour
     /*[SerializeField] string startGameActionGamepad = "<Gamepad>/buttonWest";
     [SerializeField] string startGameActionKeyboard = "<Keyboard>/space";*/
 
-    public event Action<(IInputActionCollection2, InputUser)> UserCreated;
-    public event Action<InputUser> UserDeleted;
+    public event Action<InputActionCollectionAndUser> UserCreated;
+    public event Action<int> UserDeleted;
     public event Action AllUsersDeleted;
 
     InputAction joinAction;
@@ -50,7 +48,6 @@ public class LocalPlayerCreationManager : MonoBehaviour
         leaveAction.AddBinding(leaveActionKeyboard);
         leaveAction.started += LeaveLobby;
 
-        EnableActions();
     }
 
     private void JoinLobby(InputAction.CallbackContext context)
@@ -62,11 +59,9 @@ public class LocalPlayerCreationManager : MonoBehaviour
             return;
         }
 
-        if (!UserDeviceMappingUtil.TryCreateUser(device, GeneratedInputActionAsset, out var newUserInputActions)) return;
+        if (!UserDeviceMappingUtil.TryCreateUser(device, GeneratedInputActionAsset, out var mapping)) return;
 
-        var inputUser = InputUser.FindUserPairedToDevice(device).Value;
-
-        UserCreated?.Invoke((newUserInputActions, inputUser));
+        UserCreated?.Invoke((mapping));
 
         joinedCount++;
 
@@ -89,13 +84,9 @@ public class LocalPlayerCreationManager : MonoBehaviour
             return;
         }
 
-        var inputUser = InputUser.FindUserPairedToDevice(device).Value;
+        if (!UserDeviceMappingUtil.TryDeleteUser(device, out var index)) return;
 
-        var userID = InputUser.FindUserPairedToDevice(device).Value.id;
-
-        if (!UserDeviceMappingUtil.TryDeleteUser(device)) return;
-
-        UserDeleted?.Invoke(inputUser);
+        UserDeleted?.Invoke(index);
 
         joinedCount--;
 
@@ -158,6 +149,11 @@ public class LocalPlayerCreationManager : MonoBehaviour
         if (device == null) return;
 
         disabledLeaveActions.Add(device);
+    }
+
+    private void OnEnable()
+    {
+        EnableActions();
     }
 
     void OnDisable()

@@ -5,9 +5,13 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     [SerializeField] InputController controller;
-    [SerializeField] MonoEntity playerEntity;
 
-    IEntity entity => playerEntity.GetComponent<IEntity>();
+    IEntity entity;
+
+    public void SetEntity(IEntity entity)
+    {
+        this.entity = entity;
+    }
 
     private void ThrowEventStarted()
     {

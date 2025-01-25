@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 422898785289315171}
   - component: {fileID: 5291628570717146814}
   m_Layer: 7
-  m_Name: Player
+  m_Name: Player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,9 +417,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352a8715dec95e54d943fb9b8d4ef9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeight: 2
+  jumpHeight: 2.5
   timeToJumpApex: 0.3
   moveSpeed: 10
+  maxClimbAngle: 80
+  maxDescendAngle: 80
   isGroundedTag: {fileID: 11400000, guid: 2088cac3207fc3d4fad1e1519fe2a3e2, type: 2}
   jumpFilter:
     mustHaveAll: []

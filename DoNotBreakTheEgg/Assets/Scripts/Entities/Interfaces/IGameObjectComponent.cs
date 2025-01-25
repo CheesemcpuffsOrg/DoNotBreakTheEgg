@@ -12,7 +12,7 @@ public interface IGameObjectComponent : IEntityComponent
 
     public void SetParent(Transform parentTransform);
 
-    public void Destroy(float time);
+    public void Destroy(float time = 0);
 
     public Transform GetAnchor(AnchorScriptableObject anchor);
 }

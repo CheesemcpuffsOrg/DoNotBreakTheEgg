@@ -1,21 +1,35 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class DeleteMe : MonoBehaviour
 {
 
-    [SerializeField] MonoEntity player;
+    [SerializeField] string resetGameKeyboard = "<Keyboard>/enter";
+    [SerializeField] string resetGameGamepad = "<Gamepad>/start";
 
-    [SerializeField] MonoEntity objectToHold;
+    InputAction resetAction;
 
-    [SerializeField] AnchorScriptableObject holdAnchor;
+    bool reset;
 
-    [Header("Tags")]
-    [SerializeField] TagScriptableObject isHeldTag;
-    [SerializeField] TagScriptableObject isHoldingTag;
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        HoldEntityManager.Instance.AddHeldEntity(player, objectToHold, player.GetComponent<IGameObjectComponent>().GetAnchor(holdAnchor));
+        resetAction = new InputAction(binding: resetGameKeyboard);
+        resetAction.AddBinding(resetGameGamepad);
+        resetAction.started += ResetGame;
+
+        resetAction.Enable();
+
+        if (reset) return;
+
+        UserDeviceMappingUtil.DeleteAllUsers();
+
+        reset = true;
+    }
+
+    void ResetGame(InputAction.CallbackContext context)
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
