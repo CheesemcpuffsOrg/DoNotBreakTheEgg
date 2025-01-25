@@ -205,22 +205,21 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
             Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
 
-            foreach(var hit in hits)
+            foreach (var hit in hits)
             {
-                //ignore colliders if they are entities own colliders
+                // Ignore colliders if they are the entity's own colliders
                 if (collisionComponent.IsEntityCollider(hit.collider))
                 {
                     continue;
                 }
 
-                // Check if the raycast hit something
                 if (hit)
                 {
                     var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
+                    // Handle slope climbing logic
                     if (i == 0 && slopeAngle <= maxClimbAngle)
                     {
-
                         if (collisionInfo.descendingSlope)
                         {
                             collisionInfo.descendingSlope = false;
@@ -229,31 +228,43 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
                         var distanceToSlopeStart = 0f;
 
-                        if(slopeAngle != collisionInfo.oldSlopeAngle)
+                        // Smoother transition when slope angle changes
+                        if (slopeAngle != collisionInfo.oldSlopeAngle)
                         {
                             distanceToSlopeStart = hit.distance - skinWidth;
                             velocity.x -= distanceToSlopeStart * directionX;
+
+                            // Gradual reset of slope data when reaching flat ground
+                            if (slopeAngle == 0)
+                            {
+                                collisionInfo.climbingSlope = false;
+                                collisionInfo.slopeAngle = 0;
+                            }
                         }
 
                         ClimbSlope(ref velocity, slopeAngle);
                         velocity.x += distanceToSlopeStart * directionX;
                     }
 
-                    if(!collisionInfo.climbingSlope || slopeAngle > maxClimbAngle)
+                    // Adjust for horizontal collisions when not climbing slopes
+                    if (!collisionInfo.climbingSlope || slopeAngle > maxClimbAngle)
                     {
                         velocity.x = (hit.distance - skinWidth) * directionX;
                         rayLength = hit.distance;
 
-                        if (collisionInfo.climbingSlope)
+                        // Smooth out vertical adjustment when transitioning to flat ground
+                        if (collisionInfo.climbingSlope && slopeAngle == 0)
                         {
                             velocity.y = Mathf.Tan(collisionInfo.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x);
+                            collisionInfo.climbingSlope = false;
+                            collisionInfo.slopeAngle = 0;
                         }
 
                         collisionInfo.left = directionX == -1;
                         collisionInfo.right = directionX == 1;
-                    }   
+                    }
                 }
-            }   
+            }
         }
     }
 
@@ -273,11 +284,8 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
             foreach (var hit in hits)
             {
                 //ignore colliders if they are entities own colliders
-                if (collisionComponent.IsEntityCollider(hit.collider))
-                {
-                    continue;
-                }
-                
+                if (collisionComponent.IsEntityCollider(hit.collider)) continue;
+
                 // Process the valid hit
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
@@ -306,10 +314,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
             {
 
                 //ignore colliders if they are entities own colliders
-                if (collisionComponent.IsEntityCollider(hit.collider))
-                {
-                    continue;
-                }
+                if (collisionComponent.IsEntityCollider(hit.collider)) continue;
 
                 if (hit)
                 {
@@ -322,9 +327,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                         break;
                     }
                 }
-            }
-
-            
+            }     
         }
     }
 
@@ -352,10 +355,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         foreach (var hit in hits)
         {
             //ignore colliders if they are entities own colliders
-            if (collisionComponent.IsEntityCollider(hit.collider))
-            {
-                continue;
-            }
+            if (collisionComponent.IsEntityCollider(hit.collider)) continue;
 
             if (hit)
             {
@@ -381,9 +381,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                     }
                 }
             }
-        }
-
-            
+        }        
     }
 
     void CalculateRaySpacing()
