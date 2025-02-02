@@ -62,9 +62,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
         
         HoldEntityManager.Instance.RemoveHeldEntity(entity);
 
-        var velocity = powerCurrent * (Vector2)launchPoint.up;
-
-        ThrowEntityManager.Instance.AddEntityToThrow(heldEntity, new ThrowEntityManager.ThrowData(velocity, -9.81f, heldEntity.GetEntityComponent<IGameObjectComponent>().GetTransform()));
+        heldEntity.GetEntityComponent<IMovementComponent>().Launch(powerCurrent, (Vector2)launchPoint.up);
     }
 
     private void ChargeShot()
@@ -89,9 +87,6 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
             || !catchableEntityFilter.PassTagFilterCheck(collisionEntity.GetEntityComponent<IGameObjectComponent>()?.GetTransform())
             || !catchingFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>()?.GetTransform()))
             return;
-        
-        if(ThrowEntityManager.Instance.IsEntityBeingThrown(collisionEntity))
-            ThrowEntityManager.Instance.RemoveThrownEntity(collisionEntity);
             
         HoldEntityManager.Instance.AddHeldEntity(entity, collisionEntity, holdAnchor);
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class DeleteMe : MonoBehaviour
+public class TestDropInDropOut : MonoBehaviour
 {
 
     [SerializeField] string resetGameKeyboard = "<Keyboard>/enter";
@@ -26,6 +26,9 @@ public class DeleteMe : MonoBehaviour
         UserDeviceMappingUtil.DeleteAllUsers();
 
         reset = true;
+
+
+
     }
 
     void ResetGame(InputAction.CallbackContext context)

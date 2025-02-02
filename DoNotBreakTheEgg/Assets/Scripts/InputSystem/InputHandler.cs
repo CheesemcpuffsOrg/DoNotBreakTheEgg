@@ -35,7 +35,7 @@ public class InputHandler : MonoBehaviour
 
     private void MoveEventPerformed(Vector2 position)
     {
-        entity.GetEntityComponent<IMovementComponent>().SetTarget(position);
+        entity.GetEntityComponent<IMovementComponent>().Move(position);
     }
 
     private void MoveEventCancelled()

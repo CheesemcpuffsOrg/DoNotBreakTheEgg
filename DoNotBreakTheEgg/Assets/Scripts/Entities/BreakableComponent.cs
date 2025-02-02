@@ -23,7 +23,7 @@ public class BreakableComponent : MonoBehaviour, IBreakableComponent
         if (EntityCollisionService.TryGetEntity(collision.collider, out IEntity collisionEntity) && !breakFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
             return;
 
-        ThrowEntityManager.Instance.RemoveThrownEntity(entity);
+        entity.GetEntityComponent<IMovementComponent>().DisableGravity();
 
         entity.GetEntityComponent<ITagComponent>().AddTag(isDeadTag);
 

@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 28718426000266360}
   - component: {fileID: 4976031343907318434}
   - component: {fileID: 209267930390857747}
+  - component: {fileID: 2092565735228315554}
   m_Layer: 0
   m_Name: Egg
   m_TagString: Untagged
@@ -228,6 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fee184e18eae55e4093b926136e1f4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anchorMappings: []
 --- !u!50 &954366866584538315
 Rigidbody2D:
   serializedVersion: 4
@@ -316,3 +318,37 @@ MonoBehaviour:
   mainEntityCollider: {fileID: 9040234461396159724}
   allEntityColliders:
   - {fileID: 9040234461396159724}
+--- !u!114 &2092565735228315554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805014060619456806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 352a8715dec95e54d943fb9b8d4ef9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpHeight: 2.5
+  timeToJumpApex: 0.3
+  moveSpeed: 10
+  maxClimbAngle: 80
+  maxDescendAngle: 80
+  isGroundedTag: {fileID: 11400000, guid: 2088cac3207fc3d4fad1e1519fe2a3e2, type: 2}
+  jumpFilter:
+    mustHaveAll: []
+    mustHaveAny: []
+    cannotHaveAny:
+    - {fileID: 11400000, guid: 342baf6bc2d8e544d9a1bd8890fa61d5, type: 2}
+    - {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
+  moveFilter:
+    mustHaveAll: []
+    mustHaveAny: []
+    cannotHaveAny:
+    - {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
+  horizontalRayCount: 4
+  verticalRayCount: 4
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 8

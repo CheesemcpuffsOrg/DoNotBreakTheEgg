@@ -44,11 +44,13 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float maxClimbAngle = 80;
     [SerializeField] float maxDescendAngle = 80;
-    float accelerationTimeAirborne = 0.2f;
-    float accelerationTimeGrounded = 0.1f;
-    
+    [SerializeField] float accelerationTimeAirborne = 0.2f;
+    [SerializeField] float accelerationTimeGrounded = 0.1f;
+    [SerializeField] bool gravityEnabledOnStart;
 
     float gravity;
+    bool gravityEnabled;
+
     float jumpVelocity;
     Vector3 velocity;
     float VelocityXSmoothing;
@@ -78,6 +80,12 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     Vector2 input;
     bool jumpFired;
 
+
+    bool launchFired;
+    float launchBuffer = 0.1f;
+    float launchBufferCounter;
+
+
     IEntity entity;
     ICollisionComponent collisionComponent;
     ITagComponent tagComponent;
@@ -94,25 +102,25 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         gravity = (-2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+
+        gravityEnabled = gravityEnabledOnStart;
     }
 
     private void Update()
     {
+        IsCeilinged();
 
-        CheckIfGrounded();
-
-        if (collisionInfo.above || collisionInfo.below)
-        {
-            velocity.y = 0;
-        }
+        IsGrounded();
 
         ProcessJump();
 
-        var targetVelocityX = input.x * moveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref VelocityXSmoothing, (collisionInfo.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
-        velocity.y += gravity * Time.deltaTime;
+        ProcessLaunch();
 
-        Move(velocity * Time.deltaTime);
+        CalculateMovementVelocity();
+
+        Gravity();
+
+        Move(velocity * Time.deltaTime);  
     }
 
     public void Jump()
@@ -123,11 +131,19 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         jumpBufferCounter = jumpBufferTime;
     }
 
-    public void SetTarget(Vector2 target)
+    public void Move(Vector2 target)
     {
         if (!moveFilter.PassTagFilterCheck(gameObjectComponent.GetTransform())) return;
 
         input = target;
+    }
+
+    public void Launch(float power, Vector2 direction)
+    {
+        // Ensure we're working with a Vector3 and keeping Z unchanged
+        velocity += new Vector3(direction.x, direction.y, 0) * power;
+        launchFired = true;
+        launchBufferCounter = launchBuffer;
     }
 
     public void StopMovement()
@@ -135,15 +151,66 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         input = Vector2.zero;
     }
 
-    private void CheckIfGrounded()
+    public void EnableGravity()
     {
+        gravityEnabled = true;
+    }
+    public void DisableGravity()
+    {
+        gravityEnabled = false;
+    }
+
+    private void IsGrounded()
+    {
+        if (launchFired)
+            return;
+
         if (collisionInfo.below)
         {
+            velocity.y = 0;
             tagComponent.AddTag(isGroundedTag);
         }
         else
         {
             tagComponent.RemoveTag(isGroundedTag);
+        }
+    }
+
+    private void IsCeilinged()
+    {
+        if (collisionInfo.above)
+        {
+            velocity.y = 0;
+        }
+    }
+
+    private void CalculateMovementVelocity()
+    {
+        if(launchFired) 
+            return;
+
+        var targetVelocityX = input.x * moveSpeed;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref VelocityXSmoothing, (collisionInfo.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+    }
+
+    private void Gravity()
+    {
+        if(!gravityEnabled)
+            return;
+
+        velocity.y += gravity * Time.deltaTime;
+    }
+
+    private void ProcessLaunch()
+    {
+        if (launchFired)
+        {
+            launchBufferCounter -= Time.deltaTime;
+            if(launchBufferCounter < 0 && (collisionInfo.below || collisionInfo.left || collisionInfo.right))
+            {
+                velocity.x = 0;
+                launchFired = false;
+            }
         }
     }
 
@@ -173,20 +240,11 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         collisionInfo.Reset();
         collisionInfo.velocityOld = velocity;
 
-        if(velocity.y < 0)
-        {
-            DescendSlope(ref velocity);
-        }
+        DescendSlope(ref velocity);
 
-        if (velocity.x != 0)
-        {
-            HorizontalCollisions(ref velocity);
-        }
+        HorizontalCollisions(ref velocity);
 
-        if (velocity.y != 0)
-        {
-            VerticalCollisions(ref velocity);
-        }
+        VerticalCollisions(ref velocity);
 
         transform.Translate(velocity);
         Physics2D.SyncTransforms(); //sync all child objects with parent object
@@ -194,6 +252,9 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void HorizontalCollisions(ref Vector3 velocity)
     {
+        if(velocity.x == 0)
+            return;
+
         var directionX = Mathf.Sign(velocity.x);
         var rayLength = Mathf.Abs(velocity.x) + skinWidth;
 
@@ -270,6 +331,9 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void VerticalCollisions(ref Vector3 velocity)
     {
+        if(velocity.y == 0)
+            return;
+
         var directionY = Mathf.Sign(velocity.y);
         var rayLength = Mathf.Abs(velocity.y) + skinWidth;
 
@@ -306,11 +370,11 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         {
             var directionX = Mathf.Sign(velocity.x);
             rayLength = Mathf.Abs(velocity.x) + skinWidth;
-            var rayOrigin = ((directionX == -1)?raycastOrigins.bottomLeft : raycastOrigins.bottomRight) + Vector2.up * velocity.y;
+            var rayOrigin = ((directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight) + Vector2.up * velocity.y;
 
             var hits = Physics2D.RaycastAll(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
-            foreach (var hit in hits) 
+            foreach (var hit in hits)
             {
 
                 //ignore colliders if they are entities own colliders
@@ -327,7 +391,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                         break;
                     }
                 }
-            }     
+            }
         }
     }
 
@@ -347,6 +411,10 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void DescendSlope(ref Vector3 velocity)
     {
+
+        if(velocity.y >= 0) 
+            return;
+
         var directionX = Mathf.Sign(velocity.x);
 
         var rayOrigin = (directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
@@ -386,8 +454,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void CalculateRaySpacing()
     {
-        var bounds = collisionComponent.GetMainPlayerColliderBounds();
-        bounds.Expand(skinWidth * -2);
+        var bounds = GetBounds();
 
         horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
         verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
@@ -398,12 +465,18 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void UpdateRaycastOrigins()
     {
-        var bounds = collisionComponent.GetMainPlayerColliderBounds();
-        bounds.Expand(skinWidth * -2);
+        var bounds = GetBounds();
 
         raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
         raycastOrigins.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
         raycastOrigins.topleft = new Vector2(bounds.min.x, bounds.max.y);
         raycastOrigins.topright = new Vector2(bounds.max.x, bounds.max.y);
+    }
+
+    private Bounds GetBounds()
+    {
+        var bounds = collisionComponent.GetMainPlayerColliderBounds();
+        bounds.Expand(skinWidth * -2);
+        return bounds;
     }
 }
