@@ -335,6 +335,9 @@ MonoBehaviour:
   moveSpeed: 10
   maxClimbAngle: 80
   maxDescendAngle: 80
+  accelerationTimeAirborne: 0.2
+  accelerationTimeGrounded: 0.1
+  gravityEnabledOnStart: 1
   isGroundedTag: {fileID: 11400000, guid: 2088cac3207fc3d4fad1e1519fe2a3e2, type: 2}
   jumpFilter:
     mustHaveAll: []

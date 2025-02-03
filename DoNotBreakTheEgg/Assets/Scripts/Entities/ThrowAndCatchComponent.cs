@@ -62,7 +62,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
         
         HoldEntityManager.Instance.RemoveHeldEntity(entity);
 
-        heldEntity.GetEntityComponent<IMovementComponent>().Launch(powerCurrent, (Vector2)launchPoint.up);
+        heldEntity.GetEntityComponent<IMovementComponent>().Throw(powerCurrent, (Vector2)launchPoint.up);
     }
 
     private void ChargeShot()

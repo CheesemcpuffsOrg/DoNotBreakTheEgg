@@ -46,7 +46,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [SerializeField] float maxDescendAngle = 80;
     [SerializeField] float accelerationTimeAirborne = 0.2f;
     [SerializeField] float accelerationTimeGrounded = 0.1f;
-    [SerializeField] bool gravityEnabledOnStart;
+    [SerializeField] bool gravityEnabledOnStart = true;
 
     float gravity;
     bool gravityEnabled;
@@ -62,7 +62,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [SerializeField] TagScriptableObject isGroundedTag;
     [SerializeField] TagFilter jumpFilter;
     [SerializeField] TagFilter moveFilter;
-    //is grounded filter
 
     [Header("Raycasting")]
     [SerializeField] int horizontalRayCount = 4;
@@ -73,18 +72,14 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     float horizontalRaySpacing;
     float verticalRaySpacing;
     
-
     RaycastOrigins raycastOrigins;
     CollisionInfo collisionInfo;
 
     Vector2 input;
     bool jumpFired;
 
-
-    bool launchFired;
-    float launchBuffer = 0.1f;
-    float launchBufferCounter;
-
+    bool throwFired;
+    int frameSkipper = 1;
 
     IEntity entity;
     ICollisionComponent collisionComponent;
@@ -114,9 +109,9 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         ProcessJump();
 
-        ProcessLaunch();
+        ProcessThrow();
 
-        CalculateMovementVelocity();
+        CalculateInputVelocity();
 
         Gravity();
 
@@ -138,12 +133,11 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         input = target;
     }
 
-    public void Launch(float power, Vector2 direction)
+    public void Throw(float power, Vector2 direction)
     {
-        // Ensure we're working with a Vector3 and keeping Z unchanged
         velocity += new Vector3(direction.x, direction.y, 0) * power;
-        launchFired = true;
-        launchBufferCounter = launchBuffer;
+        frameSkipper = 1;
+        throwFired = true;
     }
 
     public void StopMovement()
@@ -162,7 +156,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     private void IsGrounded()
     {
-        if (launchFired)
+        if(throwFired) 
             return;
 
         if (collisionInfo.below)
@@ -184,9 +178,9 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         }
     }
 
-    private void CalculateMovementVelocity()
+    private void CalculateInputVelocity()
     {
-        if(launchFired) 
+        if (throwFired)
             return;
 
         var targetVelocityX = input.x * moveSpeed;
@@ -201,15 +195,21 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         velocity.y += gravity * Time.deltaTime;
     }
 
-    private void ProcessLaunch()
+    private void ProcessThrow()
     {
-        if (launchFired)
-        {
-            launchBufferCounter -= Time.deltaTime;
-            if(launchBufferCounter < 0 && (collisionInfo.below || collisionInfo.left || collisionInfo.right))
+        if (throwFired)
+        {   
+            if(frameSkipper > 0)
             {
+                frameSkipper--;
+                return;
+            }
+
+            if(collisionInfo.below || collisionInfo.left || collisionInfo.right)
+            {
+
                 velocity.x = 0;
-                launchFired = false;
+                throwFired = false;
             }
         }
     }

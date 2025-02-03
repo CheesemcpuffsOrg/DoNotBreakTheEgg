@@ -10,7 +10,7 @@ public interface IMovementComponent : IEntityComponent
 
     public void Jump();
 
-    public void Launch(float power, Vector2 direction);
+    public void Throw(float power, Vector2 direction);
 
     public void EnableGravity();
     public void DisableGravity();

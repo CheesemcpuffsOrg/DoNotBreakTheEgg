@@ -389,8 +389,6 @@ MonoBehaviour:
   - {fileID: 175828963205910518, guid: b5be0213d5d08a4419015b501e888ace, type: 3}
   inputControllerPrefab: {fileID: 400698465901904917, guid: 5a70bd30dd9897d4e9237a61a51d32c4, type: 3}
   spawnpoint: {fileID: 1524075613}
-  entityToHoldObj: {fileID: 1268558436}
-  holdAnchor: {fileID: 11400000, guid: c189e19764a2ef44bbb9bcd29b62a7df, type: 2}
 --- !u!1 &512330471
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,11 +1786,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHeldTag: {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
   isHoldingTag: {fileID: 11400000, guid: 342baf6bc2d8e544d9a1bd8890fa61d5, type: 2}
---- !u!1 &1268558436 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 175828963205910518, guid: ac455362dd81af547ab8803b141bb556, type: 3}
-  m_PrefabInstance: {fileID: 1415384112}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1307455621
 GameObject:
   m_ObjectHideFlags: 0
@@ -3540,11 +3533,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7968065028738994202, guid: 23d6046cdea14a348b43dc85cf5dd9aa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.49
+      value: -14.96
       objectReference: {fileID: 0}
     - target: {fileID: 7968065028738994202, guid: 23d6046cdea14a348b43dc85cf5dd9aa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.49
+      value: 5.46
       objectReference: {fileID: 0}
     - target: {fileID: 7968065028738994202, guid: 23d6046cdea14a348b43dc85cf5dd9aa, type: 3}
       propertyPath: m_LocalPosition.z
