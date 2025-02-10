@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 422898785289315171}
   - component: {fileID: 5291628570717146814}
   - component: {fileID: 3619361875597409297}
+  - component: {fileID: 4567936215249529566}
   m_Layer: 7
   m_Name: Player1
   m_TagString: Untagged
@@ -423,6 +424,10 @@ MonoBehaviour:
   moveSpeed: 10
   maxClimbAngle: 80
   maxDescendAngle: 80
+  renderer: {fileID: 4848433930548909381}
+  controller: {fileID: 4567936215249529566}
+  idle: Idle
+  walk: Walk
   isGroundedTag: {fileID: 11400000, guid: 2088cac3207fc3d4fad1e1519fe2a3e2, type: 2}
   jumpFilter:
     mustHaveAll: []
@@ -435,8 +440,6 @@ MonoBehaviour:
     mustHaveAny: []
     cannotHaveAny:
     - {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
-  soundComponentObj: {fileID: 5382001462561511537}
-  jumpSfx: {fileID: 11400000, guid: cb85adf4af9cf6f469273aad79364c5e, type: 2}
   horizontalRayCount: 4
   verticalRayCount: 4
   collisionMask:
@@ -470,6 +473,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99070df2e7273984eac969fea8249fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4567936215249529566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5382001462561511537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3fafe65204294747af87f407a724555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 4865591031574529091}
 --- !u!1 &6447130475722892646
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,6 +721,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5093136107009673492}
   - component: {fileID: 4848433930548909381}
+  - component: {fileID: 4865591031574529091}
   m_Layer: 7
   m_Name: PlayerView
   m_TagString: Untagged
@@ -779,3 +796,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4865591031574529091
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8121686758647809369}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 581574e66dd995245934fe5a5699c660, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

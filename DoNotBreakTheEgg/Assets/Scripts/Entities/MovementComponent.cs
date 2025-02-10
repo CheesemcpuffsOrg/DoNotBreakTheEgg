@@ -56,6 +56,14 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
 
+    [Header("Animation")]
+    [SerializeField] SpriteRenderer renderer;
+    [SerializeField] AnimationController controller;
+    [SerializeField] string idle = "Idle";
+    [SerializeField] string walk = "Walk";
+
+
+
     [Header("Tags")]
     [SerializeField] TagScriptableObject isGroundedTag;
     [SerializeField] TagFilter jumpFilter;
@@ -85,6 +93,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     private void Start()
     {
+
         entity = GetComponent<IEntity>();
         collisionComponent = entity.GetEntityComponent<ICollisionComponent>();
         tagComponent = entity.GetEntityComponent<ITagComponent>();
@@ -98,6 +107,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     private void Update()
     {
+        
 
         CheckIfGrounded();
 
@@ -111,6 +121,24 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         var targetVelocityX = input.x * moveSpeed;
         velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref VelocityXSmoothing, (collisionInfo.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
         velocity.y += gravity * Time.deltaTime;
+
+        Debug.Log(input);
+
+        if (input.x > 0.01f) 
+        {
+            controller.PlayAnimation(walk);
+            renderer.flipX = false;
+        }
+        else if(input.x < -0.01f)
+        {
+            controller.PlayAnimation(walk);
+            renderer.flipX = true;
+        }
+
+        if (input == Vector2.zero)
+        {
+            controller.PlayAnimation(idle);
+        }
 
         Move(velocity * Time.deltaTime);
     }
