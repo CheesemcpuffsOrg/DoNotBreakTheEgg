@@ -31,7 +31,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         }
     }
 
-    public struct RaycastOrigins
+    private struct RaycastOrigins
     {
         public Vector2 topleft;
         public Vector2 topright;
@@ -407,7 +407,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void DescendSlope(ref Vector3 velocity)
     {
-
         if(velocity.y >= 0) 
             return;
 
