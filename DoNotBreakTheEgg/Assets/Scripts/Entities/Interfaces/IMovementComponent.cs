@@ -4,6 +4,8 @@ using UnityEngine;
 
 public interface IMovementComponent : IEntityComponent
 {
+    Vector3 Velocity { get; }
+
     public void Move(Vector2 position);
 
     public void StopMovement();

@@ -39,20 +39,15 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         public Vector2 bottomRight;
     }
 
-    [SerializeField] float jumpHeight = 4;
-    [SerializeField] float timeToJumpApex = 0.4f;
-    [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float maxClimbAngle = 80;
-    [SerializeField] float maxDescendAngle = 80;
-    [SerializeField] float accelerationTimeAirborne = 0.2f;
-    [SerializeField] float accelerationTimeGrounded = 0.1f;
-    [SerializeField] bool gravityEnabledOnStart = true;
+    [SerializeField] EntityDataScriptableObject data;
 
     float gravity;
     bool gravityEnabled;
 
     float jumpVelocity;
+    
     Vector3 velocity;
+    public Vector3 Velocity => velocity;
     float VelocityXSmoothing;
 
     float jumpBufferTime = 0.2f;
@@ -95,10 +90,10 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         CalculateRaySpacing();
 
-        gravity = (-2 * jumpHeight) / Mathf.Pow(timeToJumpApex, 2);
-        jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
+        gravity = (-2 * data.JumpHeight) / Mathf.Pow(data.TimeToJumpApex, 2);
+        jumpVelocity = Mathf.Abs(gravity) * data.TimeToJumpApex;
 
-        gravityEnabled = gravityEnabledOnStart;
+        gravityEnabled = data.GravityEnabledOnStart;
     }
 
     private void Update()
@@ -183,8 +178,8 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         if (throwFired)
             return;
 
-        var targetVelocityX = input.x * moveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref VelocityXSmoothing, (collisionInfo.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+        var targetVelocityX = input.x * data.MoveSpeed;
+        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref VelocityXSmoothing, (collisionInfo.below) ? data.AccelerationTimeGrounded : data.AccelerationTimeAirborne);
     }
 
     private void Gravity()
@@ -199,6 +194,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     {
         if (throwFired)
         {   
+            //skip frame incase entity is already grounded
             if(frameSkipper > 0)
             {
                 frameSkipper--;
@@ -279,7 +275,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                     var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
 
                     // Handle slope climbing logic
-                    if (i == 0 && slopeAngle <= maxClimbAngle)
+                    if (i == 0 && slopeAngle <= data.MaxClimbAngle)
                     {
                         if (collisionInfo.descendingSlope)
                         {
@@ -308,7 +304,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                     }
 
                     // Adjust for horizontal collisions when not climbing slopes
-                    if (!collisionInfo.climbingSlope || slopeAngle > maxClimbAngle)
+                    if (!collisionInfo.climbingSlope || slopeAngle > data.MaxClimbAngle)
                     {
                         velocity.x = (hit.distance - skinWidth) * directionX;
                         rayLength = hit.distance;
@@ -428,7 +424,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
             if (hit)
             {
                 var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-                if (slopeAngle != 0 && slopeAngle <= maxDescendAngle)
+                if (slopeAngle != 0 && slopeAngle <= data.MaxDescendAngle)
                 {
                     if (Mathf.Sign(hit.normal.x) == directionX)
                     {

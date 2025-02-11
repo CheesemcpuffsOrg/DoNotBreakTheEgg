@@ -418,14 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352a8715dec95e54d943fb9b8d4ef9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpHeight: 2.5
-  timeToJumpApex: 0.3
-  moveSpeed: 10
-  maxClimbAngle: 80
-  maxDescendAngle: 80
-  accelerationTimeAirborne: 0.2
-  accelerationTimeGrounded: 0.1
-  gravityEnabledOnStart: 1
+  data: {fileID: 11400000, guid: c06d18459a1ea8e4193809b8f44085ca, type: 2}
   isGroundedTag: {fileID: 11400000, guid: 2088cac3207fc3d4fad1e1519fe2a3e2, type: 2}
   jumpFilter:
     mustHaveAll: []
