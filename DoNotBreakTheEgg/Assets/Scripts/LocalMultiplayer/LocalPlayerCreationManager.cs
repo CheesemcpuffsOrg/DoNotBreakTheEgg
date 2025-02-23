@@ -18,9 +18,6 @@ public class LocalPlayerCreationManager : MonoBehaviour
     [SerializeField] string leaveActionGamepad = "<Gamepad>/buttonEast";
     [SerializeField] string leaveActionKeyboard = "<Keyboard>/escape";
 
-    /*[SerializeField] string startGameActionGamepad = "<Gamepad>/buttonWest";
-    [SerializeField] string startGameActionKeyboard = "<Keyboard>/space";*/
-
     public event Action<InputActionCollectionAndUser> UserCreated;
     public event Action<int> UserDeleted;
     public event Action AllUsersDeleted;
