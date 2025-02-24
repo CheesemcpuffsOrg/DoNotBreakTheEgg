@@ -8,6 +8,20 @@ public class PlayerAnimations : MonoBehaviour
     IEntity entity;
     IMovementComponent movementComponent;
 
+    [SerializeField] AnimationController2D controller;
+    [SerializeField] SpriteRenderer spriteRenderer;
+
+    [Header("Animations")]
+    [SerializeField] string idleAnimation;
+    [SerializeField] string movementAnimation;
+    [SerializeField] string jumpAnimation;
+    [SerializeField] string fallAnimation;
+
+    [Header("Tags")]
+    [SerializeField] TagFilter groundedFilter;
+
+    bool isMoving;
+
     private void Start()
     {
         entity = GetComponent<IEntity>();
@@ -15,4 +29,53 @@ public class PlayerAnimations : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        isMoving = movementComponent.Velocity.magnitude > 2f;
+
+        FlipSpriteDirection();
+
+        if (groundedFilter.PassTagFilterCheck(transform))
+        {
+            if (!isMoving)
+            {
+                if (!controller.IsAnimationPlaying(idleAnimation))
+                {
+                    controller.PlayAnimation(idleAnimation);
+                }
+            }
+            else
+            {
+                if (!controller.IsAnimationPlaying(movementAnimation))
+                {
+                    controller.PlayAnimation(movementAnimation);
+                }
+            }
+        }
+        else
+        {
+            if (movementComponent.Velocity.normalized.y > 0)
+            {
+                controller.PlayAnimation(jumpAnimation);
+            }
+            else if (movementComponent.Velocity.normalized.y < 0)
+            {
+                controller.PlayAnimation(fallAnimation);
+            }
+        }
+
+    }
+
+    private void FlipSpriteDirection()
+    {
+        if (movementComponent.Velocity.normalized.x > 0)
+        {
+            spriteRenderer.flipX = false;
+
+        }
+        else if (movementComponent.Velocity.normalized.x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+    }
 }

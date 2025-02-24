@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationController : MonoBehaviour
+public class AnimationController2D : MonoBehaviour
 {
     [System.Serializable]
     private class CurrentlyPlayingAnimations
@@ -17,15 +17,6 @@ public class AnimationController : MonoBehaviour
 
     public void PlayAnimation(string animation, float transitionTime = 0f, int layer = 0)
     {
-        
-        //check if animation is already playing
-        for(int i = 0; i < currentlyPlayingAnimations.Count; i++)
-        {
-            if (animation == currentlyPlayingAnimations[i].animation && layer == currentlyPlayingAnimations[i].layer)
-            {
-                return;
-            }
-        }
 
         //remove the previous layer reference
         for (int i = 0; i < currentlyPlayingAnimations.Count; i++)
@@ -45,6 +36,19 @@ public class AnimationController : MonoBehaviour
 
         currentlyPlayingAnimations.Add(reference);
         
+    }
+
+    public bool IsAnimationPlaying(string animation, int layer = 0)
+    {
+        foreach (var currentAnimation in currentlyPlayingAnimations)
+        {
+            if (animation == currentAnimation.animation && layer == currentAnimation.layer)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /*public void PlaySameAnimation(Animator animator, string animation, float transitionTime, int layer)
