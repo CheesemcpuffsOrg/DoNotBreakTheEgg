@@ -1,15 +1,22 @@
 #if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class VariableSearchTool : EditorWindow
 {
-    private string searchTypeName = "int";
-    private static string[] favoriteTypes;
+    private string searchTypeName;
+    private static string[] favoriteTypes = new string[] { null };
     private static int selectedFavoriteIndex;
+
+    private static List<GameObject> highlightedGameObjects = new();
+
+    private const string FavouritePrefsKey = "VariableSearchTool_Favourites";
 
     [MenuItem("Tools/Hierarchy Variable Search")]
     public static void OpenWindow()
@@ -20,10 +27,14 @@ public class VariableSearchTool : EditorWindow
 
     private void OnEnable()
     {
-        // Initialize the list of favorite types
-        favoriteTypes = new string[] { "int", "float", "string", "Vector3" };  // Default favorites
+        //Load from EditorPrefs
+        LoadFavourites();
+
         selectedFavoriteIndex = 0; // Default to the first item
+
+        EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyItemGUI;
     }
+
 
     private void OnGUI()
     {
@@ -82,17 +93,47 @@ public class VariableSearchTool : EditorWindow
 
     private void SearchByType(Type searchType)
     {
-        GameObject[] allObjects = FindObjectsOfType<GameObject>(true);
+        GameObject[] allObjects = GetAllObjects();
+
+        foreach(var thing  in allObjects)
+        {
+            Debug.Log(thing);
+        }
+
+        highlightedGameObjects.Clear();
 
         foreach (var obj in allObjects)
         {
-            bool hasVariable = HasVariableOfType(obj, searchType);
+            bool hasVariable = HasVariableOfType(obj, searchType) || HasVariableInChildren(obj, searchType);
 
-            // Show objects with the variable, hide others
-            obj.hideFlags = hasVariable ? HideFlags.None : HideFlags.HideInHierarchy;
+            Debug.Log(obj +" has variable "+ hasVariable);
+
+            if (hasVariable)
+            {
+                if (HasVariableOfType(obj, searchType)) highlightedGameObjects.Add(obj);
+                obj.hideFlags = HideFlags.None;
+            }
+            else
+            {
+                obj.hideFlags = HideFlags.HideInHierarchy;
+            }
         }
+       
 
         Debug.Log($"Filtered hierarchy by type: {searchType}");
+    }
+
+    private bool HasVariableInChildren(GameObject parent, Type searchType)
+    {
+        foreach(Transform child in parent.transform)
+        {
+            if(HasVariableOfType(child.gameObject, searchType) || HasVariableInChildren(child.gameObject, searchType))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private bool HasVariableOfType(GameObject obj, Type searchType)
@@ -111,16 +152,62 @@ public class VariableSearchTool : EditorWindow
         return false;
     }
 
+    private void OnHierarchyItemGUI(int instanceID, Rect selectionRect)
+    {
+        var obj = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
+        if(obj == null) return;
+
+        if (highlightedGameObjects.Contains(obj))
+        {
+            EditorGUI.DrawRect(selectionRect, new Color(1f, 1f, 0.5f, 0.3f));
+        }
+    }
+
     private void ResetHierarchy()
     {
-        GameObject[] allObjects = FindObjectsOfType<GameObject>(true);
+        GameObject[] allObjects = GetAllObjects();
 
         foreach (var obj in allObjects)
         {
             obj.hideFlags = HideFlags.None; // Show everything again
         }
 
+        highlightedGameObjects.Clear();
+
         Debug.Log("Reset hierarchy visibility.");
+    }
+
+    private GameObject[] GetAllObjects()
+    {
+        var prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+
+        if (prefabStage != null)
+        {
+            return GetPrefabObjects(prefabStage);
+        }
+
+        return FindObjectsOfType<GameObject>(true);
+    }
+
+    private GameObject[] GetPrefabObjects(PrefabStage prefabStage)
+    {
+        List<GameObject> objects = new();
+        CollectAllChildren(prefabStage.prefabContentsRoot, objects);
+        return objects.ToArray();
+    }
+
+    private void CollectAllChildren(GameObject parent, List<GameObject> objects)
+    {
+        if (parent == null) return;
+
+        // Add the current object to the list
+        objects.Add(parent);
+
+        // Recursively add all children
+        foreach (Transform child in parent.transform)
+        {
+            CollectAllChildren(child.gameObject, objects);
+        }
     }
 
     private Type ResolveType(string typeName)
@@ -151,6 +238,8 @@ public class VariableSearchTool : EditorWindow
         Array.Resize(ref favoriteTypes, favoriteTypes.Length + 1);
         favoriteTypes[favoriteTypes.Length - 1] = typeToAdd;
 
+        SaveFavourites();
+
         Debug.Log($"Added '{typeToAdd}' to favorites.");
     }
 
@@ -166,7 +255,26 @@ public class VariableSearchTool : EditorWindow
         }
         Array.Resize(ref favoriteTypes, favoriteTypes.Length - 1);
 
+        SaveFavourites();
+
         Debug.Log($"Removed '{typeToRemove}' from favorites.");
+    }
+
+    private void LoadFavourites()
+    {
+        var savedFavourites = EditorPrefs.GetString(FavouritePrefsKey, string.Empty);
+
+        if (!string.IsNullOrEmpty(savedFavourites))
+        {
+            favoriteTypes = savedFavourites.Split(',');
+        }
+    }
+
+    private void SaveFavourites()
+    {
+        var favouriteTypesString = string.Join(",", favoriteTypes);
+
+        EditorPrefs.SetString(FavouritePrefsKey, favouriteTypesString);
     }
 
     // Automatically reset visibility when the window is closed
