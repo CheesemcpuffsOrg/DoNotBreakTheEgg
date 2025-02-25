@@ -95,18 +95,11 @@ public class VariableSearchTool : EditorWindow
     {
         GameObject[] allObjects = GetAllObjects();
 
-        foreach(var thing  in allObjects)
-        {
-            Debug.Log(thing);
-        }
-
         highlightedGameObjects.Clear();
 
         foreach (var obj in allObjects)
         {
             bool hasVariable = HasVariableOfType(obj, searchType) || HasVariableInChildren(obj, searchType);
-
-            Debug.Log(obj +" has variable "+ hasVariable);
 
             if (hasVariable)
             {
