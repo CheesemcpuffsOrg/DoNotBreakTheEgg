@@ -55,7 +55,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
     {
         chargingShot = false;
 
-        if (!throwFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
+        if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
             return;
 
         var heldEntity = HoldEntityManager.Instance.GetHeldEntity(entity);
@@ -83,9 +83,9 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
 
     private void TriggerEnter(Collider2D collision)
     {
-        if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity) 
-            || !catchableEntityFilter.PassTagFilterCheck(collisionEntity.GetEntityComponent<IGameObjectComponent>()?.GetTransform())
-            || !catchingFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>()?.GetTransform()))
+        if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity)
+            || !collisionEntity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(catchableEntityFilter)
+            || !entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(catchingFilter))
             return;
             
         HoldEntityManager.Instance.AddHeldEntity(entity, collisionEntity, holdAnchor);

@@ -15,4 +15,6 @@ public interface ITags
     public void RemoveTag(TagScriptableObject tag);
 
     public void RemoveAllTags();
+
+    public bool PassTagFilterCheck(TagFilter tagFilter);
 }

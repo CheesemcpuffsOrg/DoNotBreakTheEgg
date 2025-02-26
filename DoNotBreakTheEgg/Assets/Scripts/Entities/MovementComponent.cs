@@ -115,7 +115,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     public void Jump()
     {
-        if (!jumpFilter.PassTagFilterCheck(gameObjectComponent.GetTransform())) return;
+        if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(jumpFilter)) return;
 
         jumpFired = true;
         jumpBufferCounter = jumpBufferTime;
@@ -123,7 +123,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     public void Move(Vector2 target)
     {
-        if (!moveFilter.PassTagFilterCheck(gameObjectComponent.GetTransform())) return;
+        if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(moveFilter)) return;
 
         input = target;
     }

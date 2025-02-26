@@ -15,11 +15,6 @@ public class GameObjectComponent : MonoBehaviour, IGameObjectComponent
 
     [SerializeField] List<AnchorMapping> anchorMappings;
 
-    public Transform GetTransform()
-    {
-        return transform;
-    }
-
     public Vector3 GetPosition() 
     { 
         return transform.position; 

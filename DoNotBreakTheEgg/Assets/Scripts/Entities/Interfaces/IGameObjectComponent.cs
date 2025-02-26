@@ -4,8 +4,6 @@ using UnityEngine;
 
 public interface IGameObjectComponent : IEntityComponent
 {
-    public Transform GetTransform();
-
     public Vector3 GetPosition();
 
     public void SetPosition(Vector3 position);

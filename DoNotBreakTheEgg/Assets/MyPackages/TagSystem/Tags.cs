@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 
 [AddComponentMenu("GameObject/Tags")]
-[HelpURL("")]
 public class Tags : MonoBehaviour, ITags
 {
     [SerializeField] private List<TagScriptableObject> tags;
@@ -94,5 +93,17 @@ public class Tags : MonoBehaviour, ITags
         {
             RemoveTag(tag); // Reuse the RemoveTag method
         }
+    }
+
+    public bool PassTagFilterCheck(TagFilter tagFilter)
+    {
+        var mustHaveAll = tagFilter.MustHaveAll;
+        var mustHaveAny = tagFilter.MustHaveAny;
+        var cannotHaveAny = tagFilter.CannotHaveAny;
+
+        if (mustHaveAll != null && !transform.HasAllTags(mustHaveAll)) return false;
+        if (mustHaveAny != null && mustHaveAny.Length > 0 && !transform.HasAnyTag(mustHaveAny)) return false;
+        if (cannotHaveAny != null && transform.HasAnyTag(cannotHaveAny)) return false;
+        return true;
     }
 }

@@ -35,7 +35,7 @@ public class PlayerAnimations : MonoBehaviour
 
         FlipSpriteDirection();
 
-        if (groundedFilter.PassTagFilterCheck(transform))
+        if (entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(groundedFilter))
         {
             if (!isMoving)
             {

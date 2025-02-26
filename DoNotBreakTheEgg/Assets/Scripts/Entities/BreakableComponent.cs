@@ -20,7 +20,7 @@ public class BreakableComponent : MonoBehaviour, IBreakableComponent
 
     private void CollisionEnter(Collision2D collision)
     {
-        if (EntityCollisionService.TryGetEntity(collision.collider, out IEntity collisionEntity) && !breakFilter.PassTagFilterCheck(entity.GetEntityComponent<IGameObjectComponent>().GetTransform()))
+        if (EntityCollisionService.TryGetEntity(collision.collider, out IEntity collisionEntity) && !entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(breakFilter))
             return;
 
         entity.GetEntityComponent<IMovementComponent>().DisableGravity();
