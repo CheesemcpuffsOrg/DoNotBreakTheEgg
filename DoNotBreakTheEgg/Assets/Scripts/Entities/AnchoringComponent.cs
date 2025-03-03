@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class GameObjectComponent : MonoBehaviour, IGameObjectComponent
+public class AnchoringComponent : MonoBehaviour, IAnchoringComponent
 {
     [Serializable]
     private class AnchorMapping
@@ -28,14 +28,6 @@ public class GameObjectComponent : MonoBehaviour, IGameObjectComponent
     public void SetParent(Transform parentTransform)
     {
         transform.parent = parentTransform;
-    }
-
-    public void Destroy(float time)
-    {
-
-        gameObject.GetComponent<ITagComponent>().RemoveAllTags();
-
-        Destroy(gameObject, time);
     }
 
     public Transform GetAnchor(AnchorScriptableObject anchor)

@@ -6,7 +6,7 @@ public interface IMovementComponent : IEntityComponent
 {
     Vector3 Velocity { get; }
 
-    public void Move(Vector2 position);
+    public void MoveToTarget(Vector2 position);
 
     public void StopMovement();
 
@@ -16,4 +16,7 @@ public interface IMovementComponent : IEntityComponent
 
     public void EnableGravity();
     public void DisableGravity();
+
+    public void EnableMovement();
+    public void DisableMovement();
 }

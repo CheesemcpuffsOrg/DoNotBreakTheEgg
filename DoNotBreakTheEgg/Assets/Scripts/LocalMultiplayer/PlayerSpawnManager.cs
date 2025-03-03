@@ -45,7 +45,7 @@ public class PlayerSpawnManager : MonoBehaviour
 
         Destroy(tuple.Item1.gameObject);
 
-        tuple.Item2.GetEntityComponent<IGameObjectComponent>().Destroy();
+        tuple.Item2.Destroy();
     }
 
     void OnStartOrEnable()

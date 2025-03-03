@@ -27,7 +27,7 @@ public class BreakableComponent : MonoBehaviour, IBreakableComponent
 
         entity.GetEntityComponent<ITagComponent>().AddTag(isDeadTag);
 
-        entity.GetEntityComponent<IGameObjectComponent>().Destroy(1);
+        entity.Destroy(1);
     }
 
     private void OnEnable()

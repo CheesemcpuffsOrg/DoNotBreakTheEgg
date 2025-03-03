@@ -45,4 +45,11 @@ public class MonoEntity : MonoBehaviour, IEntity
     {
         entityComponents.Add(entityComponent);
     }
+
+    public void Destroy(float time)
+    {
+        gameObject.GetComponent<ITagComponent>().RemoveAllTags();
+
+        Destroy(gameObject, time);
+    }
 }

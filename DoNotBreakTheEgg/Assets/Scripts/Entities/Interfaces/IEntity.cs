@@ -7,4 +7,6 @@ public interface IEntity
     public T GetEntityComponent<T>() where T : class, IEntityComponent;
 
     public void RegisterEntityComponent(IEntityComponent entityComponent);
+
+    public void Destroy(float time = 0);
 }

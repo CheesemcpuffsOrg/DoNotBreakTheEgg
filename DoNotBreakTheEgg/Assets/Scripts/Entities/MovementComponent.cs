@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,6 +44,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     float gravity;
     bool gravityEnabled;
+    bool movementEnabled;
 
     float jumpVelocity;
     
@@ -79,14 +81,14 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     IEntity entity;
     ICollisionComponent collisionComponent;
     ITagComponent tagComponent;
-    IGameObjectComponent gameObjectComponent;
+    IAnchoringComponent gameObjectComponent;
 
     private void Start()
     {
         entity = GetComponent<IEntity>();
         collisionComponent = entity.GetEntityComponent<ICollisionComponent>();
         tagComponent = entity.GetEntityComponent<ITagComponent>();
-        gameObjectComponent = entity.GetEntityComponent<IGameObjectComponent>();
+        gameObjectComponent = entity.GetEntityComponent<IAnchoringComponent>();
 
         CalculateRaySpacing();
 
@@ -94,6 +96,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         jumpVelocity = Mathf.Abs(gravity) * data.TimeToJumpApex;
 
         gravityEnabled = data.GravityEnabledOnStart;
+        movementEnabled = true;
     }
 
     private void Update()
@@ -121,7 +124,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         jumpBufferCounter = jumpBufferTime;
     }
 
-    public void Move(Vector2 target)
+    public void MoveToTarget(Vector2 target)
     {
         if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(moveFilter)) return;
 
@@ -138,6 +141,16 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     public void StopMovement()
     {
         input = Vector2.zero;
+    }
+
+    public void EnableMovement()
+    {
+        movementEnabled = true;
+    }
+
+    public void DisableMovement()
+    {
+        movementEnabled = false;
     }
 
     public void EnableGravity()
@@ -232,6 +245,9 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void Move(Vector3 velocity)
     {
+
+        if (!movementEnabled) return;
+
         UpdateRaycastOrigins();
         collisionInfo.Reset();
         collisionInfo.velocityOld = velocity;

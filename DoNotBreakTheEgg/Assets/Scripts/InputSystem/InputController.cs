@@ -16,6 +16,7 @@ public class InputController : MonoBehaviour
     public event Action<Vector2> MoveEventPerfomed;
     public event Action MoveEventCancelled;
     public event Action JumpEventPerformed;
+    public event Action InteractEventPerformed;
 
     public void InitializeControls(IInputActionCollection2 inputActions)
     {
@@ -28,6 +29,12 @@ public class InputController : MonoBehaviour
         controls.PlayerControls.Aim.performed += AimPerformed;
         controls.PlayerControls.Aim.canceled += AimCanceled;
         controls.PlayerControls.Jump.performed += JumpPerformed;
+        controls.PlayerControls.Interact.performed += InteractPerformed;
+    }
+
+    private void InteractPerformed(InputAction.CallbackContext context)
+    {
+        InteractEventPerformed?.Invoke();
     }
 
     private void JumpPerformed(InputAction.CallbackContext context)

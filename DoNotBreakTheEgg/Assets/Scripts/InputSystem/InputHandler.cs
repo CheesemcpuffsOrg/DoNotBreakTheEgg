@@ -35,7 +35,7 @@ public class InputHandler : MonoBehaviour
 
     private void MoveEventPerformed(Vector2 position)
     {
-        entity.GetEntityComponent<IMovementComponent>().Move(position);
+        entity.GetEntityComponent<IMovementComponent>().MoveToTarget(position);
     }
 
     private void MoveEventCancelled()
@@ -48,6 +48,11 @@ public class InputHandler : MonoBehaviour
         entity.GetEntityComponent<IMovementComponent>().Jump();
     }
 
+    private void InteractEventPerformed()
+    {
+        entity.GetEntityComponent<IInteractionComponent>().Interact();
+    }
+
 
     private void OnEnable()
     {
@@ -58,6 +63,7 @@ public class InputHandler : MonoBehaviour
         controller.MoveEventPerfomed += MoveEventPerformed;
         controller.MoveEventCancelled += MoveEventCancelled;
         controller.JumpEventPerformed += JumpEventPerformed;
+        controller.InteractEventPerformed += InteractEventPerformed;
     }
 
     private void OnDisable()
@@ -69,5 +75,6 @@ public class InputHandler : MonoBehaviour
         controller.MoveEventPerfomed -= MoveEventPerformed;
         controller.MoveEventCancelled -= MoveEventCancelled;
         controller.JumpEventPerformed -= JumpEventPerformed;
+        controller.InteractEventPerformed -= InteractEventPerformed;
     }
 }
