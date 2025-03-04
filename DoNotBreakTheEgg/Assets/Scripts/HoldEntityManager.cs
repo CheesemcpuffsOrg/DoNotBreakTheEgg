@@ -56,7 +56,7 @@ public class HoldEntityManager : MonoBehaviour
             heldObjects.Add(holdingEntity, heldEntity);
         }
 
-        // EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, true);
+        EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, true);
 
         heldEntity.GetEntityComponent<ITagComponent>().AddTag(isHeldTag);
         holdingEntity.GetEntityComponent<ITagComponent>().AddTag(isHoldingTag);
@@ -83,6 +83,6 @@ public class HoldEntityManager : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
 
-       // EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, false);
+        EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, false);
     }
 }

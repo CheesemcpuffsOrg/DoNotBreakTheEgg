@@ -7,6 +7,8 @@ public static class EntityCollisionService
 {
     private static Dictionary<Collider2D, IEntity> entityColliders = new Dictionary<Collider2D, IEntity>();
 
+    private static Dictionary<IEntity, List<Collider2D>> ignoredColliders = new Dictionary<IEntity, List<Collider2D>>();
+
     public static void RegisterEntityCollider(Collider2D collider, IEntity entity)
     {
         if (!entityColliders.ContainsKey(collider))
@@ -20,6 +22,21 @@ public static class EntityCollisionService
         if(entityColliders.TryGetValue(collider, out entity))
         {
             return true;
+        }
+
+        return false;
+    }
+
+    public static bool IsIgnoredCollider(IEntity referenceEntity, Collider2D collider)
+    {
+        if (!ignoredColliders.TryGetValue(referenceEntity, out var colliders))
+        {
+            return false;
+        }
+
+        foreach(var storedCollider in colliders)
+        {
+            if(storedCollider == collider) return true;
         }
 
         return false;
@@ -44,15 +61,87 @@ public static class EntityCollisionService
             Debug.Log("One of the entities does not have a CollisionComponent");
             return;
         }
-            
+
 
         // Ignore collisions
         foreach (var collider1 in entity1Colliders)
         {
             foreach (var collider2 in entity2Colliders)
             {
-                Debug.Log($"Setting collision ignore between {collider1.name} and {collider2.name} to {setActive}");
+                //Debug.Log($"Setting collision ignore between {collider1.name} and {collider2.name} to {setActive}");
                 Physics2D.IgnoreCollision(collider1, collider2, setActive);
+            }
+        }
+
+        UpdateIgnoredCollidersDictionary(entity1, entity2, setActive, entity1Colliders, entity2Colliders);
+
+    }
+
+    private static void UpdateIgnoredCollidersDictionary(IEntity entity1, IEntity entity2, bool setActive, List<Collider2D> entity1Colliders, List<Collider2D> entity2Colliders)
+    {
+        if (setActive)
+        {
+            if (!ignoredColliders.TryGetValue(entity1, out var entity1StoredColliders))
+            {
+                ignoredColliders.Add(entity1, entity2Colliders);
+            }
+            else
+            {
+                foreach (var collider in entity2Colliders)
+                {
+                    if (!entity1StoredColliders.Contains(collider))
+                    {
+                        entity1StoredColliders.Add(collider);
+                    }
+                }
+            }
+
+            if (!ignoredColliders.TryGetValue(entity2, out var entity2StoredColliders))
+            {
+                ignoredColliders.Add(entity2, entity1Colliders);
+            }
+            else
+            {
+                foreach (var collider in entity1Colliders)
+                {
+                    if (!entity2StoredColliders.Contains(collider))
+                    {
+                        entity2StoredColliders.Add(collider);
+                    }     
+                }
+            }
+
+        }
+        else
+        {
+            if (ignoredColliders.TryGetValue(entity1, out var entity1StoredColliders))
+            {
+                for (int i = entity1StoredColliders.Count - 1; i >= 0; i--)
+                {
+                    foreach (var collider in entity2Colliders)
+                    {
+                        if (entity1StoredColliders[i] == collider)
+                        {
+                            entity1StoredColliders.RemoveAt(i);
+                            break; // Exit the inner loop once removed
+                        }
+                    }
+                }
+            }
+
+            if (ignoredColliders.TryGetValue(entity2, out var entity2StoredColliders))
+            {
+                for (int i = entity2StoredColliders.Count - 1; i >= 0; i--)
+                {
+                    foreach (var collider in entity1Colliders)
+                    {
+                        if (entity2StoredColliders[i] == collider)
+                        {
+                            entity2StoredColliders.RemoveAt(i);
+                            break; // Exit the inner loop once removed
+                        }
+                    }
+                }
             }
         }
     }

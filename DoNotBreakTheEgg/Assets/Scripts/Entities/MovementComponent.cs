@@ -281,10 +281,10 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
             foreach (var hit in hits)
             {
                 // Ignore colliders if they are the entity's own colliders
-                if (collisionComponent.IsEntityCollider(hit.collider))
-                {
-                    continue;
-                }
+                if (collisionComponent.IsEntityCollider(hit.collider)) continue;
+
+                //Ignore colliders if they are on the ignore list
+                if(EntityCollisionService.IsIgnoredCollider(entity, hit.collider)) continue;
 
                 if (hit)
                 {
@@ -362,6 +362,9 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                 //ignore colliders if they are entities own colliders
                 if (collisionComponent.IsEntityCollider(hit.collider)) continue;
 
+                //Ignore colliders if they are on the ignore list
+                if (EntityCollisionService.IsIgnoredCollider(entity, hit.collider)) continue;
+
                 // Process the valid hit
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
@@ -391,6 +394,9 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
                 //ignore colliders if they are entities own colliders
                 if (collisionComponent.IsEntityCollider(hit.collider)) continue;
+
+                //Ignore colliders if they are on the ignore list
+                if (EntityCollisionService.IsIgnoredCollider(entity, hit.collider)) continue;
 
                 if (hit)
                 {
@@ -435,6 +441,9 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         {
             //ignore colliders if they are entities own colliders
             if (collisionComponent.IsEntityCollider(hit.collider)) continue;
+
+            //Ignore colliders if they are on the ignore list
+            if (EntityCollisionService.IsIgnoredCollider(entity, hit.collider)) continue;
 
             if (hit)
             {

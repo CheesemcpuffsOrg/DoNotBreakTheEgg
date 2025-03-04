@@ -502,11 +502,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collision: {fileID: 5511672338940452868}
-  interactableFilter:
-    mustHaveAll:
-    - {fileID: 11400000, guid: 14dabdc80a081ad48a9aa49178a19f1e, type: 2}
-    mustHaveAny: []
-    cannotHaveAny: []
 --- !u!1 &6447130475722892646
 GameObject:
   m_ObjectHideFlags: 0

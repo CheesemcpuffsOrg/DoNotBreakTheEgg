@@ -21,8 +21,6 @@ public class InteractionComponent : MonoBehaviour, IInteractionComponent
 
     public void Interact()
     {
-        Debug.Log("InteractCalled");
-
         var firstEntity = interactableEntities.TryGet(0);
 
         if (firstEntity == null) return;
@@ -46,9 +44,10 @@ public class InteractionComponent : MonoBehaviour, IInteractionComponent
 
     private void TriggerEnter(Collider2D collision)
     {
+
         if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity)
             || interactableEntities.Contains(collisionEntity)
-            || collisionEntity.GetEntityComponent<IInteractableComponent>() != null)
+            || collisionEntity.GetEntityComponent<IInteractableComponent>() == null)
             return;
 
         interactableEntities.Add(collisionEntity);
