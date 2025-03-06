@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ITagComponent : ITags, IEntityComponent
 {
-    
+    public bool HasTag(TagScriptableObject tag); 
 }

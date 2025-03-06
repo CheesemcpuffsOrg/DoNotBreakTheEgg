@@ -104,4 +104,9 @@ public class TagComponent : MonoBehaviour, ITagComponent
         if (cannotHaveAny != null && transform.HasAnyTag(cannotHaveAny)) return false;
         return true;
     }
+
+    public bool HasTag(TagScriptableObject tag)
+    {
+        return gameObject.HasTag(tag);
+    }
 }

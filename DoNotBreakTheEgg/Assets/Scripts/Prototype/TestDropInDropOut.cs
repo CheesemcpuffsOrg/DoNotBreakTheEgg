@@ -26,9 +26,6 @@ public class TestDropInDropOut : MonoBehaviour
         UserDeviceMappingUtil.DeleteAllUsers();
 
         reset = true;
-
-
-
     }
 
     void ResetGame(InputAction.CallbackContext context)
