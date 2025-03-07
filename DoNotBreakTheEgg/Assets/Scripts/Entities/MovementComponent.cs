@@ -133,6 +133,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     public void Throw(float power, Vector2 direction)
     {
+        velocity = Vector2.zero; //reset the velocity to make sure no previous velocity is impacting the throw
         velocity += new Vector3(direction.x, direction.y, 0) * power;
         frameSkipper = 1;
         throwFired = true;
@@ -216,7 +217,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
             if(collisionInfo.below || collisionInfo.left || collisionInfo.right)
             {
-
                 velocity.x = 0;
                 throwFired = false;
             }
@@ -245,7 +245,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void Move(Vector3 velocity)
     {
-
         if (!movementEnabled) return;
 
         UpdateRaycastOrigins();
@@ -359,6 +358,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
             foreach (var hit in hits)
             {
+
                 //ignore colliders if they are entities own colliders
                 if (collisionComponent.IsEntityCollider(hit.collider)) continue;
 

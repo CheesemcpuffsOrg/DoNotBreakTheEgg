@@ -40,6 +40,7 @@ public class AnchoringComponent : MonoBehaviour, IAnchoringComponent
             }
         }
 
+        Debug.Log($"Entity does not have {anchor}");
         return null;
     }
 }

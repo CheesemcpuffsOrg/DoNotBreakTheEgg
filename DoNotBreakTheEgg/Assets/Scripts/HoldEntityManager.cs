@@ -62,6 +62,8 @@ public class HoldEntityManager : MonoBehaviour
         holdingEntity.GetEntityComponent<ITagComponent>().AddTag(isHoldingTag);
 
         heldEntity.GetEntityComponent<IHoldableComponent>().Hold(holdAnchor);
+
+
     }
 
     public void RemoveHeldEntity(IEntity holdingEntity)
@@ -81,7 +83,7 @@ public class HoldEntityManager : MonoBehaviour
 
     IEnumerator EnableEntityCollisions(IEntity heldEntity, IEntity holdingEntity)
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.1f);
 
         EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, false);
     }
