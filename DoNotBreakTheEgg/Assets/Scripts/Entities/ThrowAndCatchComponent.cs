@@ -101,6 +101,9 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
         collision.OnTriggerEnter2D_Action -= TriggerEnter;
     }
 
+
+
+//I think this logic is invalid now
 #if UNITY_EDITOR
 
     private void OnDrawGizmos()

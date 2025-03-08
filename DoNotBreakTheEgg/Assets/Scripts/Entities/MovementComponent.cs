@@ -81,14 +81,12 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     IEntity entity;
     ICollisionComponent collisionComponent;
     ITagComponent tagComponent;
-    IAnchoringComponent gameObjectComponent;
 
     private void Start()
     {
         entity = GetComponent<IEntity>();
         collisionComponent = entity.GetEntityComponent<ICollisionComponent>();
         tagComponent = entity.GetEntityComponent<ITagComponent>();
-        gameObjectComponent = entity.GetEntityComponent<IAnchoringComponent>();
 
         CalculateRaySpacing();
 
@@ -133,7 +131,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     public void Throw(float power, Vector2 direction)
     {
-       // velocity = Vector2.zero; //reset the velocity to make sure no previous velocity is impacting the throw
+        velocity = Vector2.zero; //reset the velocity to make sure no previous velocity is impacting the throw
         velocity += new Vector3(direction.x, direction.y, 0) * power;
         frameSkipper = 1;
         throwFired = true;

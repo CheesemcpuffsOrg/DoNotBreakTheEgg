@@ -339,7 +339,7 @@ MonoBehaviour:
   holdAnchor: {fileID: 3192593221783738279}
   launchPoint: {fileID: 8136978824323319624}
   powerBase: 1
-  powerMax: 30
+  powerMax: 20
   powerIncrease: 0.1
   collision: {fileID: 1208271136638990722}
   isHeldTag: {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
