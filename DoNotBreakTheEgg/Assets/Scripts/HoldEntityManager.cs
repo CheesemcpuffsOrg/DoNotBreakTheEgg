@@ -69,13 +69,58 @@ public class HoldEntityManager : MonoBehaviour
         if(!heldObjects.TryGetValue(holdingEntity, out var heldEntity))
             return;
 
-        EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, false);
-
         heldObjects.Remove(holdingEntity);
 
         heldEntity.GetEntityComponent<IHoldableComponent>().Release();
 
         heldEntity.GetEntityComponent<ITagComponent>().RemoveTag(isHeldTag);
         holdingEntity.GetEntityComponent<ITagComponent>().RemoveTag(isHoldingTag);
+
+        StartCoroutine(HandleEntityCollision(heldEntity, holdingEntity));
+    }
+
+    private IEnumerator HandleEntityCollision(IEntity heldEntity, IEntity holdingEntity)
+    {
+        float waitTime = 0.1f; // Time to wait before checking for overlap
+        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForFixedUpdate(); // Wait for physics to resolve
+
+        var heldBounds = heldEntity.GetEntityComponent<ICollisionComponent>().GetEntityMainColliderBounds();
+        var holdingBounds = holdingEntity.GetEntityComponent<ICollisionComponent>().GetEntityMainColliderBounds();
+
+        // Check if colliders still overlap
+        if (heldBounds.Intersects(holdingBounds))
+        {
+            // Calculate and apply separation
+            Vector3 separation = CalculateSeparationVector(heldBounds, holdingBounds);
+            heldEntity.GetEntityComponent<IAnchoringComponent>().SetPosition(heldEntity.GetEntityComponent<IAnchoringComponent>().GetPosition() + separation);
+        }
+
+        // Ensure physics is updated before re-enabling collisions
+        yield return new WaitForFixedUpdate();
+        EntityCollisionService.IgnoreEntityCollisions(heldEntity, holdingEntity, false);
+    }
+
+    private Vector3 CalculateSeparationVector(Bounds heldBounds, Bounds holdingBounds)
+    {
+        Vector3 separation = Vector3.zero;
+        float buffer = 0.01f; // Add a small buffer to ensure no overlap remains
+
+        // X-Axis overlap
+        float overlapX = (heldBounds.extents.x + holdingBounds.extents.x) - Mathf.Abs(heldBounds.center.x - holdingBounds.center.x);
+        if (overlapX > 0)
+            separation.x = Mathf.Sign(heldBounds.center.x - holdingBounds.center.x) * (overlapX + buffer);
+
+        // Y-Axis overlap
+        float overlapY = (heldBounds.extents.y + holdingBounds.extents.y) - Mathf.Abs(heldBounds.center.y - holdingBounds.center.y);
+        if (overlapY > 0)
+            separation.y = Mathf.Sign(heldBounds.center.y - holdingBounds.center.y) * (overlapY + buffer);
+
+        // Z-Axis overlap (for 3D, ignore if 2D)
+        float overlapZ = (heldBounds.extents.z + holdingBounds.extents.z) - Mathf.Abs(heldBounds.center.z - holdingBounds.center.z);
+        if (overlapZ > 0)
+            separation.z = Mathf.Sign(heldBounds.center.z - holdingBounds.center.z) * (overlapZ + buffer);
+
+        return separation;
     }
 }

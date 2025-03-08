@@ -133,7 +133,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     public void Throw(float power, Vector2 direction)
     {
-        velocity = Vector2.zero; //reset the velocity to make sure no previous velocity is impacting the throw
+       // velocity = Vector2.zero; //reset the velocity to make sure no previous velocity is impacting the throw
         velocity += new Vector3(direction.x, direction.y, 0) * power;
         frameSkipper = 1;
         throwFired = true;
@@ -495,7 +495,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     private Bounds GetBounds()
     {
-        var bounds = collisionComponent.GetMainPlayerColliderBounds();
+        var bounds = collisionComponent.GetEntityMainColliderBounds();
         bounds.Expand(skinWidth * -2);
         return bounds;
     }

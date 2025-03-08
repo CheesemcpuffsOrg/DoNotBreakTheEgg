@@ -5,7 +5,7 @@ using UnityEngine;
 public interface ICollisionComponent : IEntityComponent
 {
     
-    public Bounds GetMainPlayerColliderBounds();
+    public Bounds GetEntityMainColliderBounds();
 
     public bool IsEntityCollider(Collider2D collider);
 }

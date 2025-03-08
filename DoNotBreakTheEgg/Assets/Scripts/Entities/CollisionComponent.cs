@@ -25,7 +25,7 @@ public class CollisionComponent : MonoBehaviour, ICollisionComponent
         return allEntityColliders.Contains(collider);
     }
 
-    public Bounds GetMainPlayerColliderBounds()
+    public Bounds GetEntityMainColliderBounds()
     {
         return mainEntityCollider.bounds;
     }
