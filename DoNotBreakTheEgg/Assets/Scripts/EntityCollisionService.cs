@@ -7,13 +7,27 @@ public static class EntityCollisionService
 {
     private static Dictionary<Collider2D, IEntity> entityColliders = new Dictionary<Collider2D, IEntity>();
 
+    private static Dictionary<IEntity, Collider2D> mainEntityColliders = new Dictionary<IEntity, Collider2D>();
+
     private static Dictionary<IEntity, List<Collider2D>> ignoredColliders = new Dictionary<IEntity, List<Collider2D>>();
 
-    public static void RegisterEntityCollider(Collider2D collider, IEntity entity)
+    public static void RegisterEntityColliders(Collider2D[] colliders, IEntity entity)
     {
-        if (!entityColliders.ContainsKey(collider))
+        foreach (var collider in colliders) 
         {
-            entityColliders.Add(collider, entity);
+            if (!entityColliders.ContainsKey(collider))
+            {
+                entityColliders.Add(collider, entity);
+            }
+        }
+        
+    }
+
+    public static void RegisterMainEntityCollider(Collider2D collider, IEntity entity)
+    {
+        if (!mainEntityColliders.ContainsKey(entity))
+        {
+            mainEntityColliders.Add(entity, collider);
         }
     }
 
@@ -75,6 +89,23 @@ public static class EntityCollisionService
 
         UpdateIgnoredCollidersDictionary(entity1, entity2, setActive, entity1Colliders, entity2Colliders);
 
+    }
+
+    public static void IgnoreMainEntityColliders(IEntity entity1, IEntity entity2, bool setActive)
+    {
+        if(!mainEntityColliders.TryGetValue(entity1, out var mainCollider1))
+        {
+            Debug.Log(entity1 + " has not registered their main collider");
+            return;
+        }
+
+        if (!mainEntityColliders.TryGetValue(entity2, out var mainCollider2))
+        {
+            Debug.Log(entity2 + " has not registered their main collider");
+            return;
+        }
+
+        Physics2D.IgnoreCollision(mainCollider1, mainCollider2, setActive);
     }
 
     private static void UpdateIgnoredCollidersDictionary(IEntity entity1, IEntity entity2, bool setActive, List<Collider2D> entity1Colliders, List<Collider2D> entity2Colliders)

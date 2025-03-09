@@ -90,8 +90,8 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         CalculateRaySpacing();
 
-        gravity = (-2 * data.JumpHeight) / Mathf.Pow(data.TimeToJumpApex, 2);
-        jumpVelocity = Mathf.Abs(gravity) * data.TimeToJumpApex;
+        gravity = GlobalDataManager.Instance.Gravity;
+        jumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * data.JumpHeight);
 
         gravityEnabled = data.GravityEnabledOnStart;
         movementEnabled = true;
@@ -135,6 +135,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         velocity += new Vector3(direction.x, direction.y, 0) * power;
         frameSkipper = 1;
         throwFired = true;
+        EnableGravity();
     }
 
     public void StopMovement()

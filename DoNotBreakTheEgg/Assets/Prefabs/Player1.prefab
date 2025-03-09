@@ -32,101 +32,6 @@ Transform:
   - {fileID: 3192593221783738279}
   m_Father: {fileID: 9064841143096759055}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2370969862776787936
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6601225740595979599}
-  - component: {fileID: 5693742158676626097}
-  - component: {fileID: 1208271136638990722}
-  - component: {fileID: 2100045097849958069}
-  m_Layer: 7
-  m_Name: CatchCollision
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6601225740595979599
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2370969862776787936}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 0, z: 0}
-  m_LocalScale: {x: 0.67296, y: 0.67296, z: 0.67296}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7781959172608742802}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &5693742158676626097
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2370969862776787936}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.75
---- !u!114 &1208271136638990722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2370969862776787936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 300fe20840486df40a8fd8e97d5d9599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2100045097849958069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2370969862776787936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd90699561adb164ea596ea6b6d49978, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tags:
-  - {fileID: 11400000, guid: 4229a30bf6ea6594fbf00ff463dff398, type: 2}
 --- !u!1 &2684322885531909013
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,9 +244,9 @@ MonoBehaviour:
   holdAnchor: {fileID: 3192593221783738279}
   launchPoint: {fileID: 8136978824323319624}
   powerBase: 1
-  powerMax: 20
+  powerMax: 25
   powerIncrease: 0.1
-  collision: {fileID: 1208271136638990722}
+  collision: {fileID: 0}
   isHeldTag: {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
   isHoldingTag: {fileID: 11400000, guid: 342baf6bc2d8e544d9a1bd8890fa61d5, type: 2}
   catchableEntityFilter:
@@ -437,7 +342,7 @@ MonoBehaviour:
   verticalRayCount: 4
   collisionMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 768
 --- !u!114 &5291628570717146814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,7 +357,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainEntityCollider: {fileID: 8933668129807429666}
   allEntityColliders:
-  - {fileID: 5693742158676626097}
   - {fileID: 8933668129807429666}
   - {fileID: 6364005288740910700}
 --- !u!114 &3619361875597409297
@@ -502,7 +406,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0193355bf7e4fc4eb49610ee6294334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collision: {fileID: 5511672338940452868}
+  interactCollider: {fileID: 5511672338940452868}
+  interactFilter:
+    mustHaveAll: []
+    mustHaveAny: []
+    cannotHaveAny:
+    - {fileID: 11400000, guid: 14dabdc80a081ad48a9aa49178a19f1e, type: 2}
 --- !u!1 &6447130475722892646
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +472,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6601225740595979599}
   - {fileID: 2354964339126638801}
   - {fileID: 9114117381976654366}
   m_Father: {fileID: 9064841143096759055}
@@ -578,7 +486,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9114117381976654366}
   - component: {fileID: 8933668129807429666}
-  m_Layer: 3
+  m_Layer: 9
   m_Name: PlayerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -860,9 +768,8 @@ GameObject:
   - component: {fileID: 2354964339126638801}
   - component: {fileID: 6364005288740910700}
   - component: {fileID: 5511672338940452868}
-  - component: {fileID: 1949519647583840337}
   m_Layer: 7
-  m_Name: InteractCollision
+  m_Name: InteractCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -877,7 +784,7 @@ Transform:
   m_GameObject: {fileID: 8705343995412071147}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.012, y: 0, z: 0}
+  m_LocalPosition: {x: -0.03, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -930,17 +837,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300fe20840486df40a8fd8e97d5d9599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1949519647583840337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8705343995412071147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd90699561adb164ea596ea6b6d49978, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tags:
-  - {fileID: 11400000, guid: 4229a30bf6ea6594fbf00ff463dff398, type: 2}

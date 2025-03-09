@@ -93,12 +93,12 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
 
     private void OnEnable()
     {
-        collision.OnTriggerEnter2D_Action += TriggerEnter;
+        //collision.OnTriggerEnter2D_Action += TriggerEnter;
     }
 
     private void OnDisable()
     {
-        collision.OnTriggerEnter2D_Action -= TriggerEnter;
+       // collision.OnTriggerEnter2D_Action -= TriggerEnter;
     }
 
 

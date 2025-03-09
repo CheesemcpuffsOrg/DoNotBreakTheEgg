@@ -9,15 +9,12 @@ public class CollisionComponent : MonoBehaviour, ICollisionComponent
 
     IEntity entity;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         entity = GetComponent<IEntity>();
 
-        foreach (var collider in allEntityColliders)
-        {
-            EntityCollisionService.RegisterEntityCollider(collider, entity);
-        }
+        EntityCollisionService.RegisterEntityColliders(allEntityColliders.ToArray(), entity);   
+        EntityCollisionService.RegisterMainEntityCollider(mainEntityCollider, entity);
     }
 
     public bool IsEntityCollider(Collider2D collider)

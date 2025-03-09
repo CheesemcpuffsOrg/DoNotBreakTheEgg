@@ -9,14 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d9d35f842149764eb18be5270524e4e, type: 3}
-  m_Name: EggData
+  m_Script: {fileID: 11500000, guid: bacec31b3639a9c4387c63f602604d50, type: 3}
+  m_Name: BaseGlobalData
   m_EditorClassIdentifier: 
-  JumpHeight: 0
-  TimeToJumpApex: 0
-  MoveSpeed: 0
-  MaxClimbAngle: 0
-  MaxDescendAngle: 0
-  AccelerationTimeAirborne: 0
-  AccelerationTimeGrounded: 0
-  GravityEnabledOnStart: 0
+  Gravity: 5

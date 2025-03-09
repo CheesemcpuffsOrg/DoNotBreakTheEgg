@@ -12,6 +12,11 @@ public class MonoEntity : MonoBehaviour, IEntity
         GetComponents();
     }
 
+    private void Start()
+    {
+        EntityRegistry.RegisterEntity(this);
+    }
+
     private void GetComponents()
     {
         // Get all components attached to this GameObject
@@ -49,6 +54,8 @@ public class MonoEntity : MonoBehaviour, IEntity
     public void Destroy(float time)
     {
         gameObject.GetComponent<ITagComponent>().RemoveAllTags();
+
+        EntityRegistry.UnregisterEntity(this);
 
         Destroy(gameObject, time);
     }

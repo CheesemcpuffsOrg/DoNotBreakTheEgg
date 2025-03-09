@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - CanJump
+  - 
   - Water
   - UI
   - HeldObject
   - Player
-  - 
-  - 
+  - Terrain
+  - PretendTerrain
   - 
   - 
   - 
