@@ -8,6 +8,18 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
 
     UniqueSoundID UUID = new UniqueSoundID();
 
+    public void PlaySound(SoundData data, UnityAction fireEventWhenSoundFinished = null)
+    {
+        StartCoroutine(DelayTimer(data.Delay, data, fireEventWhenSoundFinished));
+    }
+
+    private IEnumerator DelayTimer(float delay, SoundData data, UnityAction fireEventWhenSoundFinished = null)
+    {
+        yield return new WaitForSeconds(delay);
+
+        AudioManager.AudioManagerInstance.PlaySound(data.AudioScriptableObject, UUID, data.Playlocation, data.FollowTransform, fireEventWhenSoundFinished);
+    }
+
     public void PlaySound(AudioScriptableObject audioScriptableObject, Vector3 location, UnityAction fireEventWhenSoundFinished = null)
     {
         AudioManager.AudioManagerInstance.PlaySound(audioScriptableObject, UUID, location, fireEventWhenSoundFinished);

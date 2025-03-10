@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestSound : MonoBehaviour
 {
-    [SerializeField] AudioScriptableObject sound;
+    [SerializeField, ColoredField(ColoredFieldAttribute.ColoredField.Sound)] SoundData sound;
     [SerializeField] GameObject soundComponentObj;
 
     ISoundComponent soundComponent => soundComponentObj.GetComponent<ISoundComponent>();
@@ -12,12 +12,6 @@ public class TestSound : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        soundComponent.PlaySound(sound, transform.position);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        soundComponent.PlaySound(sound);
     }
 }
