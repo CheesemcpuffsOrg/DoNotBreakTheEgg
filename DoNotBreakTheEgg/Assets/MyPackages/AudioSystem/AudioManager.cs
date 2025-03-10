@@ -452,8 +452,6 @@ public class AudioManager : MonoBehaviour
 
         CreateAudioReference(sound, UUID, obj, audioSource, chosenAudioClip, type);
 
-        Debug.Log("Pls play sound");
-
         audioSource.Play();
 
 #if UNITY_EDITOR

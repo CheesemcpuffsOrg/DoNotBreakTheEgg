@@ -9,9 +9,9 @@ public class AudioList
 {
     public AudioClip audioClip;
     [Range(0f, 1f)]
-    public float volume = 1;
+    public float volume;
     [Range(-3f, 3f)]
-    public float pitch = 1;
+    public float pitch;
 }
 
 
@@ -20,6 +20,7 @@ public class AudioScriptableObject : ScriptableObject
 {
 
     public List<ObjectPool<AudioList>> audioClips;
+    [SerializeField, HideInInspector] bool defaultValuesApplied = false;
 
     [Header ("Basic Controls")]
     public AudioMixerGroup audioMixerGroup;
@@ -52,4 +53,23 @@ public class AudioScriptableObject : ScriptableObject
     public AudioRolloffMode volumeRollOffMode = AudioRolloffMode.Linear;
     public AnimationCurve volumeRollOffCurve;
 
+    //due to how unity handles generics, we need to intialize the values onvalidate
+    private void OnValidate()
+    {
+        // Ensure audioClips and internal AudioList objects have their default values
+        if (audioClips == null) return;
+
+        foreach (var pool in audioClips)
+        {
+            if (pool.obj == null) continue;
+
+            // Apply default values if not manually set
+            if (!defaultValuesApplied) 
+            { 
+                pool.obj.volume = 1f;
+                pool.obj.pitch = 1f;
+                defaultValuesApplied = true;
+            }
+        }
+    }
 }
