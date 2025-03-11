@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 [Serializable]
-public class AudioList
+public class AudioVariant
 {
     public AudioClip audioClip;
     [Range(0f, 1f)]
@@ -19,7 +19,7 @@ public class AudioList
 public class AudioScriptableObject : ScriptableObject
 {
 
-    public List<ObjectPool<AudioList>> audioClips;
+    public List<ObjectPool<AudioVariant>> audioClips;
     [SerializeField, HideInInspector] bool defaultValuesApplied = false;
 
     [Header ("Basic Controls")]

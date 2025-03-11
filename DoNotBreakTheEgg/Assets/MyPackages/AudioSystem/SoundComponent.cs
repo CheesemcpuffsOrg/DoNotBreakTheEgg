@@ -17,7 +17,14 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
     {
         yield return new WaitForSeconds(delay);
 
-        AudioManager.AudioManagerInstance.PlaySound(data.AudioScriptableObject, UUID, data.Playlocation, data.FollowTransform, fireEventWhenSoundFinished);
+        var playLocation = data.PlayLocation;
+
+        if(playLocation == null)
+        {
+            playLocation = transform;
+        }
+
+        AudioManager.AudioManagerInstance.PlaySound(data.AudioScriptableObject, UUID, playLocation, data.FollowTransform, fireEventWhenSoundFinished);
     }
 
     public void PlaySound(AudioScriptableObject audioScriptableObject, Vector3 location, UnityAction fireEventWhenSoundFinished = null)

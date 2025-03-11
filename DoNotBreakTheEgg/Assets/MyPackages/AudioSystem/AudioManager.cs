@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-//Joshua 
-
 
 public class AudioManager : MonoBehaviour
 {
@@ -288,7 +286,7 @@ public class AudioManager : MonoBehaviour
 #if UNITY_EDITOR
                     if(logStackTrace)
                     {
-                        loggingUtility.LogCleanedUpStackTrace($"STACKTRACE FOR STOPPED SOUND: {sound.name}", fullStackTrace);
+                        loggingUtility.LogCleanedUpStackTrace($"STACKTRACE FOR STOPPED SOUND: {sound.name}", fullStackTrace); 
                     }
 #endif
 
@@ -476,7 +474,7 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// Creates or re-uses an audio object.
     /// </summary>
-    private GameObject AudioObjectType(Vector3 location, AudioObjType type, Transform transformLocation)
+    private GameObject AudioObjectType(Vector3 location, AudioObjType type, Transform transformLocation = null)
     {
         GameObject obj;
 
@@ -511,6 +509,12 @@ public class AudioManager : MonoBehaviour
             }
 
             obj.transform.position = location;
+
+            if(transformLocation == null)
+            {
+                Debug.Log("Transform required");
+            }
+
             obj.GetComponent<AudioFollowTransform>().AssignTransform(transformLocation);
         }
 
@@ -522,7 +526,7 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// Prevent audio flooding by deleting the oldest audio source when the limit is exceeded.
     /// </summary>
-    private void AudioFloodPrevention(AudioList audioListVariable)
+    private void AudioFloodPrevention(AudioVariant audioListVariable)
     {
         var stack = 0;
 
@@ -548,7 +552,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void PopulateTheAudioSource(AudioScriptableObject sound, UniqueSoundID UUID, GameObject obj, AudioList audioListVariable, AudioSource audioSource)
+    private void PopulateTheAudioSource(AudioScriptableObject sound, UniqueSoundID UUID, GameObject obj, AudioVariant audioListVariable, AudioSource audioSource)
     {
         audioSource.clip = audioListVariable.audioClip;
                 
@@ -580,7 +584,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void CreateAudioReference(AudioScriptableObject sound, UniqueSoundID UUID, GameObject obj, AudioSource audioSource, AudioList audioListVariable, AudioObjType type)
+    private void CreateAudioReference(AudioScriptableObject sound, UniqueSoundID UUID, GameObject obj, AudioSource audioSource, AudioVariant audioListVariable, AudioObjType type)
     {
         var createdObjReference = new AudioReference();
 

@@ -10,7 +10,7 @@ public class SoundData
     public AudioScriptableObject AudioScriptableObject => audioScriptableObject;
 
     [SerializeField, Tooltip("If left empty, this will default to the callers transform")] Transform playLocation;
-    public Transform Playlocation => playLocation;
+    public Transform PlayLocation => playLocation;
 
     [SerializeField] bool followTransform = false;
     public bool FollowTransform => followTransform;
