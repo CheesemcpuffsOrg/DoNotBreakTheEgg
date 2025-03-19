@@ -30,7 +30,9 @@ public class AudioSystemManager : MonoBehaviour
     }
 
     List<AudioReference> audioReferences = new List<AudioReference>();
+
     Transform audioPoolContainer;
+    Transform activeSounds;
 
     /// <summary>
     /// Base functionality required when calling a sound
@@ -49,6 +51,8 @@ public class AudioSystemManager : MonoBehaviour
 
         var (obj, audioSource) = GenerateAudioSource(audioData, chosenAudioVariant, location, type, transformLocation);
 
+        obj.transform.SetParent(activeSounds);
+
         CreateAudioReference(sound, UUID, obj, audioSource, chosenAudioVariant, type);
 
         audioSource.Play();
@@ -58,14 +62,11 @@ public class AudioSystemManager : MonoBehaviour
 
     private void CreateAudioReference(AudioScriptableObject sound, UniqueSoundID UUID, GameObject obj, AudioSource audioSource, AudioVariant audioVariant, AudioObjType type)
     {
-
-        Coroutine clipLength = null;
-
         if (!audioSource.loop)
         {
             var lengthCalculatingPitch = audioSource.clip.length / Math.Abs(audioVariant.pitch);
-            clipLength = StartCoroutine(Countdown(lengthCalculatingPitch, UUID.soundID));
 
+            var clipLength = StartCoroutine(Countdown(lengthCalculatingPitch, UUID.soundID));
 
             var createdObjReference = new AudioReference(sound, UUID, obj, type, clipLength, new UnityEvent(), audioVariant.volume);
 
