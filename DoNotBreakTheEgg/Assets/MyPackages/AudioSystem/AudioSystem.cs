@@ -1,8 +1,40 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public static class AudioSystem
 {
+    public class AudioSourceData
+    {
+
+        public bool PlayOnAwake { get; }
+
+        public AudioMixerGroup MixerGroup { get; }
+        public bool Loop { get; }
+        public float Pan { get; }
+        public float SpatialBlend { get; }
+        public float DopplerLevel { get; }
+        public float MinDistance { get; }
+        public float MaxDistance { get; }
+        public AudioRolloffMode RolloffMode { get; }
+        public AnimationCurve Curve { get; }
+
+        public AudioSourceData(AudioMixerGroup audioMixerGroup, bool loop, float pan, float spatialBlend, float dopplerLevel, float minDistance, float maxDistance, AudioRolloffMode audioRolloffMode, AnimationCurve curve)
+        {
+            PlayOnAwake = false;
+
+            MixerGroup = audioMixerGroup;
+            Loop = loop;
+            Pan = pan;
+            SpatialBlend = spatialBlend;
+            DopplerLevel = dopplerLevel;
+            MinDistance = minDistance;
+            MaxDistance = maxDistance;
+            RolloffMode = audioRolloffMode;
+            Curve = curve;
+        }
+    }
+
     public enum AudioObjType 
     { 
         STATIC, 
@@ -15,9 +47,9 @@ public static class AudioSystem
     /// <summary>
     /// Generate a gameobject and AudioSource to use.
     /// </summary>
-    public  static (GameObject, AudioSource) GenerateAudioSource(AudioScriptableObject sound, AudioVariant variant, Vector3 location, AudioObjType type, Transform transformLocation = null)
+    public  static (GameObject, AudioSource) GenerateAudioSource(AudioSourceData data, AudioVariant variant, Vector3 location, AudioObjType type, Transform transformLocation = null)
     {
-        if (sound == null)
+        if (data == null)
         {
             Debug.LogError($"You are missing a sound scriptable object");
             return (null, null);
@@ -27,7 +59,7 @@ public static class AudioSystem
 
         var audioSource = obj.GetComponent<AudioSource>();
 
-        PopulateTheAudioSource(sound, variant, audioSource);
+        PopulateTheAudioSource(data, variant, audioSource);
 
         return (obj, audioSource);
     }
@@ -97,25 +129,26 @@ public static class AudioSystem
         return obj;
     }
 
-    private static void PopulateTheAudioSource(AudioScriptableObject sound, AudioVariant audioVariant, AudioSource audioSource)
+    private static void PopulateTheAudioSource(AudioSourceData data, AudioVariant audioVariant, AudioSource audioSource)
     {
         audioSource.clip = audioVariant.audioClip;
+        audioSource.volume = audioVariant.volume;
 
-        audioSource.playOnAwake = false;
+        audioSource.playOnAwake = data.PlayOnAwake;
 
         audioSource.pitch = audioVariant.pitch;
-        audioSource.outputAudioMixerGroup = sound.audioMixerGroup;
-        audioSource.loop = sound.loop;
-        audioSource.panStereo = sound.pan;
-        audioSource.spatialBlend = sound.spatialBlend;
-        audioSource.dopplerLevel = sound.dopplerLevel;
-        audioSource.minDistance = sound.minDistance;
-        audioSource.maxDistance = sound.maxDistance;
-        audioSource.rolloffMode = sound.volumeRollOffMode;
+        audioSource.outputAudioMixerGroup = data.MixerGroup;
+        audioSource.loop = data.Loop;
+        audioSource.panStereo = data.Pan;
+        audioSource.spatialBlend = data.SpatialBlend;
+        audioSource.dopplerLevel = data.DopplerLevel;
+        audioSource.minDistance = data.MinDistance;
+        audioSource.maxDistance = data.MaxDistance;
+        audioSource.rolloffMode = data.RolloffMode;
 
-        if (sound.volumeRollOffMode == AudioRolloffMode.Custom)
+        if (data.RolloffMode == AudioRolloffMode.Custom && data.Curve != null)
         {
-            audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, sound.volumeRollOffCurve);
+            audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, data.Curve);
         }
     }
 }
