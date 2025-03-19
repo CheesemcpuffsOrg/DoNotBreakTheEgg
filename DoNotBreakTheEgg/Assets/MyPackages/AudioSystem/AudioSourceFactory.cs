@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public static class AudioSystem
+public static class AudioSourceFactory
 {
     public class AudioSourceData
     {
-
         public bool PlayOnAwake { get; }
 
         public AudioMixerGroup MixerGroup { get; }
@@ -41,8 +40,11 @@ public static class AudioSystem
         FOLLOW 
     }
 
-    static Queue<GameObject> staticAudioPool = new Queue<GameObject>();
-    static Queue<GameObject> followAudioPool = new Queue<GameObject>();
+    static Dictionary<AudioObjType, Queue<GameObject>> audioPoolDictionary = new Dictionary<AudioObjType, Queue<GameObject>>()
+    {
+        { AudioObjType.STATIC, new Queue<GameObject>() },
+        { AudioObjType.FOLLOW, new Queue<GameObject>() }
+    };
 
     /// <summary>
     /// Generate a gameobject and AudioSource to use.
@@ -55,7 +57,7 @@ public static class AudioSystem
             return (null, null);
         }
 
-        GameObject obj = AudioObjectType(location, type, transformLocation);
+        var obj = GetOrCreateAudioObject(location, type, transformLocation);
 
         var audioSource = obj.GetComponent<AudioSource>();
 
@@ -69,62 +71,65 @@ public static class AudioSystem
     /// </summary>
     public static void ClearAudioSource(AudioObjType type, GameObject audioSourceObject)
     {
-        
-        if (type == AudioObjType.STATIC)
-        {
-            staticAudioPool.Enqueue(audioSourceObject);
-        }
-        else
-        {
-            audioSourceObject.GetComponent<AudioFollowTransform>().RemoveTransform();
-            followAudioPool.Enqueue(audioSourceObject);
-        }
 
         var audioSource = audioSourceObject.GetComponent<AudioSource>();
-
         audioSource.Stop();
+
+        switch (type)
+        {
+            case AudioObjType.STATIC:
+                audioPoolDictionary[type].Enqueue(audioSourceObject);
+                break;
+            case AudioObjType.FOLLOW:
+                audioSourceObject.GetComponent<AudioFollowTransform>().RemoveTransform();
+                audioPoolDictionary[type].Enqueue(audioSourceObject);
+                break;
+            default:
+                Debug.LogWarning($"Unhandled AudioObjType: {type}");
+                break;
+        }
     }
 
     /// <summary>
     /// Creates or re-uses an audio object.
     /// </summary>
-    private static GameObject AudioObjectType(Vector3 location, AudioObjType type, Transform transformLocation)
+    private static GameObject GetOrCreateAudioObject(Vector3 location, AudioObjType type, Transform transformLocation)
     {
-        GameObject obj;
 
-        if (type == AudioObjType.STATIC)
+        GameObject obj = null;
+
+        if (audioPoolDictionary.TryGetValue(type, out var queue))
         {
-            //take obj from audio pool, if there are none create a new object.
-            if (staticAudioPool.Count > 0)
+            if(queue.Count > 0)
             {
-                obj = staticAudioPool.Dequeue();
+                obj = queue.Dequeue();
             }
-            else
-            {
-                obj = new GameObject("StaticAudioObject");
-                obj.AddComponent<AudioSource>();
-            }
-
-            obj.transform.position = location;
         }
-        else
+
+        switch (type)
         {
-            //take obj from audio pool, if there are none create a new object.
-            if (followAudioPool.Count > 0)
-            {
-                obj = followAudioPool.Dequeue();
-
-            }
-            else
-            {
-                obj = new GameObject("FollowAudioObject");
-                obj.AddComponent<AudioSource>();
-                obj.AddComponent<AudioFollowTransform>();
-            }
-
-            obj.transform.position = location;
-            obj.GetComponent<AudioFollowTransform>().AssignTransform(transformLocation);
+            case AudioObjType.STATIC:
+                if (obj != null)
+                {
+                    obj = new GameObject("StaticAudioObject");
+                    obj.AddComponent<AudioSource>();
+                }
+                break;
+            case AudioObjType.FOLLOW:
+                if (obj != null)
+                {
+                    obj = new GameObject("FollowAudioObject");
+                    obj.AddComponent<AudioSource>();
+                    obj.AddComponent<AudioFollowTransform>();
+                }
+                obj.GetComponent<AudioFollowTransform>().AssignTransform(transformLocation);
+                break;
+            default:
+                Debug.LogWarning($"Unhandled AudioObjType: {type}");
+                break;
         }
+
+        obj.transform.position = location;
 
         return obj;
     }

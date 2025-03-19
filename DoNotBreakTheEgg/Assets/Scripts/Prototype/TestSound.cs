@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestSound : MonoBehaviour
 {
-    [SerializeField, ColoredField(ColoredFieldAttribute.ColoredField.Sound)] SoundData sound;
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData sound;
     [SerializeField] GameObject soundComponentObj;
 
     ISoundComponent soundComponent => soundComponentObj.GetComponent<ISoundComponent>();

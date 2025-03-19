@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ColoredFieldAttribute : PropertyAttribute
 {
-    public enum ColoredField
+    public enum PresetColors
     {
         Sound
     }
@@ -17,16 +17,16 @@ public class ColoredFieldAttribute : PropertyAttribute
         Color = new Color(r, g, b);
     }
 
-    public ColoredFieldAttribute(ColoredField color)
+    public ColoredFieldAttribute(PresetColors color)
     {
         Color = GetColorFromEnum(color);
     }
 
-    private Color GetColorFromEnum(ColoredField color)
+    private Color GetColorFromEnum(PresetColors color)
     {
         switch (color)
         {
-            case ColoredField.Sound:
+            case PresetColors.Sound:
                 return new Color(0f, .3f, 0f);
             default:
                 return Color.white; // Default color if nothing matches

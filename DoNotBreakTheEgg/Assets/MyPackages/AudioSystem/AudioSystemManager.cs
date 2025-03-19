@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static AudioSystem;
+using static AudioSourceFactory;
 
 public class AudioSystemManager : MonoBehaviour
 {
@@ -58,6 +58,32 @@ public class AudioSystemManager : MonoBehaviour
         audioSource.Play();
 
         return true;
+    }
+
+    private void StopSound(AudioScriptableObject sound, UniqueSoundID UUID, string fullStackTrace)
+    {
+        foreach (var audioReference in audioReferences)
+        {
+            if (audioReference.SoundID == UUID.soundID)
+            {
+                audioReference.AudioSourceObject.transform.SetParent(audioPoolContainer);
+
+                ClearAudioSource(audioReference.Type, audioReference.AudioSourceObject);
+
+                if (audioReference.ClipLength != null)
+                {
+                    StopCoroutine(audioReference.ClipLength);
+                }
+
+                audioReference.EndOfClip?.Invoke();
+
+                audioReferences.Remove(audioReference);
+
+                return;
+            }
+        }
+
+        UnityEngine.Debug.LogError("Sound: " + sound + " is not active.");
     }
 
     private void CreateAudioReference(AudioScriptableObject sound, UniqueSoundID UUID, GameObject obj, AudioSource audioSource, AudioVariant audioVariant, AudioObjType type)
