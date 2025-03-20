@@ -7,123 +7,191 @@ using static AudioSourceFactory;
 
 public class AudioSystemManager : MonoBehaviour
 {
-    private class AudioReference
+    public class ActiveSound
+    {
+        private AudioReference reference;
+
+        public ActiveSound(AudioReference audioReference)
+        {
+            reference = audioReference;
+        }
+
+        public void AddListener(Action listener)
+        {
+            reference.AddListener(listener);
+        }
+
+        public void RemoveListener(Action listener)
+        {
+            reference.RemoveListener(listener);
+        }
+    }
+
+    public class AudioReference
     {
         public AudioScriptableObject ScriptableObjectReference { get; }
         public string SoundID { get; }
         public GameObject AudioSourceObject { get; }
         public AudioObjType Type { get; }
         public Coroutine ClipLength { get; }
-        public UnityEvent EndOfClip { get; }
         public float Volume { get; }
 
-        public AudioReference(AudioScriptableObject scriptableObjectReference, UniqueSoundID UUID, GameObject audioSourceObject, AudioObjType type, Coroutine clipLength, UnityEvent endOfClip, float volume)
+        private Action EndOfClip;
+
+        public AudioReference(AudioScriptableObject scriptableObjectReference, UniqueSoundID UUID, GameObject audioSourceObject, AudioObjType type, Coroutine clipLength, float volume)
         {
             ScriptableObjectReference = scriptableObjectReference;
             SoundID = UUID.soundID;
             AudioSourceObject = audioSourceObject;
             Type = type;
             ClipLength = clipLength;
-            EndOfClip = endOfClip;
             Volume = volume;
         }
+
+        public void EndOfClipReached()
+        {
+            EndOfClip?.Invoke();
+        }
+
+        public void RemoveAllListeners()
+        {
+            EndOfClip = null;
+        }
+
+        public void AddListener(Action listener)
+        {
+            EndOfClip += listener;
+        }
+
+        public void RemoveListener(Action listener)
+        {
+            EndOfClip -= listener;
+        }
     }
+
+    public static AudioSystemManager AudioManagerInstance;
 
     List<AudioReference> audioReferences = new List<AudioReference>();
 
     Transform audioPoolContainer;
     Transform activeSounds;
 
+    private void Awake()
+    {
+        AudioManagerInstance = this;
+
+        audioPoolContainer = new GameObject("AudioPoolContainer").transform;
+        audioPoolContainer.SetParent(this.transform, false);
+
+        activeSounds = new GameObject("ActiveSounds").transform;
+        activeSounds.SetParent(this.transform, false);
+    }
+
     /// <summary>
     /// Base functionality required when calling a sound
     /// </summary>
-    private bool PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Vector3 location, AudioObjType type, string fullStackTrace, Transform transformLocation = null)
+    public ActiveSound PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Vector3 location, bool followTransform = false, Transform transformLocation = null)
     {
         if (sound == null)
         {
             Debug.LogError($"You are missing a sound scriptable object");
-            return false;
+            return null;
         }
 
         var chosenAudioVariant = RandomUtility.ObjectPoolCalculator(sound.audioClips);
 
         var audioData = new AudioSourceData(sound.audioMixerGroup, sound.loop, sound.pan, sound.spatialBlend, sound.dopplerLevel, sound.minDistance, sound.maxDistance, sound.volumeRollOffMode, sound.volumeRollOffCurve);
 
+        var type = AudioObjType.STATIC;
+
+        if (followTransform)
+        {
+            type = AudioObjType.FOLLOW;
+        }
+
         var (obj, audioSource) = GenerateAudioSource(audioData, chosenAudioVariant, location, type, transformLocation);
 
         obj.transform.SetParent(activeSounds);
 
-        CreateAudioReference(sound, UUID, obj, audioSource, chosenAudioVariant, type);
+        var audioReference = CreateAudioReference(sound, UUID, obj, audioSource, chosenAudioVariant, type);
 
         audioSource.Play();
 
-        return true;
+        return new ActiveSound(audioReference);
     }
 
-    private void StopSound(AudioScriptableObject sound, UniqueSoundID UUID, string fullStackTrace)
+    public void StopSound(AudioScriptableObject sound, UniqueSoundID UUID)
     {
-        foreach (var audioReference in audioReferences)
+        if (!TryGetAudioReference(sound, UUID.soundID, out var audioReference))
         {
-            if (audioReference.SoundID == UUID.soundID)
-            {
-                audioReference.AudioSourceObject.transform.SetParent(audioPoolContainer);
-
-                ClearAudioSource(audioReference.Type, audioReference.AudioSourceObject);
-
-                if (audioReference.ClipLength != null)
-                {
-                    StopCoroutine(audioReference.ClipLength);
-                }
-
-                audioReference.EndOfClip?.Invoke();
-
-                audioReferences.Remove(audioReference);
-
-                return;
-            }
+            return;
         }
 
-        UnityEngine.Debug.LogError("Sound: " + sound + " is not active.");
+        audioReference.AudioSourceObject.transform.SetParent(audioPoolContainer);
+
+        ClearAudioSource(audioReference.Type, audioReference.AudioSourceObject);
+
+        if (audioReference.ClipLength != null)
+        {
+            StopCoroutine(audioReference.ClipLength);
+        }
+
+        audioReference.EndOfClipReached();
+        audioReference.RemoveAllListeners();
     }
 
-    private void CreateAudioReference(AudioScriptableObject sound, UniqueSoundID UUID, GameObject obj, AudioSource audioSource, AudioVariant audioVariant, AudioObjType type)
+    private AudioReference CreateAudioReference(AudioScriptableObject sound, UniqueSoundID UUID, GameObject obj, AudioSource audioSource, AudioVariant audioVariant, AudioObjType type)
     {
+        Coroutine clipLength = null;
+
         if (!audioSource.loop)
         {
             var lengthCalculatingPitch = audioSource.clip.length / Math.Abs(audioVariant.pitch);
 
-            var clipLength = StartCoroutine(Countdown(lengthCalculatingPitch, UUID.soundID));
-
-            var createdObjReference = new AudioReference(sound, UUID, obj, type, clipLength, new UnityEvent(), audioVariant.volume);
-
-            audioReferences.Add(createdObjReference);
+            clipLength = StartCoroutine(Countdown(lengthCalculatingPitch, sound, UUID.soundID));
         }
+
+        var createdObjReference = new AudioReference(sound, UUID, obj, type, clipLength, audioVariant.volume);
+
+        audioReferences.Add(createdObjReference);
+
+        return createdObjReference;
     }
 
     /// <summary>
     /// This will turn any non-looping audio into a oneshot
     /// </summary>
-    IEnumerator Countdown(float seconds, string soundID)
+    IEnumerator Countdown(float seconds, AudioScriptableObject sound, string soundID)
     {
         yield return new WaitForSeconds(seconds);
 
-        foreach (var audioReference in audioReferences)
+        if (!TryGetAudioReference(sound, soundID, out var audioReference))
         {
-            if (audioReference.SoundID == soundID)
+            yield break;
+        }
+
+        audioReference.AudioSourceObject.transform.SetParent(audioPoolContainer);
+
+        audioReference.EndOfClipReached();
+        audioReference.RemoveAllListeners();
+
+        ClearAudioSource(audioReference.Type, audioReference.AudioSourceObject);
+
+        audioReferences.Remove(audioReference);
+    }
+
+    private bool TryGetAudioReference(AudioScriptableObject sound, string soundID, out AudioReference audioReference)
+    {
+        foreach (var reference in audioReferences)
+        {
+            if (reference.SoundID == soundID && reference.ScriptableObjectReference == sound)
             {
-                audioReference.AudioSourceObject.transform.SetParent(audioPoolContainer);
-
-                if (audioReference.EndOfClip != null)
-                {
-                    audioReference.EndOfClip.Invoke();
-                }
-
-                ClearAudioSource(audioReference.Type, audioReference.AudioSourceObject);
-
-                audioReferences.Remove(audioReference);
-
-                yield break;
+                audioReference = reference;
+                return true;
             }
         }
+
+        audioReference = null;
+        return false;
     }
 }
