@@ -109,14 +109,14 @@ public static class AudioSourceFactory
         switch (type)
         {
             case AudioObjType.STATIC:
-                if (obj != null)
+                if (obj == null)
                 {
                     obj = new GameObject("StaticAudioObject");
                     obj.AddComponent<AudioSource>();
                 }
                 break;
             case AudioObjType.FOLLOW:
-                if (obj != null)
+                if (obj == null)
                 {
                     obj = new GameObject("FollowAudioObject");
                     obj.AddComponent<AudioSource>();

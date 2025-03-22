@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using System.Linq;
 using static AudioSourceFactory;
 
-public class AudioSystemManager : MonoBehaviour
+//I want to look at audio instancing per UUID call in the future, similar to something like gunshots, who is the best way to handle it if stop called early.
+
+public class BaseAudioSystemManager : MonoBehaviour
 {
     public class ActiveSound
     {
@@ -30,22 +32,23 @@ public class AudioSystemManager : MonoBehaviour
     public class AudioReference
     {
         public AudioScriptableObject ScriptableObjectReference { get; }
-        public string SoundID { get; }
+        public UniqueSoundID UUID { get; }
         public GameObject AudioSourceObject { get; }
+        public AudioSource AudioSource => AudioSourceObject.GetComponent<AudioSource>();
         public AudioObjType Type { get; }
         public Coroutine ClipLength { get; }
-        public float Volume { get; }
+        public float DefaultVolume { get; }
 
         private Action EndOfClip;
 
         public AudioReference(AudioScriptableObject scriptableObjectReference, UniqueSoundID UUID, GameObject audioSourceObject, AudioObjType type, Coroutine clipLength, float volume)
         {
             ScriptableObjectReference = scriptableObjectReference;
-            SoundID = UUID.soundID;
+            this.UUID = UUID;
             AudioSourceObject = audioSourceObject;
             Type = type;
             ClipLength = clipLength;
-            Volume = volume;
+            DefaultVolume = volume;
         }
 
         public void EndOfClipReached()
@@ -69,16 +72,16 @@ public class AudioSystemManager : MonoBehaviour
         }
     }
 
-    public static AudioSystemManager AudioManagerInstance;
+    public static BaseAudioSystemManager Instance;
 
-    List<AudioReference> audioReferences = new List<AudioReference>();
+    protected List<AudioReference> audioReferences = new List<AudioReference>();
 
     Transform audioPoolContainer;
     Transform activeSounds;
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        AudioManagerInstance = this;
+        Instance = this;
 
         audioPoolContainer = new GameObject("AudioPoolContainer").transform;
         audioPoolContainer.SetParent(this.transform, false);
@@ -88,7 +91,7 @@ public class AudioSystemManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Base functionality required when calling a sound
+    /// Base play sound call
     /// </summary>
     public ActiveSound PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Vector3 location, bool followTransform = false, Transform transformLocation = null)
     {
@@ -120,24 +123,45 @@ public class AudioSystemManager : MonoBehaviour
         return new ActiveSound(audioReference);
     }
 
+    /// <summary>
+    /// Base stop sound call.
+    /// </summary>
     public void StopSound(AudioScriptableObject sound, UniqueSoundID UUID)
     {
-        if (!TryGetAudioReference(sound, UUID.soundID, out var audioReference))
+        if (sound == null)
         {
+            UnityEngine.Debug.LogError($"You are missing a sound scriptable object");
             return;
         }
 
-        audioReference.AudioSourceObject.transform.SetParent(audioPoolContainer);
-
-        ClearAudioSource(audioReference.Type, audioReference.AudioSourceObject);
-
-        if (audioReference.ClipLength != null)
+        if (UUID == null)
         {
-            StopCoroutine(audioReference.ClipLength);
+            UnityEngine.Debug.LogError($"You are missing the UUID");
+            return;
         }
 
-        audioReference.EndOfClipReached();
-        audioReference.RemoveAllListeners();
+        //make sure if a call to stop a sound occurs, it stops all instances of that sound for the UUID
+        for (int i = audioReferences.Count - 1; i >= 0; i--)
+        {
+            var audioReference = audioReferences[i];
+
+            if (audioReference.UUID.soundID == UUID.soundID && audioReference.ScriptableObjectReference == sound)
+            {
+                audioReference.AudioSourceObject.transform.SetParent(audioPoolContainer);
+
+                ClearAudioSource(audioReference.Type, audioReference.AudioSourceObject);
+
+                if (audioReference.ClipLength != null)
+                {
+                    StopCoroutine(audioReference.ClipLength);
+                }
+
+                audioReference.EndOfClipReached();
+                audioReference.RemoveAllListeners();
+
+                audioReferences.Remove(audioReference); 
+            }
+        }
     }
 
     private AudioReference CreateAudioReference(AudioScriptableObject sound, UniqueSoundID UUID, GameObject obj, AudioSource audioSource, AudioVariant audioVariant, AudioObjType type)
@@ -148,7 +172,7 @@ public class AudioSystemManager : MonoBehaviour
         {
             var lengthCalculatingPitch = audioSource.clip.length / Math.Abs(audioVariant.pitch);
 
-            clipLength = StartCoroutine(Countdown(lengthCalculatingPitch, sound, UUID.soundID));
+            clipLength = StartCoroutine(Countdown(lengthCalculatingPitch, sound, UUID));
         }
 
         var createdObjReference = new AudioReference(sound, UUID, obj, type, clipLength, audioVariant.volume);
@@ -161,11 +185,11 @@ public class AudioSystemManager : MonoBehaviour
     /// <summary>
     /// This will turn any non-looping audio into a oneshot
     /// </summary>
-    IEnumerator Countdown(float seconds, AudioScriptableObject sound, string soundID)
+    IEnumerator Countdown(float seconds, AudioScriptableObject sound, UniqueSoundID UUID)
     {
         yield return new WaitForSeconds(seconds);
 
-        if (!TryGetAudioReference(sound, soundID, out var audioReference))
+        if (!TryGetOldestAudioReference(sound, UUID, out var audioReference))
         {
             yield break;
         }
@@ -180,11 +204,28 @@ public class AudioSystemManager : MonoBehaviour
         audioReferences.Remove(audioReference);
     }
 
-    private bool TryGetAudioReference(AudioScriptableObject sound, string soundID, out AudioReference audioReference)
+    protected bool TryGetOldestAudioReference(AudioScriptableObject sound, UniqueSoundID UUID, out AudioReference audioReference)
     {
-        foreach (var reference in audioReferences)
+        foreach(var reference in audioReferences)
         {
-            if (reference.SoundID == soundID && reference.ScriptableObjectReference == sound)
+            if (reference.UUID == UUID && reference.ScriptableObjectReference == sound)
+            {
+                audioReference = reference;
+                return true;
+            }
+        }
+
+        audioReference = null;
+        return false;
+    }
+
+    protected bool TryGetNewestAudioReference(AudioScriptableObject sound, UniqueSoundID UUID, out AudioReference audioReference)
+    {
+        for (int i = audioReferences.Count - 1; i >= 0; i--)
+        {
+            var reference = audioReferences[i];
+
+            if (reference.UUID == UUID && reference.ScriptableObjectReference == sound)
             {
                 audioReference = reference;
                 return true;

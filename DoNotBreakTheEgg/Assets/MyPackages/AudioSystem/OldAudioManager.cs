@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public class AudioManager : MonoBehaviour
+public class OldAudioManager : MonoBehaviour
 {
     [Serializable]
     private class AudioReference
@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
 
     enum AudioObjType { STATIC, FOLLOW }
 
-    public static AudioManager AudioManagerInstance;
+    public static OldAudioManager AudioManagerInstance;
 
     List<AudioReference> audioReferences = new List<AudioReference>();
     Queue<GameObject> staticAudioPool = new Queue<GameObject>();

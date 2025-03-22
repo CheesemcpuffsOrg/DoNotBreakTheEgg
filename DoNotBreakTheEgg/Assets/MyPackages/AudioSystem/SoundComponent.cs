@@ -8,14 +8,14 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
 
     UniqueSoundID UUID = new UniqueSoundID();
 
-    public void PlaySound(SoundData data, UnityAction fireEventWhenSoundFinished = null)
+    public void PlaySound(SoundData data)
     {
-        StartCoroutine(DelayTimer(data.Delay, data, fireEventWhenSoundFinished));
+        StartCoroutine(DelayTimer(data));
     }
 
-    private IEnumerator DelayTimer(float delay, SoundData data, UnityAction fireEventWhenSoundFinished = null)
+    private IEnumerator DelayTimer(SoundData data)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(data.Delay);
 
         var playLocation = data.PlayLocation;
 
@@ -24,31 +24,43 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
             playLocation = transform;
         }
 
-        AudioManager.AudioManagerInstance.PlaySound(data.AudioScriptableObject, UUID, playLocation, data.FollowTransform, fireEventWhenSoundFinished);
+        AdvancedAudioSystemManager.Instance.PlaySound(data.AudioScriptableObject, UUID, playLocation, data.FollowTransform);
     }
+
+    public bool IsSoundPlaying(SoundData data)
+    {
+        return AdvancedAudioSystemManager.Instance.IsSoundPlaying(data.AudioScriptableObject, UUID);
+    }
+
+    public void StopSound(SoundData data)
+    {
+        AdvancedAudioSystemManager.Instance.StopSound(data.AudioScriptableObject, UUID);
+    }
+
+    //deprecated
 
     public void PlaySound(AudioScriptableObject audioScriptableObject, Vector3 location, UnityAction fireEventWhenSoundFinished = null)
     {
-        AudioManager.AudioManagerInstance.PlaySound(audioScriptableObject, UUID, location, fireEventWhenSoundFinished);
+        OldAudioManager.AudioManagerInstance.PlaySound(audioScriptableObject, UUID, location, fireEventWhenSoundFinished);
     }
 
     public void PlaySound(AudioScriptableObject audioScriptableObject, Transform transformLocation, bool followTransform = false, UnityAction fireEventWhenSoundFinished = null)
     {
-        AudioManager.AudioManagerInstance.PlaySound(audioScriptableObject, UUID, transformLocation, followTransform, fireEventWhenSoundFinished);
+        OldAudioManager.AudioManagerInstance.PlaySound(audioScriptableObject, UUID, transformLocation, followTransform, fireEventWhenSoundFinished);
     }
 
     public void StopSound(AudioScriptableObject audioScriptableObject)
     {
-        AudioManager.AudioManagerInstance.StopSound(audioScriptableObject, UUID);
+        OldAudioManager.AudioManagerInstance.StopSound(audioScriptableObject, UUID);
     }
 
     public bool IsSoundPlaying(AudioScriptableObject audioScriptableObject)
     {
-        return AudioManager.AudioManagerInstance.IsSoundPlaying(audioScriptableObject, UUID);
+        return OldAudioManager.AudioManagerInstance.IsSoundPlaying(audioScriptableObject, UUID);
     }
 
     public void DynamicVolumePrioritySystem(AudioScriptableObject audioScriptableObject, bool systemIsActive)
     {
-        AudioManager.AudioManagerInstance.DynamicVolumePrioritySystem(audioScriptableObject, systemIsActive);
+        OldAudioManager.AudioManagerInstance.DynamicVolumePrioritySystem(audioScriptableObject, systemIsActive);
     }
 }

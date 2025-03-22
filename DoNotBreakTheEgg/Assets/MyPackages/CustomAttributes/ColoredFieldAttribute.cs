@@ -50,6 +50,17 @@ public class ColoredFieldDrawer : PropertyDrawer
 
             while (childProperty.NextVisible(true) && !SerializedProperty.EqualContents(childProperty, endProperty))
             {
+                // Split the property path into segments
+                string[] pathSegments = childProperty.propertyPath.Split('.');
+
+                // Check if the path has more than one segment, meaning it's inside a container
+                if (pathSegments.Length > 2)
+                {
+                    // If there are more than two segments, it's a nested class/field
+                    // Here we just skip the nested properties
+                    continue;
+                }
+
                 height += EditorGUI.GetPropertyHeight(childProperty, true) + EditorGUIUtility.standardVerticalSpacing;
             }
         }
@@ -68,32 +79,40 @@ public class ColoredFieldDrawer : PropertyDrawer
         // Draw the foldout with default Unity text color
         property.isExpanded = EditorGUI.Foldout(labelRect, property.isExpanded, label, true);
 
-        // Draw child properties if expanded (also highlighted)
         if (property.isExpanded)
         {
             EditorGUI.indentLevel++;
             float childY = position.y + EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing;
 
-            var childProperty = property.Copy();
-            var endProperty = property.GetEndProperty();
+            SerializedProperty childProperty = property.Copy();
+            SerializedProperty endProperty = property.GetEndProperty();
 
-            while (childProperty.NextVisible(true) && !SerializedProperty.EqualContents(childProperty, endProperty))
+            if (childProperty.NextVisible(true))
             {
-                float childHeight = EditorGUI.GetPropertyHeight(childProperty, true);
-                Rect childPosition = new Rect(position.x, childY, position.width, childHeight);
+                do
+                {
+                    // Stop if we exceed the parent's scope
+                    if (SerializedProperty.EqualContents(childProperty, endProperty))
+                        break;
 
-                // Draw highlight behind each child property
-                EditorGUI.DrawRect(childPosition, colorAttribute.Color);
+                    float childHeight = EditorGUI.GetPropertyHeight(childProperty, true);
+                    Rect childPosition = new Rect(position.x, childY, position.width, childHeight);
 
-                // Draw the child property with default text color
-                EditorGUI.PropertyField(childPosition, childProperty, true);
+                    // Draw highlight behind each child property
+                    EditorGUI.DrawRect(childPosition, colorAttribute.Color);
 
-                // Move down for the next property
-                childY += childHeight + EditorGUIUtility.standardVerticalSpacing;
+                    // Draw the child property
+                    EditorGUI.PropertyField(childPosition, childProperty, true);
+
+                    // Move down for the next property
+                    childY += childHeight + EditorGUIUtility.standardVerticalSpacing;
+
+                } while (childProperty.NextVisible(false)); // false ensures we iterate within this foldout
             }
 
             EditorGUI.indentLevel--;
         }
     }
+
 }
 #endif
