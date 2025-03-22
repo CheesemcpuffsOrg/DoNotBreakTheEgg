@@ -5,7 +5,6 @@ using UnityEngine;
 public class TestSound : MonoBehaviour
 {
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData sound;
-    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData sound2;
     [SerializeField] GameObject soundComponentObj;
 
     ISoundComponent soundComponent => soundComponentObj.GetComponent<ISoundComponent>();
@@ -14,5 +13,14 @@ public class TestSound : MonoBehaviour
     void Start()
     {
         soundComponent.PlaySound(sound);
+
+        StartCoroutine(KillSound());
+    }
+
+    IEnumerator KillSound()
+    {
+        yield return new WaitForSeconds(5);
+
+        soundComponent.StopSound(sound);
     }
 }

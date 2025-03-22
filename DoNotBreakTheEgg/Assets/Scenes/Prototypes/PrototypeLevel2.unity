@@ -3771,19 +3771,9 @@ MonoBehaviour:
     followTransform: 0
     delay: 0
     fadeInFadeOut:
-      fadeIn: 0
+      fadeIn: 1
       fadeInDuration: 1
-      fadeOut: 0
-      fadeOutDuration: 1
-  sound2:
-    audioScriptableObject: {fileID: 0}
-    playLocation: {fileID: 0}
-    followTransform: 0
-    delay: 0
-    fadeInFadeOut:
-      fadeIn: 0
-      fadeInDuration: 1
-      fadeOut: 0
+      fadeOut: 1
       fadeOutDuration: 1
   soundComponentObj: {fileID: 1633702524}
 --- !u!114 &1633702526

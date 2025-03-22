@@ -68,7 +68,7 @@ public class AdvancedAudioSystemManager : BaseAudioSystemManager
         }
     }
 
-    public async void StopSound(AudioScriptableObject sound, UniqueSoundID UUID, Vector3 location, FadeInFadeOutData fadeInFadeOutData = null)
+    public async void StopSound(AudioScriptableObject sound, UniqueSoundID UUID, FadeInFadeOutData fadeInFadeOutData = null)
     {
         try
         {
@@ -86,7 +86,7 @@ public class AdvancedAudioSystemManager : BaseAudioSystemManager
             Debug.LogError($"Error during fade-out: {ex.Message}");
         }
 
-        StopSound(sound, UUID, location);
+        base.StopSound(sound, UUID);
     }
 
     /// <summary>

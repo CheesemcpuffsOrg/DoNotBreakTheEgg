@@ -24,7 +24,7 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
             playLocation = transform;
         }
 
-        AdvancedAudioSystemManager.Instance.PlaySound(data.AudioScriptableObject, UUID, playLocation, data.FollowTransform);
+        AdvancedAudioSystemManager.Instance.PlaySound(data.AudioScriptableObject, UUID, playLocation, data.FollowTransform, data.FadeInFadeOut);
     }
 
     public bool IsSoundPlaying(SoundData data)
@@ -34,7 +34,7 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
 
     public void StopSound(SoundData data)
     {
-        AdvancedAudioSystemManager.Instance.StopSound(data.AudioScriptableObject, UUID);
+        AdvancedAudioSystemManager.Instance.StopSound(data.AudioScriptableObject, UUID, data.FadeInFadeOut);
     }
 
     //deprecated
