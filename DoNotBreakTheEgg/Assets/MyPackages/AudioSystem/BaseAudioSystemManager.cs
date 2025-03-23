@@ -103,7 +103,7 @@ public class BaseAudioSystemManager : MonoBehaviour
 
         var chosenAudioVariant = RandomUtility.ObjectPoolCalculator(sound.audioClips);
 
-        var audioData = new AudioSourceData(sound.audioMixerGroup, sound.ApplyPitchShift, sound.minPitchShift, sound.maxPitchShift, sound.loop, sound.pan, sound.spatialBlend, sound.dopplerLevel, sound.minDistance, sound.maxDistance, sound.volumeRollOffMode, sound.volumeRollOffCurve);
+        var audioData = new AudioSourceData(sound.audioMixerGroup, sound.PitchShift, sound.minPitchShift, sound.maxPitchShift, sound.loop, sound.pan, sound.spatialBlend, sound.dopplerLevel, sound.minDistance, sound.maxDistance, sound.volumeRollOffMode, sound.volumeRollOffCurve);
 
         var type = AudioObjType.STATIC;
 
