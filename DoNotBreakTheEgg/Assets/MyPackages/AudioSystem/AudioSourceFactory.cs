@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -9,6 +10,9 @@ public static class AudioSourceFactory
         public bool PlayOnAwake { get; }
 
         public AudioMixerGroup MixerGroup { get; }
+        public bool PitchShift { get; }
+        public float MinPitchShift { get; }
+        public float MaxPitchShift { get; }
         public bool Loop { get; }
         public float Pan { get; }
         public float SpatialBlend { get; }
@@ -18,11 +22,14 @@ public static class AudioSourceFactory
         public AudioRolloffMode RolloffMode { get; }
         public AnimationCurve Curve { get; }
 
-        public AudioSourceData(AudioMixerGroup audioMixerGroup, bool loop, float pan, float spatialBlend, float dopplerLevel, float minDistance, float maxDistance, AudioRolloffMode audioRolloffMode, AnimationCurve curve)
+        public AudioSourceData(AudioMixerGroup audioMixerGroup, bool pitchShift, float minPitchShift, float maxPitchShift, bool loop, float pan, float spatialBlend, float dopplerLevel, float minDistance, float maxDistance, AudioRolloffMode audioRolloffMode, AnimationCurve curve)
         {
             PlayOnAwake = false;
 
             MixerGroup = audioMixerGroup;
+            PitchShift = pitchShift;
+            MinPitchShift = minPitchShift;
+            MaxPitchShift = maxPitchShift;
             Loop = loop;
             Pan = pan;
             SpatialBlend = spatialBlend;
@@ -141,7 +148,15 @@ public static class AudioSourceFactory
 
         audioSource.playOnAwake = data.PlayOnAwake;
 
-        audioSource.pitch = audioVariant.pitch;
+        if(data.PitchShift)
+        {
+            audioSource.pitch = Random.Range(data.MinPitchShift, data.MaxPitchShift);
+        }
+        else
+        {
+            audioSource.pitch = audioVariant.pitch;
+        }
+
         audioSource.outputAudioMixerGroup = data.MixerGroup;
         audioSource.loop = data.Loop;
         audioSource.panStereo = data.Pan;

@@ -25,6 +25,12 @@ public class AudioScriptableObject : ScriptableObject
     [Header ("Basic Controls")]
     public AudioMixerGroup audioMixerGroup;
     public bool loop = false;
+    public bool PitchShift;
+    [CustomRange(-3, 3), ShowIf("PitchShift")]
+    public float minPitchShift = 0.9f;
+    [CustomRange(-3, 3), ShowIf("PitchShift")]
+    public float maxPitchShift = 1.1f;
+
 
     [Header ("Fade Controls")]
     public bool fadeIn = false;

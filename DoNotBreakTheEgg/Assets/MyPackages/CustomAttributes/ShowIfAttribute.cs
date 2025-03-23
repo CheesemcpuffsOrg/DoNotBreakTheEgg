@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using System.Reflection;
 
 public class ShowIfAttribute : PropertyAttribute
 {
@@ -12,40 +13,66 @@ public class ShowIfAttribute : PropertyAttribute
 }
 
 #if UNITY_EDITOR
+
 [CustomPropertyDrawer(typeof(ShowIfAttribute))]
 public class ShowIfDrawer : PropertyDrawer
 {
+
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         ShowIfAttribute showIf = (ShowIfAttribute)attribute;
         SerializedProperty conditionProperty = property.serializedObject.FindProperty(showIf.ConditionField);
 
-        if (conditionProperty != null && conditionProperty.propertyType == SerializedPropertyType.Boolean)
+        if (conditionProperty != null && conditionProperty.propertyType == SerializedPropertyType.Boolean && !conditionProperty.boolValue)
         {
-            bool isVisible = conditionProperty.boolValue;
-
-            if (isVisible)
-            {
-                EditorGUI.PropertyField(position, property, label, true);
-            }
+            return; // Hide the property
         }
-        else
+
+        var clampedRangeHandled = HandleClampedRange(property, ref position, ref label);
+
+        if(!clampedRangeHandled)
         {
+            // If no ClampedRange, draw normally
             EditorGUI.PropertyField(position, property, label, true);
         }
     }
+
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         ShowIfAttribute showIf = (ShowIfAttribute)attribute;
         SerializedProperty conditionProperty = property.serializedObject.FindProperty(showIf.ConditionField);
 
-        if (conditionProperty != null && conditionProperty.propertyType == SerializedPropertyType.Boolean)
+        if (conditionProperty != null && conditionProperty.propertyType == SerializedPropertyType.Boolean && !conditionProperty.boolValue)
         {
-            return conditionProperty.boolValue ? EditorGUI.GetPropertyHeight(property, label) : 0;
+            return 0; // Hide the property
         }
 
-        return EditorGUI.GetPropertyHeight(property, label);
+        return EditorGUI.GetPropertyHeight(property, label, true);
+    }
+
+    private bool HandleClampedRange(SerializedProperty property, ref Rect position, ref GUIContent label)
+    {
+        // Check if ClampedRange exists
+        CustomRangeAttribute range = fieldInfo.GetCustomAttribute<CustomRangeAttribute>();
+
+        if (range != null)
+        {
+            // If ClampedRange is present, draw a slider instead of a standard field
+            if (property.propertyType == SerializedPropertyType.Float)
+            {
+                property.floatValue = EditorGUI.Slider(position, label, property.floatValue, range.Min, range.Max);
+            }
+            else if (property.propertyType == SerializedPropertyType.Integer)
+            {
+                property.intValue = EditorGUI.IntSlider(position, label, property.intValue, (int)range.Min, (int)range.Max);
+            }
+
+            return true;
+        }
+        
+        return false;
     }
 }
 #endif
+

@@ -21,6 +21,9 @@ MonoBehaviour:
   defaultValuesApplied: 1
   audioMixerGroup: {fileID: -3962127376102151815, guid: 219101960e5b7994c9f3c9a1c082bf41, type: 2}
   loop: 1
+  ApplyPitchShift: 0
+  minPitchAdjuster: 0
+  maxPitchAdjuster: 0
   fadeIn: 0
   fadeInDuration: 1
   fadeOut: 0
