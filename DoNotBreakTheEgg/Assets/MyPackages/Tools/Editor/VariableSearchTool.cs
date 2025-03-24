@@ -298,7 +298,7 @@ public class VariableSearchTool : EditorWindow
         ResetHierarchy();
     }
 
-    private static void OnUnityQuit()
+    private static void OnQuitUnity()
     {
         if (!isSubscribed) return;
 
