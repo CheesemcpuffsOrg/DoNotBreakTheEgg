@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
+using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer.Explorer;
 
 public class VariableSearchTool : EditorWindow
 {
@@ -18,11 +19,25 @@ public class VariableSearchTool : EditorWindow
 
     private const string FavouritePrefsKey = "VariableSearchTool_Favourites";
 
+    private static bool isSubscribed;
+    private static bool searchIsAtive;
+
     [MenuItem("Tools/Hierarchy Variable Search")]
     public static void OpenWindow()
     {
         var window = GetWindow<VariableSearchTool>("Variable Search");
         window.Show();
+    }
+
+    [InitializeOnLoadMethod]
+    public static void Intialize()
+    {
+        if (isSubscribed) return;
+
+        EditorSceneManager.sceneOpened += OnSceneOpened;
+        isSubscribed = true;
+
+        EditorApplication.quitting += OnQuitUnity;
     }
 
     private void OnEnable()
@@ -33,6 +48,11 @@ public class VariableSearchTool : EditorWindow
         selectedFavoriteIndex = 0; // Default to the first item
 
         EditorApplication.hierarchyWindowItemOnGUI += OnHierarchyItemGUI;
+    }
+
+    private void OnDisable()
+    {
+        ResetHierarchy();
     }
 
 
@@ -74,13 +94,13 @@ public class VariableSearchTool : EditorWindow
     private void TrySearch()
     {
         // Use the selected favorite type or custom type name
-        string typeToSearch = favoriteTypes[selectedFavoriteIndex];
+        var typeToSearch = favoriteTypes[selectedFavoriteIndex];
         if (!string.IsNullOrEmpty(searchTypeName))
         {
             typeToSearch = searchTypeName;
         }
 
-        Type searchType = ResolveType(typeToSearch);
+        var searchType = ResolveType(typeToSearch);
 
         if (searchType == null)
         {
@@ -93,7 +113,7 @@ public class VariableSearchTool : EditorWindow
 
     private void SearchByType(Type searchType)
     {
-        GameObject[] allObjects = GetAllObjects();
+        var allObjects = GetAllObjects();
 
         highlightedGameObjects.Clear();
 
@@ -131,7 +151,7 @@ public class VariableSearchTool : EditorWindow
 
     private bool HasVariableOfType(GameObject obj, Type searchType)
     {
-        MonoBehaviour[] components = obj.GetComponents<MonoBehaviour>();
+        var components = obj.GetComponents<MonoBehaviour>();
 
         foreach (var component in components)
         {
@@ -156,9 +176,12 @@ public class VariableSearchTool : EditorWindow
         }
     }
 
-    private void ResetHierarchy()
+    private static void ResetHierarchy()
     {
-        GameObject[] allObjects = GetAllObjects();
+
+        if (!searchIsAtive) return;
+
+        var allObjects = FindObjectsOfType<GameObject>(true);
 
         foreach (var obj in allObjects)
         {
@@ -238,7 +261,7 @@ public class VariableSearchTool : EditorWindow
 
     private void RemoveFromFavorites(string typeToRemove)
     {
-        int index = Array.IndexOf(favoriteTypes, typeToRemove);
+        var index = Array.IndexOf(favoriteTypes, typeToRemove);
         if (index < 0) return;
 
         // Remove the type and resize the array
@@ -270,10 +293,17 @@ public class VariableSearchTool : EditorWindow
         EditorPrefs.SetString(FavouritePrefsKey, favouriteTypesString);
     }
 
-    // Automatically reset visibility when the window is closed
-    private void OnDestroy()
+    private static void OnSceneOpened(Scene scene, OpenSceneMode mode)
     {
         ResetHierarchy();
+    }
+
+    private static void OnUnityQuit()
+    {
+        if (!isSubscribed) return;
+
+        EditorSceneManager.sceneOpened -= OnSceneOpened;
+        isSubscribed = false;
     }
 }
 #endif
