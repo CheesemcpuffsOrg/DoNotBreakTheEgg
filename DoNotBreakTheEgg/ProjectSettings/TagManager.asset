@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackgroundAssests
+    uniqueID: 4044864405
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
