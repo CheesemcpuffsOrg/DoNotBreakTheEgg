@@ -24,7 +24,7 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
             playLocation = transform;
         }
 
-        AdvancedAudioSystemManager.Instance.PlaySound(data.AudioScriptableObject, UUID, playLocation, data.FollowTransform, data.FadeInFadeOut);
+        AdvancedAudioSystemManager.Instance.PlaySound(data.AudioScriptableObject, UUID, playLocation, data.FollowTransform);
     }
 
     public bool IsSoundPlaying(SoundData data)
@@ -34,33 +34,6 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
 
     public void StopSound(SoundData data)
     {
-        AdvancedAudioSystemManager.Instance.StopSound(data.AudioScriptableObject, UUID, data.FadeInFadeOut);
-    }
-
-    //deprecated
-
-    public void PlaySound(AudioScriptableObject audioScriptableObject, Vector3 location, UnityAction fireEventWhenSoundFinished = null)
-    {
-        OldAudioManager.AudioManagerInstance.PlaySound(audioScriptableObject, UUID, location, fireEventWhenSoundFinished);
-    }
-
-    public void PlaySound(AudioScriptableObject audioScriptableObject, Transform transformLocation, bool followTransform = false, UnityAction fireEventWhenSoundFinished = null)
-    {
-        OldAudioManager.AudioManagerInstance.PlaySound(audioScriptableObject, UUID, transformLocation, followTransform, fireEventWhenSoundFinished);
-    }
-
-    public void StopSound(AudioScriptableObject audioScriptableObject)
-    {
-        OldAudioManager.AudioManagerInstance.StopSound(audioScriptableObject, UUID);
-    }
-
-    public bool IsSoundPlaying(AudioScriptableObject audioScriptableObject)
-    {
-        return OldAudioManager.AudioManagerInstance.IsSoundPlaying(audioScriptableObject, UUID);
-    }
-
-    public void DynamicVolumePrioritySystem(AudioScriptableObject audioScriptableObject, bool systemIsActive)
-    {
-        OldAudioManager.AudioManagerInstance.DynamicVolumePrioritySystem(audioScriptableObject, systemIsActive);
+        AdvancedAudioSystemManager.Instance.StopSound(data.AudioScriptableObject, UUID);
     }
 }

@@ -33,18 +33,18 @@ public class AdvancedAudioSystemManager : BaseAudioSystemManager
     /// <summary>
     /// Play a sound and fire an event when the sound finishes or is stopped.
     /// </summary>
-    public void PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Vector3 location, FadeInFadeOutData fadeInFadeOutData = null)
+    public void PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Vector3 location)
     {
         var activeSound = PlaySound(sound, UUID, location, false, null);
 
-        if (fadeInFadeOutData != null)
+        if (sound.FadeControls.FadeIn)
         {
             if(TryGetNewestAudioReference(sound, UUID, out var audioReference))
             {
                 var cancellationTokenSource = new CancellationTokenSource();
                 activeSound.AddListener(() => cancellationTokenSource.Cancel());
 
-                StartCoroutine(FadeIn(audioReference.AudioSource, fadeInFadeOutData.FadeInDuration, audioReference.DefaultVolume, cancellationTokenSource.Token));
+                StartCoroutine(FadeIn(audioReference.AudioSource, sound.FadeControls.FadeInDuration, audioReference.DefaultVolume, cancellationTokenSource.Token));
             }
         }
     }
@@ -52,32 +52,32 @@ public class AdvancedAudioSystemManager : BaseAudioSystemManager
     /// <summary>
     /// Play a sound and position the audio source at a transforms location, define if it follows and fire event when finished.
     /// </summary>
-    public void PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Transform transformToTrack, bool followTransform = false, FadeInFadeOutData fadeInFadeOutData = null)
+    public void PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Transform transformToTrack, bool followTransform = false)
     {
         var activeSound = PlaySound(sound, UUID, transformToTrack.position, followTransform, transformToTrack);
 
-        if (fadeInFadeOutData != null)
+        if (sound.FadeControls.FadeIn)
         {
             if (TryGetNewestAudioReference(sound, UUID, out var audioReference))
             {
                 var cancellationTokenSource = new CancellationTokenSource();
                 activeSound.AddListener(() => cancellationTokenSource.Cancel());
 
-                StartCoroutine(FadeIn(audioReference.AudioSource, fadeInFadeOutData.FadeInDuration, audioReference.DefaultVolume, cancellationTokenSource.Token));
+                StartCoroutine(FadeIn(audioReference.AudioSource, sound.FadeControls.FadeInDuration, audioReference.DefaultVolume, cancellationTokenSource.Token));
             }
         }
     }
 
-    public async void StopSound(AudioScriptableObject sound, UniqueSoundID UUID, FadeInFadeOutData fadeInFadeOutData = null)
+    public new async void StopSound(AudioScriptableObject sound, UniqueSoundID UUID)
     {
         try
         {
-            if (fadeInFadeOutData != null)
+            if (sound.FadeControls.FadeOut)
             {
                 if (TryGetNewestAudioReference(sound, UUID, out var audioReference))
                 {
                     // Fade out the sound asynchronously
-                    await FadeOutAsync(audioReference.AudioSource, fadeInFadeOutData.FadeInDuration);
+                    await FadeOutAsync(audioReference.AudioSource, sound.FadeControls.FadeOutDuration);
                 }
             }
         }
@@ -129,7 +129,7 @@ public class AdvancedAudioSystemManager : BaseAudioSystemManager
         foreach (AudioReference audioReference in audioReferences)
         {
             //change the location of this call
-            if (!audioReference.ScriptableObjectReference.playWhilePaused)
+            if (!audioReference.ScriptableObjectReference.PlayWhilePaused)
             {
                 audioReference.AudioSourceObject.GetComponent<AudioSource>().Pause();
             }
@@ -143,7 +143,7 @@ public class AdvancedAudioSystemManager : BaseAudioSystemManager
     {
         foreach (AudioReference audioReference in audioReferences)
         {
-            if (!audioReference.ScriptableObjectReference.playWhilePaused)
+            if (!audioReference.ScriptableObjectReference.PlayWhilePaused)
             {
                 audioReference.AudioSourceObject.GetComponent<AudioSource>().Play();
             }

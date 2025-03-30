@@ -17,9 +17,4 @@ public class SoundData
 
     [SerializeField] float delay;
     public float Delay => delay;
-
-    [SerializeField] AdvancedAudioSystemManager.FadeInFadeOutData fadeInFadeOut;
-
-    public AdvancedAudioSystemManager.FadeInFadeOutData FadeInFadeOut => fadeInFadeOut;
-
 }

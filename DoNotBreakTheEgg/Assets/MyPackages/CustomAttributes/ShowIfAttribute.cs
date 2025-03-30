@@ -23,19 +23,26 @@ public class ShowIfDrawer : PropertyDrawer
         ShowIfAttribute showIf = (ShowIfAttribute)attribute;
         SerializedProperty conditionProperty = property.serializedObject.FindProperty(showIf.ConditionField);
 
-        if (conditionProperty != null && conditionProperty.propertyType == SerializedPropertyType.Boolean && !conditionProperty.boolValue)
+        if (conditionProperty == null)
+        {
+            Debug.LogWarning($"ShowIf: Could not find property '{showIf.ConditionField}'");
+            EditorGUI.PropertyField(position, property, label, true);
+            return;
+        }
+
+        if (conditionProperty.propertyType == SerializedPropertyType.Boolean && !conditionProperty.boolValue)
         {
             return; // Hide the property
         }
 
         var clampedRangeHandled = HandleClampedRange(property, ref position, ref label);
 
-        if(!clampedRangeHandled)
+        if (!clampedRangeHandled)
         {
-            // If no ClampedRange, draw normally
             EditorGUI.PropertyField(position, property, label, true);
         }
     }
+
 
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

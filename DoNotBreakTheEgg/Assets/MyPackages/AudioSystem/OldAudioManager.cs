@@ -151,7 +151,7 @@ public class OldAudioManager : MonoBehaviour
 
         foreach (AudioReference audioReference in audioReferences)
         {
-            if (!audioReference.scriptableObjectReference.playWhilePaused)
+            if (!audioReference.scriptableObjectReference.PlayWhilePaused)
             {
                 audioReference.audioSourceObject.GetComponent<AudioSource>().Pause();     
             }
@@ -174,7 +174,7 @@ public class OldAudioManager : MonoBehaviour
 
         foreach (AudioReference audioReference in audioReferences)
         {
-            if (!audioReference.scriptableObjectReference.playWhilePaused)
+            if (!audioReference.scriptableObjectReference.PlayWhilePaused)
             {
                 audioReference.audioSourceObject.GetComponent<AudioSource>().Play();    
             }
@@ -212,7 +212,7 @@ public class OldAudioManager : MonoBehaviour
     /// <summary>
     /// The following method allows for dynamic control over the lowering and highering of all audios based on the priority of the SO parameter .
     /// </summary>
-    public void DynamicVolumePrioritySystem(AudioScriptableObject sound, bool systemIsActive)
+    /*public void DynamicVolumePrioritySystem(AudioScriptableObject sound, bool systemIsActive)
     {
         if (sound == null)
         {
@@ -249,7 +249,7 @@ public class OldAudioManager : MonoBehaviour
 
             activeAudioPriority = 0;
         }
-    }
+    }*/
 
     #endregion
 
@@ -275,9 +275,9 @@ public class OldAudioManager : MonoBehaviour
 
                 var audioSource = audioReference.audioSourceObject.GetComponent<AudioSource>();
 
-                if (sound.fadeOut)
+                if (sound.FadeControls.FadeOut)
                 {
-                    StartCoroutine(FadeOut(audioSource, sound.fadeOutDuration));
+                    StartCoroutine(FadeOut(audioSource, sound.FadeControls.FadeOutDuration));
                 }
                 else
                 {
@@ -415,7 +415,7 @@ public class OldAudioManager : MonoBehaviour
             return false;
         }
 
-        if (sound.singleInstanceAudio)
+        /*if (sound.singleInstanceAudio)
         {
             foreach (AudioReference reference in audioReferences)
             {
@@ -424,10 +424,10 @@ public class OldAudioManager : MonoBehaviour
                     return false;
                 }
             }
-        }
+        }*/
 
         //priority system
-        if (audioReferences.Count >= 32)
+        /*if (audioReferences.Count >= 32)
         {
             foreach (AudioReference reference in audioReferences)
             {
@@ -436,11 +436,11 @@ public class OldAudioManager : MonoBehaviour
                     StopSound(reference.scriptableObjectReference, reference.UUID);
                 }
             }
-        }
+        }*/
 
         GameObject obj = AudioObjectType(location, type, transformLocation);
 
-        var chosenAudioClip = RandomUtility.ObjectPoolCalculator(sound.audioClips);
+        var chosenAudioClip = RandomUtility.ObjectPoolCalculator(sound.AudioClips);
 
         AudioFloodPrevention(chosenAudioClip);
 
@@ -452,15 +452,15 @@ public class OldAudioManager : MonoBehaviour
 
         audioSource.Play();
 
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
         if (logStackTrace || sound.logStackTrace)
         {
             loggingUtility.LogCleanedUpStackTrace($"STACKTRACE FOR PLAYED SOUND: {sound.name}", fullStackTrace);
         }
-#endif
+#endif*/
 
-        var fadeIn = sound.fadeIn;
-        var fadeInDuration = sound.fadeInDuration;
+        var fadeIn = sound.FadeControls.FadeIn;
+        var fadeInDuration = sound.FadeControls.FadeInDuration;
 
         if (fadeIn)
         {
@@ -559,28 +559,28 @@ public class OldAudioManager : MonoBehaviour
         audioSource.playOnAwake = false;
             
         //check if a high priority sound has been played.
-        if (activeAudioPriority > 0 && sound.audioPriority < activeAudioPriority)
+        /*if (activeAudioPriority > 0 && sound.audioPriority < activeAudioPriority)
         {
             audioSource.volume = audioListVariable.volume * reductionAmount;
-        }
-        else
-        {
+        }*/
+       // else
+      //  {
             audioSource.volume = audioListVariable.volume;
-        }
+      //  }
 
         audioSource.pitch = audioListVariable.pitch;
-        audioSource.outputAudioMixerGroup = sound.audioMixerGroup;
-        audioSource.loop = sound.loop;
-        audioSource.panStereo = sound.pan;
-        audioSource.spatialBlend = sound.spatialBlend;
-        audioSource.dopplerLevel = sound.dopplerLevel;
-        audioSource.minDistance = sound.minDistance;
-        audioSource.maxDistance = sound.maxDistance;
-        audioSource.rolloffMode = sound.volumeRollOffMode;
+        audioSource.outputAudioMixerGroup = sound.AudioMixerGroup;
+        audioSource.loop = sound.Loop;
+        audioSource.panStereo = sound.Pan;
+        audioSource.spatialBlend = sound.SpatialBlend;
+        audioSource.dopplerLevel = sound.DopplerLevel;
+        audioSource.minDistance = sound.MinDistance;
+        audioSource.maxDistance = sound.MaxDistance;
+        audioSource.rolloffMode = sound.VolumeRollOffMode;
 
-        if (sound.volumeRollOffMode == AudioRolloffMode.Custom)
+        if (sound.VolumeRollOffMode == AudioRolloffMode.Custom)
         {  
-            audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, sound.volumeRollOffCurve);
+            audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, sound.VolumeRollOffCurve);
         }
     }
 

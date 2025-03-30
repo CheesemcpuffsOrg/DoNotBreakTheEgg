@@ -93,7 +93,7 @@ public class BaseAudioSystemManager : MonoBehaviour
     /// <summary>
     /// Base play sound call
     /// </summary>
-    public ActiveSound PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Vector3 location, bool followTransform = false, Transform transformLocation = null)
+    protected ActiveSound PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Vector3 location, bool followTransform = false, Transform transformLocation = null)
     {
         if (sound == null)
         {
@@ -101,9 +101,9 @@ public class BaseAudioSystemManager : MonoBehaviour
             return null;
         }
 
-        var chosenAudioVariant = RandomUtility.ObjectPoolCalculator(sound.audioClips);
+        var chosenAudioVariant = RandomUtility.ObjectPoolCalculator(sound.AudioClips);
 
-        var audioData = new AudioSourceData(sound.audioMixerGroup, sound.PitchShift, sound.minPitchShift, sound.maxPitchShift, sound.loop, sound.pan, sound.spatialBlend, sound.dopplerLevel, sound.minDistance, sound.maxDistance, sound.volumeRollOffMode, sound.volumeRollOffCurve);
+        var audioData = new AudioSourceData(sound.AudioMixerGroup, sound.PitchShift, sound.MinPitchShift, sound.MaxPitchShift, sound.Loop, sound.Pan, sound.SpatialBlend, sound.DopplerLevel, sound.MinDistance, sound.MaxDistance, sound.VolumeRollOffMode, sound.VolumeRollOffCurve);
 
         var type = AudioObjType.STATIC;
 
@@ -126,7 +126,7 @@ public class BaseAudioSystemManager : MonoBehaviour
     /// <summary>
     /// Base stop sound call.
     /// </summary>
-    public void StopSound(AudioScriptableObject sound, UniqueSoundID UUID)
+    protected void StopSound(AudioScriptableObject sound, UniqueSoundID UUID)
     {
         if (sound == null)
         {
