@@ -65,8 +65,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [SerializeField] int verticalRayCount = 4;
     [SerializeField] LayerMask collisionMask;
 
-    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData Footsteps;
-
     const float skinWidth = 0.015f;
     float horizontalRaySpacing;
     float verticalRaySpacing;
