@@ -10,30 +10,44 @@ public interface IGeneratedInputActionAsset
     public IInputActionCollection2 CreateNewGeneratedInputActionAsset();
 }
 
-public readonly struct InputActionAssetAndUser
+public readonly struct InputActionAssetAndUserData
 {
     public InputActionAsset UserInputActions { get; }
 
-    public InputUser User { get; }
+    public InputUserData UserData { get; }
 
-    public InputActionAssetAndUser(InputActionAsset userInputActions, InputUser user)
+    public InputActionAssetAndUserData(InputActionAsset userInputActions, InputUserData userData)
     {
         UserInputActions = userInputActions;
-        User = user; 
+        UserData = userData; 
     }
 }
 
-public readonly struct InputActionCollectionAndUser
+public readonly struct InputActionCollectionAndUserData
 {
     public IInputActionCollection2 UserInputActions { get; }
 
-    public InputUser User { get; }
+    public InputUserData UserData { get; }
 
-    public InputActionCollectionAndUser(IInputActionCollection2 userInputActions, InputUser user)
+    public InputActionCollectionAndUserData(IInputActionCollection2 userInputActions, InputUserData userData)
     {
         UserInputActions = userInputActions;
-        User = user;
+        UserData = userData;
     }
+}
+
+public class InputUserData
+{
+    public int Index { get; }
+
+    public int Id { get; }
+
+    public InputUserData(int index, int id)
+    {
+        Index = index;
+        Id = id;
+    }
+
 }
 
 //This script handles the creation of a local multiplayer lobby with 1 keyboard and mouse and any number of controllers.
@@ -46,7 +60,7 @@ public static class UserDeviceMappingUtil
     /// <summary>
     /// This method creates a new user, binds the user to the most recently used device and then assigns a unique input action asset to that user.
     /// </summary>
-    public static bool TryCreateUser(InputDevice device, InputActionAsset inputActionAsset, out InputActionAssetAndUser inputActionsAndUser)
+    public static bool TryCreateUser(InputDevice device, InputActionAsset inputActionAsset, out InputActionAssetAndUserData inputActionsAndUser)
     {
         var inputDevices = new List<InputDevice>();
 
@@ -74,7 +88,7 @@ public static class UserDeviceMappingUtil
                 
         userInputActions.Enable();
 
-        inputActionsAndUser = new(userInputActions, user);
+        inputActionsAndUser = new(userInputActions, new InputUserData(user.index, (int)user.id));
         
         return true;
     }
@@ -83,7 +97,7 @@ public static class UserDeviceMappingUtil
     /// <summary>
     /// This method creates a new user, binds the user to the most recently used device and then accepts a list of input actions to bind to.
     /// </summary>
-    public static bool TryCreateUser(InputDevice device, IGeneratedInputActionAsset generatedInputActionAsset, out InputActionCollectionAndUser inputActionsAndUser)
+    public static bool TryCreateUser(InputDevice device, IGeneratedInputActionAsset generatedInputActionAsset, out InputActionCollectionAndUserData inputActionsAndUser)
     {
         var inputDevices = new List<InputDevice>();
 
@@ -114,7 +128,7 @@ public static class UserDeviceMappingUtil
 
         userInputActions.Enable();
 
-        inputActionsAndUser = new(userInputActions, user);
+        inputActionsAndUser = new(userInputActions, new InputUserData(user.index, (int)user.id));
 
         return true;
     }
@@ -122,25 +136,25 @@ public static class UserDeviceMappingUtil
     /// <summary>
     /// Delete the paired user of the most recently used device.
     /// </summary>
-    public static bool TryDeleteUser(InputDevice device, out int userIndex)
+    public static bool TryDeleteUser(InputDevice device, out InputUserData userData)
     {
         var userToRemove = InputUser.FindUserPairedToDevice(device).Value;
-
-        userIndex = userToRemove.index;
 
         if (userToRemove == null)
         {
             Debug.LogError($"No paired user was found for the following device: {device}");
-            userIndex = -1;
+            userData = null;
             return false;
         }
 
         if (!userToRemove.valid)
         {
             Debug.LogError($"The user paired with the device {device} is invalid.");
-            userIndex = -1;
+            userData = null;
             return false;
         }
+
+        userData = new InputUserData(userToRemove.index, (int)userToRemove.id);
 
         userToRemove.actions.Disable();
         userToRemove.UnpairDevicesAndRemoveUser();
