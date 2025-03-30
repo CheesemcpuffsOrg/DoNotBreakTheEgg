@@ -20,7 +20,7 @@ public class VariableSearchTool : EditorWindow
     private const string FavouritePrefsKey = "VariableSearchTool_Favourites";
 
     private static bool isSubscribed;
-    private static bool searchIsAtive;
+    private static bool searchIsActive;
 
     [MenuItem("Tools/Hierarchy Variable Search")]
     public static void OpenWindow()
@@ -133,6 +133,8 @@ public class VariableSearchTool : EditorWindow
         }
        
 
+        searchIsActive = true;
+
         Debug.Log($"Filtered hierarchy by type: {searchType}");
     }
 
@@ -179,7 +181,7 @@ public class VariableSearchTool : EditorWindow
     private static void ResetHierarchy()
     {
 
-        if (!searchIsAtive) return;
+        if (!searchIsActive) return;
 
         var allObjects = FindObjectsOfType<GameObject>(true);
 

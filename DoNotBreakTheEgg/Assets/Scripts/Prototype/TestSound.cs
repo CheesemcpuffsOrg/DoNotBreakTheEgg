@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestSound : MonoBehaviour
 {
-    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData sound;
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData jumpSound;
     [SerializeField] GameObject soundComponentObj;
 
     ISoundComponent soundComponent => soundComponentObj.GetComponent<ISoundComponent>();
@@ -12,7 +12,7 @@ public class TestSound : MonoBehaviour
     //Start is called before the first frame update
     void Start()
     {
-        soundComponent.PlaySound(sound);
+        soundComponent.PlaySound(jumpSound);
 
         StartCoroutine(KillSound());
     }
@@ -21,6 +21,6 @@ public class TestSound : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
 
-        soundComponent.StopSound(sound);
+        soundComponent.StopSound(jumpSound);
     }
 }
