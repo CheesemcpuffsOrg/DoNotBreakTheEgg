@@ -271,10 +271,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefabs:
-  - {fileID: 5382001462561511537, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-  - {fileID: 175828963205910518, guid: ac455362dd81af547ab8803b141bb556, type: 3}
-  - {fileID: 175828963205910518, guid: 21811c7bb838fdc47a76605db1cb294d, type: 3}
-  - {fileID: 175828963205910518, guid: b5be0213d5d08a4419015b501e888ace, type: 3}
+  - playerPrefab: {fileID: 5382001462561511537, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
+  - playerPrefab: {fileID: 175828963205910518, guid: ac455362dd81af547ab8803b141bb556, type: 3}
+  - playerPrefab: {fileID: 175828963205910518, guid: 21811c7bb838fdc47a76605db1cb294d, type: 3}
+  - playerPrefab: {fileID: 175828963205910518, guid: b5be0213d5d08a4419015b501e888ace, type: 3}
   inputControllerPrefab: {fileID: 400698465901904917, guid: 5a70bd30dd9897d4e9237a61a51d32c4, type: 3}
   spawnpoint: {fileID: 1524075613}
 --- !u!1 &415272985

@@ -18,7 +18,7 @@ public class LocalPlayerCreationManager : MonoBehaviour
     [SerializeField] string leaveActionGamepad = "<Gamepad>/buttonEast";
     [SerializeField] string leaveActionKeyboard = "<Keyboard>/escape";
 
-    public event Action<InputActionCollectionAndUser> UserCreated;
+    public event Action<InputActionCollectionAndUserData> UserCreated;
     public event Action<int> UserDeleted;
     public event Action AllUsersDeleted;
 
@@ -58,7 +58,7 @@ public class LocalPlayerCreationManager : MonoBehaviour
 
         if (!UserDeviceMappingUtil.TryCreateUser(device, GeneratedInputActionAsset, out var mapping)) return;
 
-        UserCreated?.Invoke((mapping));
+        UserCreated?.Invoke(mapping);
 
         joinedCount++;
 
@@ -81,9 +81,9 @@ public class LocalPlayerCreationManager : MonoBehaviour
             return;
         }
 
-        if (!UserDeviceMappingUtil.TryDeleteUser(device, out var index)) return;
+        if (!UserDeviceMappingUtil.TryDeleteUser(device, out var inputUserData)) return;
 
-        UserDeleted?.Invoke(index);
+        UserDeleted?.Invoke(inputUserData.Id);
 
         joinedCount--;
 

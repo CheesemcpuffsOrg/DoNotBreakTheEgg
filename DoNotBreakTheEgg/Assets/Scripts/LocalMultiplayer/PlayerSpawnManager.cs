@@ -1,51 +1,118 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.Users;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
-    [SerializeField] List<GameObject> playerPrefabs = new List<GameObject>();
+
+    private class EntityControllerMapping
+    {
+        public InputController Controller { get; }
+
+        public IEntity Entity { get; }
+
+        public EntityControllerMapping(InputController controller, IEntity entity)
+        {
+            Controller = controller;
+            Entity = entity;
+        }
+    }
+
+    [Serializable]
+    private class PlayerPrefabMapping
+    {
+        [SerializeField] GameObject playerPrefab;
+
+        public GameObject PlayerPrefab => playerPrefab;
+
+        public bool InUse { get; private set; }
+
+        public int PlayerId { get; private set; }
+
+        public void SetInUse(bool inUse)
+        {
+            InUse = inUse;
+        }
+
+        public void SetPlayerId(int id)
+        {
+            PlayerId = id;
+        }
+    }
+
+    [SerializeField] List<PlayerPrefabMapping> playerPrefabs = new List<PlayerPrefabMapping>();
     [SerializeField] GameObject inputControllerPrefab;
     [SerializeField] Transform spawnpoint;
 
-    List<(InputController, IEntity)> entityControllerPairing = new();
+    Dictionary<int, EntityControllerMapping> userDataStorage = new();
 
     bool startCalled;
 
     private void Start()
     {
         OnStartOrEnable();
-        startCalled = true;
+        startCalled = true;   
     }
 
 
-    void SpawnPlayer(InputActionCollectionAndUser inputActionCollectionAndUser)
+    void SpawnPlayer(InputActionCollectionAndUserData inputActionCollectionAndUser)
     {
         var inputControllerObj = Instantiate(inputControllerPrefab);
 
         var inputController = inputControllerObj.GetComponent<InputController>();
 
         inputController.InitializeControls(inputActionCollectionAndUser.UserInputActions);
+        
+        var entity = GetEntity(inputActionCollectionAndUser);
 
-        var player = Instantiate(playerPrefabs[inputActionCollectionAndUser.User.index], spawnpoint.position, Quaternion.identity);
-
-        var entity = player.GetComponent<IEntity>();
+        if(entity == null) 
+        {
+            Debug.LogError("Entity in list is null");
+            return;
+        }
 
         inputControllerObj.GetComponent<InputHandler>().SetEntity(entity);
 
-        entityControllerPairing.Add((inputController, entity));
+        userDataStorage.Add(inputActionCollectionAndUser.UserData.Id, new EntityControllerMapping(inputController, entity));
     }
 
-    void DespawnPlayer(int index)
+    private IEntity GetEntity(InputActionCollectionAndUserData inputActionCollectionAndUser)
     {
-        var tuple = entityControllerPairing[index];
 
-        entityControllerPairing.RemoveAt(index);
+        foreach(var playerPrefab in playerPrefabs)
+        {
+            if (!playerPrefab.InUse)
+            {
+                var id = inputActionCollectionAndUser.UserData.Id;
 
-        Destroy(tuple.Item1.gameObject);
+                playerPrefab.SetInUse(true);
+                playerPrefab.SetPlayerId(id);
+                return Instantiate(playerPrefab.PlayerPrefab, spawnpoint.position, Quaternion.identity).GetComponent<IEntity>();
+            }
+        }
 
-        tuple.Item2.Destroy();
+        return null;
+    }
+
+    void DespawnPlayer(int id)
+    {
+        if (!userDataStorage.TryGetValue(id, out var mapping)) return;
+
+        foreach (var playerPrefab in playerPrefabs)
+        {
+            if (playerPrefab.PlayerId == id)
+            {
+                playerPrefab.SetInUse(false);
+                playerPrefab.SetPlayerId(-1);
+            }
+        }
+
+        Destroy(mapping.Controller.gameObject);
+
+        mapping.Entity.Destroy();
+
+        userDataStorage.Remove(id);
     }
 
     void OnStartOrEnable()
