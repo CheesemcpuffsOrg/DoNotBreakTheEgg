@@ -4,14 +4,11 @@ using UnityEngine;
 
 public static class CameraUtility
 {
-    public static bool IsTransformOutsideView(Camera camera, Transform transform)
+    public static bool IsInsideViewport(Camera camera, Vector3 position, float offset = 0)
     {
-        if (camera == null || transform == null) return true;
+        Vector3 viewportPoint = camera.WorldToViewportPoint(position);
 
-        Vector3 viewportPoint = camera.WorldToViewportPoint(transform.position);
-
-        return viewportPoint.x < 0 || viewportPoint.x > 1 ||
-               viewportPoint.y < 0 || viewportPoint.y > 1 ||
-               viewportPoint.z < 0;
+        return viewportPoint.x >= 0 - offset && viewportPoint.x <= 1 + offset &&
+           viewportPoint.y >= 0 - offset && viewportPoint.y <= 1 + offset;
     }
 }
