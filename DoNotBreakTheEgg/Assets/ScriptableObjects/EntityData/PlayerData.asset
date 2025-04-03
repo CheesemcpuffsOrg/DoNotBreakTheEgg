@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d9d35f842149764eb18be5270524e4e, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  JumpHeight: 1.5
+  JumpHeight: 2.5
   TimeToJumpApex: 0.3
   MoveSpeed: 8
   MaxClimbAngle: 80
