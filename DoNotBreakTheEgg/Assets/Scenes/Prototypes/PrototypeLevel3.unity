@@ -1484,7 +1484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityToFollow: {fileID: 733060796}
-  smoothSpeed: 5
+  smoothSpeed: 2
   minY: -3.97
 --- !u!1 &601731297
 GameObject:
@@ -2119,7 +2119,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc73602d31324641b88c8f72fdf34ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 1524075613}
+  transporterPadPrefab: {fileID: 5207735020650642613, guid: 805872cc78d37784da0513912d05cf84, type: 3}
+  spawnLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  moveSpeed: 0.5
+  stoppingDistance: 1
 --- !u!1 &1259729181
 GameObject:
   m_ObjectHideFlags: 0
