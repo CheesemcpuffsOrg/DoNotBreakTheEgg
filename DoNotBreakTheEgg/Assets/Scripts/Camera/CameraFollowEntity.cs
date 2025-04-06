@@ -16,36 +16,29 @@ public class CameraFollowEntity : MonoBehaviour
         screenCenterY = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0)).y;
 
         anchoringComponent = entityToFollow.GetEntityComponent<IAnchoringComponent>();
-    }
 
-    private void FixedUpdate()
-    {
-        
+        transform.position = new Vector3(transform.position.x, minY, transform.position.z);
     }
 
     private void LateUpdate()
     {
         if (!HoldEntityManager.Instance.IsEntityHeld(entityToFollow)) return;
 
+        float screenCenterY = transform.position.y; // Dynamically recalculate
+
+        float entityY = anchoringComponent.GetPosition().y;
         float targetY = transform.position.y;
 
-        // Move up if player exceeds the center
-        if (anchoringComponent.GetPosition().y > screenCenterY)
+        if (entityY > screenCenterY)
         {
-            targetY = anchoringComponent.GetPosition().y;
+            targetY = entityY;
         }
-        // Move down if player falls below center (but not below minY)
-        else if (anchoringComponent.GetPosition().y < screenCenterY && transform.position.y > minY)
+        else if (entityY < screenCenterY && transform.position.y > minY)
         {
-            targetY = anchoringComponent.GetPosition().y;
+            targetY = Mathf.Max(entityY, minY); // Clamp to minY
         }
 
         // Smoothly move the camera to the new Y position
         transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), smoothSpeed * Time.deltaTime);
-
-        if (transform.position.y < minY)
-        {
-            transform.position = new Vector3(transform.position.x, minY, transform.position.z);
-        }
     }
 }

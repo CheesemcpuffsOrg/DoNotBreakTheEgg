@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 public static class R3Extensions
 {
-    private static readonly Dictionary<GameObject, OnDestroyNotifier> Notifiers = new Dictionary<GameObject, OnDestroyNotifier>();
-
     public static Observable<T> TakeUntilDestroy<T>(this Observable<T> source, MonoBehaviour owner)
     {
         return source.TakeUntil(owner.OnDestroyedAsObservable());
@@ -14,31 +12,22 @@ public static class R3Extensions
 
     public static Observable<Unit> OnDestroyedAsObservable(this MonoBehaviour owner)
     {
-        if (!Notifiers.TryGetValue(owner.gameObject, out var notifier))
-        {
-            notifier = owner.gameObject.AddComponent<OnDestroyNotifier>();
-            Notifiers[owner.gameObject] = notifier;
-        }
+        var notifier = owner.GetComponent<OnDestroyNotifier>()
+                    ?? owner.gameObject.AddComponent<OnDestroyNotifier>();
 
-        var subject = new Subject<Unit>();
-
-        notifier.OnDestroyed = () =>
-        {
-            subject.OnNext(default);
-            subject.OnCompleted();
-        };
-
-        return subject;
+        return notifier.Destroyed;
     }
 
     private class OnDestroyNotifier : MonoBehaviour
     {
-        public Action OnDestroyed;
+        private readonly Subject<Unit> _subject = new();
+
+        public Observable<Unit> Destroyed => _subject;
 
         private void OnDestroy()
         {
-            OnDestroyed?.Invoke();
-            Notifiers.Remove(gameObject); // Clean up the notifier when the GameObject is destroyed
+            _subject.OnNext(default);
+            _subject.OnCompleted();
         }
     }
 }

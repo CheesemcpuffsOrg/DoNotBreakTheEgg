@@ -53,10 +53,15 @@ public class MonoEntity : MonoBehaviour, IEntity
 
     public void Destroy(float time)
     {
+        Destroy(gameObject, time);
+    }
+
+    private void OnDestroy()
+    {
         GetComponent<ITagComponent>().RemoveAllTags();
 
-        EntityRegistry.UnregisterEntity(this);
+        entityComponents.RemoveAll(c => c == null);
 
-        Destroy(gameObject, time);
+        EntityRegistry.UnregisterEntity(this);
     }
 }
