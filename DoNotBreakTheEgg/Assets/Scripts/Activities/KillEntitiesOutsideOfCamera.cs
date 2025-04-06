@@ -6,6 +6,7 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
 {
     [SerializeField] RespawnEntities respawnEntities;
     [SerializeField] TagFilter filter;
+    [SerializeField] float viewportOffset = 0.05f;
 
     ObservableList<IEntity> trackedEntities = new ObservableList<IEntity>();
 
@@ -38,7 +39,7 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
             .TakeUntilDestroy(this)
             .Subscribe(entity =>
             {
-                if (!CameraUtility.IsInsideViewport(Camera.main, entity.GetEntityComponent<IAnchoringComponent>().GetPosition(), 0.1f))
+                if (!CameraUtility.IsInsideViewport(Camera.main, entity.GetEntityComponent<IAnchoringComponent>().GetPosition(), viewportOffset))
                 {
                     respawnEntity.OnNext(entity);
                 }

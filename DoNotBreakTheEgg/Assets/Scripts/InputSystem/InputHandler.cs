@@ -15,12 +15,12 @@ public class InputHandler : MonoBehaviour
 
     private void ThrowEventStarted()
     {
-        entity.GetEntityComponent<IThrowAndCatchComponent>().ChargeThrow();
+        entity.GetEntityComponent<IThrowComponent>().ChargeThrow();
     }
 
     private void ThrowEventPerformed()
     {
-        entity.GetEntityComponent<IThrowAndCatchComponent>().Throw();
+        entity.GetEntityComponent<IThrowComponent>().Throw();
     }
 
     private void AimEventPerformed(Vector2 position)

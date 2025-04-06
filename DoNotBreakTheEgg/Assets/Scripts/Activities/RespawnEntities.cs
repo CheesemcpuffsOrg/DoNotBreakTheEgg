@@ -9,7 +9,7 @@ public class RespawnEntities : MonoBehaviour
     [SerializeField] GameObject transporterPadPrefab;
     [SerializeField] LayerMask spawnLayerMask;
     [SerializeField] float moveSpeed;
-    [SerializeField] float stoppingDistance;
+    [SerializeField] float stoppingDistance = 0.1f;
 
     Subject<(Transform, Vector2, Vector2, IEntity)> moveStream = new Subject<(Transform, Vector2, Vector2, IEntity)>();
 
@@ -23,10 +23,12 @@ public class RespawnEntities : MonoBehaviour
             {
                 var (transporterPad, spawnLocation, landingZone, entity) = tuple;
 
+                var adjustedLandingZone = new Vector3(landingZone.x, landingZone.y + 1);
+
                 return Observable
                     .EveryUpdate()
                     .Scan(0f, (acc, _) => acc + Time.deltaTime * moveSpeed)
-                    .Select(t => (transporterPad, spawnLocation, landingZone, entity, t))
+                    .Select(t => (transporterPad, spawnLocation, adjustedLandingZone, entity, t))
                     .TakeUntil(destinationReached);
             })
             .TakeUntilDestroy(this)
@@ -41,7 +43,7 @@ public class RespawnEntities : MonoBehaviour
                 // Use Lerp to smoothly transition between point A and point B
                 transporterPad.position = Vector3.Lerp(spawnLocation, landingZone, t);
 
-                if(Vector2.Distance(transporterPad.position, landingZone) < stoppingDistance)
+                if (Vector2.Distance(transporterPad.position, landingZone) < stoppingDistance)
                 {
                     destinationReached.OnNext((entity, transporterPad));
                 }

@@ -20,10 +20,7 @@ public class CameraFollowEntity : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(transform.position.y < minY)
-        {
-            transform.position = new Vector3(transform.position.x, minY, transform.position.z);
-        }
+        
     }
 
     private void LateUpdate()
@@ -45,5 +42,10 @@ public class CameraFollowEntity : MonoBehaviour
 
         // Smoothly move the camera to the new Y position
         transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, targetY, transform.position.z), smoothSpeed * Time.deltaTime);
+
+        if (transform.position.y < minY)
+        {
+            transform.position = new Vector3(transform.position.x, minY, transform.position.z);
+        }
     }
 }

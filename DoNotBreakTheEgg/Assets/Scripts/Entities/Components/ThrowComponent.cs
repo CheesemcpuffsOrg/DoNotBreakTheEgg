@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
+public class ThrowComponent : MonoBehaviour, IThrowComponent
 {
     [SerializeField] Transform holdAnchor;
 
@@ -81,7 +81,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
         }
     }
 
-    private void TriggerEnter(Collider2D collision)
+    /*private void TriggerEnter(Collider2D collision)
     {
         if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity)
             || !collisionEntity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(catchableEntityFilter)
@@ -89,7 +89,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
             return;
             
         HoldEntityManager.Instance.AddHeldEntity(entity, collisionEntity, holdAnchor);
-    }
+    }*/
 
     private void OnEnable()
     {
@@ -106,7 +106,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
 //I think this logic is invalid now
 #if UNITY_EDITOR
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         if (chargingShot && launchPoint != null)
         {
@@ -144,7 +144,7 @@ public class ThrowAndCatchComponent : MonoBehaviour, IThrowAndCatchComponent
                 Gizmos.DrawLine(currentPosition, currentPosition - currentVelocity * timeStep);
             }
         }
-    }
+    }*/
 
 #endif 
 }
