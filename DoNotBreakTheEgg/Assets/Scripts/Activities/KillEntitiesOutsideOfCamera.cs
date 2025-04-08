@@ -27,6 +27,8 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
 
         startCalled = true;
 
+        var subscriptionBag = Disposable.CreateBuilder();
+
         trackedEntities
             .ObserveAdd()
             .SelectMany(entity =>
@@ -36,22 +38,24 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
                     .Select(_ => entity.Value)
                     .TakeUntil(trackedEntities.ObserveRemove().Where(trackedEntity => trackedEntity.Value == entity.Value));
             })
-            .TakeUntilDestroy(this)
             .Subscribe(entity =>
             {
                 if (!CameraUtility.IsInsideViewport(Camera.main, entity.GetEntityComponent<IAnchoringComponent>().GetPosition(), viewportOffset))
                 {
                     respawnEntity.OnNext(entity);
                 }
-            });
+            })
+            .AddTo(ref subscriptionBag);
 
         respawnEntity
-            .TakeUntilDestroy(this)
             .Subscribe(entity =>
             {
                 EntityRegistry.UnregisterEntity(entity);
                 respawnEntities.RespawnEntity(entity);
-            });
+            })
+            .AddTo(ref subscriptionBag);
+
+        subscriptionBag.RegisterTo(this.destroyCancellationToken);
     }
 
     private void StartTrackingEntity(IEntity entity)

@@ -18,6 +18,8 @@ public class RespawnEntities : MonoBehaviour
     private void Start()
     {
 
+        var subscriptionBag = Disposable.CreateBuilder();
+
         moveStream
             .SelectMany(tuple =>
             {
@@ -31,7 +33,6 @@ public class RespawnEntities : MonoBehaviour
                     .Select(t => (transporterPad, spawnLocation, adjustedLandingZone, entity, t))
                     .TakeUntil(destinationReached);
             })
-            .TakeUntilDestroy(this)
             .Subscribe(tuple =>
             {
 
@@ -47,10 +48,10 @@ public class RespawnEntities : MonoBehaviour
                 {
                     destinationReached.OnNext((entity, transporterPad));
                 }
-            });
+            })
+            .AddTo(ref subscriptionBag);
 
         destinationReached
-            .TakeUntilDestroy(this)
             .Subscribe(tuple =>
             {
                 var (entity, transporterPad) = tuple;
@@ -62,7 +63,10 @@ public class RespawnEntities : MonoBehaviour
                 entity.GetEntityComponent<IAnchoringComponent>().SetParent(null);
                 EntityRegistry.RegisterEntity(entity);
                 Destroy(transporterPad.gameObject);
-            });
+            })
+            .AddTo(ref subscriptionBag);
+
+        subscriptionBag.RegisterTo(this.destroyCancellationToken);
     }
 
     public void RespawnEntity(IEntity entity)
