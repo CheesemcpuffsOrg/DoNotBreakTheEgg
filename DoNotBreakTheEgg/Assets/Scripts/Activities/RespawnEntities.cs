@@ -1,7 +1,7 @@
 using R3;
 using System.ComponentModel;
 using UnityEngine;
-
+using UnityEngine.Tilemaps;
 
 public class RespawnEntities : MonoBehaviour
 {
@@ -10,6 +10,8 @@ public class RespawnEntities : MonoBehaviour
     [SerializeField] LayerMask spawnLayerMask;
     [SerializeField] float moveSpeed;
     [SerializeField] float stoppingDistance = 0.1f;
+
+    [SerializeField] Tilemap tilemap;
 
     Subject<(Transform, Vector2, Vector2, IEntity)> moveStream = new Subject<(Transform, Vector2, Vector2, IEntity)>();
 
@@ -95,40 +97,58 @@ public class RespawnEntities : MonoBehaviour
         Vector2 screenMin = Camera.main.ViewportToWorldPoint(Vector2.zero);
         Vector2 screenMax = Camera.main.ViewportToWorldPoint(Vector2.one);
 
-        int verticalRayCount = 20;
-        float yOffset = 0.05f;
-        float xOffset = 2;
+        int verticalLayerCount = 10;  // How many height levels to check (e.g., 0.1 to 1)
+        int horizontalRayCount = 20;  // How many rays per height level
 
-        // Spacing between each ray along the top of the screen
-        float verticalRaySpacing = (screenMax.x - screenMin.x) / (verticalRayCount - 1);
+        float startHeightNormalized = 0.1f;
+        float endHeightNormalized = 1f;
+
+        float heightStep = (endHeightNormalized - startHeightNormalized) / (verticalLayerCount - 1);
+        float horizontalSpacing = (screenMax.x - screenMin.x) / (horizontalRayCount - 1);
 
         // Check if location is on the left or right side of the screen
         bool isOnLeftSide = location.x < (screenMin.x + screenMax.x) / 2;
 
-        // Calculate the initial ray starting x position based on the side
-        float initialXPos = isOnLeftSide ? screenMin.x + xOffset : screenMax.x - xOffset;
-
-        // Adjust the spacing direction based on the side
-        float xDirection = isOnLeftSide ? 1 : -1;
-
-        for (int i = 0; i < verticalRayCount; i++)
+        for (int v = 0; v < verticalLayerCount; v++)
         {
-            // Calculate x position for each ray along the top of the screen, moving towards the center
-            float xPos = initialXPos + (i * verticalRaySpacing * xDirection);
-            Vector2 rayOrigin = new Vector2(xPos, screenMax.y - yOffset); // Position at the location's y-value
+            float yNormalized = startHeightNormalized + v * heightStep;
+            float worldY = Camera.main.ViewportToWorldPoint(new Vector2(0, yNormalized)).y;
 
-            // Shoot a ray downward with length set to the height of the camera
-            float rayLength = Camera.main.orthographicSize * 2f; // Height of the camera
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, spawnLayerMask);
-
-            Debug.DrawRay(rayOrigin, Vector2.down * rayLength, Color.red, 2f); // Visualize in Scene view
-
-            if (hit.collider != null)
+            for (int h = 0; h < horizontalRayCount; h++)
             {
-                return hit.point;
+                // Calculate the X position
+                float x = isOnLeftSide ? screenMin.x + h * horizontalSpacing : screenMax.x - h * horizontalSpacing;
+                Vector2 rayOrigin = new Vector2(x, worldY);
+
+                // Calculate ray length to stay within screen bounds
+                float rayLength = worldY - screenMin.y;
+
+                RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, rayLength, spawnLayerMask);
+                Debug.DrawRay(rayOrigin, Vector2.down * rayLength, Color.red, 2f);
+
+                if (hit.collider != null)
+                {
+                    // Get the tile position of the hit point
+                    Vector3Int hitTilePosition = tilemap.WorldToCell(hit.point);
+
+                    // Calculate the tile position directly above the hit tile (adjust Y by 1 unit)
+                    Vector3Int tileAbovePosition = new Vector3Int(hitTilePosition.x, hitTilePosition.y + 1, hitTilePosition.z);
+
+                    // Check if there's a tile above the hit tile
+                    TileBase tileAbove = tilemap.GetTile(tileAbovePosition);
+
+                    if (tileAbove != null)
+                    {
+                        // If there is a tile above, skip this hit
+                        continue;  // Skip this hit if the tile above exists
+                    }
+
+                    // Return the valid hit point if no tile is above
+                    return hit.point;
+                }
             }
         }
 
-        return screenMin;
+        return screenMin; // Fallback
     }
 }

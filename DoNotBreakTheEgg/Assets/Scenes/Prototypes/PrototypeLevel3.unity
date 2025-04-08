@@ -4852,6 +4852,7 @@ MonoBehaviour:
     m_Bits: 256
   moveSpeed: 1
   stoppingDistance: 0.1
+  tilemap: {fileID: 416495419}
 --- !u!1 &1259729181
 GameObject:
   m_ObjectHideFlags: 0
