@@ -160,6 +160,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     public void DisableGravity()
     {
         gravityEnabled = false;
+        velocity.y = 0;
     }
 
     private void IsGrounded()

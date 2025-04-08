@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IThrowAndCatchComponent : IEntityComponent
+public interface IThrowComponent : IEntityComponent
 {
     public void ChargeThrow();
 

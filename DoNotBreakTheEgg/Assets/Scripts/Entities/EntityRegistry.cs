@@ -13,12 +13,16 @@ public static class EntityRegistry
 
     public static void RegisterEntity(IEntity entity)
     {
+        if (registeredEntities.Contains(entity)) return;
+
         registeredEntities.Add(entity);
         EntityRegistered?.Invoke(entity);
     }
 
     public static void UnregisterEntity(IEntity entity)
     {
+        if (!registeredEntities.Contains(entity)) return;
+
         registeredEntities.Remove(entity);
         EntityUnregistered?.Invoke(entity);
     }
