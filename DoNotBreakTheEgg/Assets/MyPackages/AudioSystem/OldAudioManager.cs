@@ -30,10 +30,6 @@ public class OldAudioManager : MonoBehaviour
     Transform audioPoolContainer;
     Transform activeSounds;
 
-#if UNITY_EDITOR
-    LoggingUtility loggingUtility = new LoggingUtility();
-#endif
-
     //move this onto individual objects
     [SerializeField, Tooltip("This int controls the max number of one type of audio clip that can be played before the oldest audio clip is cancelled")] 
     int StackingAudioLimiter = 5;
@@ -159,7 +155,7 @@ public class OldAudioManager : MonoBehaviour
 #if UNITY_EDITOR
         if (logStackTrace)
         {
-            loggingUtility.LogCleanedUpStackTrace($"STACK TRACE FOR PAUSING ALL AUDIO", fullStackTrace);
+            LoggingUtility.LogCleanedUpStackTrace($"STACK TRACE FOR PAUSING ALL AUDIO", fullStackTrace);
         }
 #endif
     }
@@ -183,7 +179,7 @@ public class OldAudioManager : MonoBehaviour
 #if UNITY_EDITOR
         if (logStackTrace)
         {
-            loggingUtility.LogCleanedUpStackTrace($"STACK TRACE FOR UNPAUSING ALL AUDIO", fullStackTrace);
+            LoggingUtility.LogCleanedUpStackTrace($"STACK TRACE FOR UNPAUSING ALL AUDIO", fullStackTrace);
         }
 #endif
     }
@@ -286,7 +282,7 @@ public class OldAudioManager : MonoBehaviour
 #if UNITY_EDITOR
                     if(logStackTrace)
                     {
-                        loggingUtility.LogCleanedUpStackTrace($"STACKTRACE FOR STOPPED SOUND: {sound.name}", fullStackTrace); 
+                        LoggingUtility.LogCleanedUpStackTrace($"STACKTRACE FOR STOPPED SOUND: {sound.name}", fullStackTrace); 
                     }
 #endif
 
