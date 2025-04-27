@@ -16,7 +16,7 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
 
     private void Start()
     {
-        var registeredEntities = EntityRegistry.RegisteredEntities();
+        var registeredEntities = EntityRegistry.GetRegisteredEntities();
 
         foreach (var entity in registeredEntities)
         {
