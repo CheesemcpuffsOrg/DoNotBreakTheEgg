@@ -10,6 +10,8 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
 
     public void PlaySound(SoundData data)
     {
+        if (data.AudioScriptableObject == null) return; //fails quitely if empty
+
         StartCoroutine(DelayTimer(data));
     }
 
@@ -34,6 +36,8 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
 
     public void StopSound(SoundData data)
     {
+        if (data.AudioScriptableObject == null) return; //fails quitely if empty
+
         AdvancedAudioSystemManager.Instance.StopSound(data.AudioScriptableObject, UUID);
     }
 }
