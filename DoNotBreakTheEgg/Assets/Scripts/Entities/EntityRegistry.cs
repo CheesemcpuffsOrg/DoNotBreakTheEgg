@@ -1,12 +1,14 @@
+using ObservableCollections;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 
 public static class EntityRegistry
 {
+    static readonly ObservableList<IEntity> registeredEntities = new ObservableList<IEntity>();
 
-    private static List<IEntity> registeredEntities = new List<IEntity>();
+    public static ObservableList<IEntity> RegisteredEntities = registeredEntities; 
+
+    //private static List<IEntity> registeredEntities = new List<IEntity>();
 
     public static event Action<IEntity> EntityRegistered;
     public static event Action<IEntity> EntityUnregistered;
@@ -16,7 +18,7 @@ public static class EntityRegistry
         if (registeredEntities.Contains(entity)) return;
 
         registeredEntities.Add(entity);
-        EntityRegistered?.Invoke(entity);
+        //EntityRegistered?.Invoke(entity);
     }
 
     public static void UnregisterEntity(IEntity entity)
@@ -24,10 +26,10 @@ public static class EntityRegistry
         if (!registeredEntities.Contains(entity)) return;
 
         registeredEntities.Remove(entity);
-        EntityUnregistered?.Invoke(entity);
+        //EntityUnregistered?.Invoke(entity);
     }
 
-    public static IEntity[] RegisteredEntities()
+    public static IEntity[] GetRegisteredEntities()
     {
         return registeredEntities.ToArray();
     } 
