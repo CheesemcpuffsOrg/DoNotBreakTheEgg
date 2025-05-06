@@ -1,3 +1,5 @@
+using R3;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +8,10 @@ public class MonoEntity : MonoBehaviour, IEntity
 {
 
     List<IEntityComponent> entityComponents = new List<IEntityComponent>();
+
+    private Subject<IEntity> destroyed = new Subject<IEntity>();
+
+    public Observable<IEntity> Destroyed => destroyed;
 
     private void Awake()
     {
@@ -63,5 +69,7 @@ public class MonoEntity : MonoBehaviour, IEntity
         entityComponents.RemoveAll(c => c == null);
 
         EntityRegistry.UnregisterEntity(this);
+
+        destroyed.OnNext(this);
     }
 }

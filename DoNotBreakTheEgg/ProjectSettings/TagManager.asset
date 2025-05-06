@@ -44,3 +44,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: ForegroundAssets
+    uniqueID: 46726805
+    locked: 0

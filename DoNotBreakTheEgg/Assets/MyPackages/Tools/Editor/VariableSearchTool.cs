@@ -180,17 +180,31 @@ public class VariableSearchTool : EditorWindow
 
     private static void ResetHierarchy()
     {
-
         if (!searchIsActive) return;
 
-        var allObjects = FindObjectsOfType<GameObject>(true);
-
-        foreach (var obj in allObjects)
+        var prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+        if (prefabStage != null)
         {
-            obj.hideFlags = HideFlags.None; // Show everything again
+            // We're in prefab mode, reset all objects in the prefab
+            List<GameObject> prefabObjects = new();
+            CollectAllChildren(prefabStage.prefabContentsRoot, prefabObjects);
+            foreach (var obj in prefabObjects)
+            {
+                obj.hideFlags = HideFlags.None;
+            }
+        }
+        else
+        {
+            // We're in scene mode
+            var allObjects = FindObjectsOfType<GameObject>(true);
+            foreach (var obj in allObjects)
+            {
+                obj.hideFlags = HideFlags.None;
+            }
         }
 
         highlightedGameObjects.Clear();
+        searchIsActive = false;
 
         Debug.Log("Reset hierarchy visibility.");
     }
@@ -214,7 +228,7 @@ public class VariableSearchTool : EditorWindow
         return objects.ToArray();
     }
 
-    private void CollectAllChildren(GameObject parent, List<GameObject> objects)
+    private static void CollectAllChildren(GameObject parent, List<GameObject> objects)
     {
         if (parent == null) return;
 
