@@ -4394,7 +4394,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 95bb17f100000000
+  m_ApplyToSortingLayers: 95bb17f10000000095fec802
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -4808,6 +4808,54 @@ Transform:
   - {fileID: 1738325564}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1081310356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1081310357}
+  - component: {fileID: 1081310358}
+  m_Layer: 0
+  m_Name: EmissionStrategy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1081310357
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081310356}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1738325564}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1081310358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081310356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b735087d83e16c14281307a0710cebfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mappings:
+  - particleSystem: {fileID: 4723654728111432981, guid: f994d622858f69f44aa81381402ccb7b, type: 3}
+    tagScriptableObject: {fileID: 11400000, guid: 4229a30bf6ea6594fbf00ff463dff398, type: 2}
+  anchor: {fileID: 11400000, guid: 2438d2694f08c454dae9dff51a6236e7, type: 2}
 --- !u!1 &1113701478
 GameObject:
   m_ObjectHideFlags: 0
@@ -5112,7 +5160,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1081310357}
   m_Father: {fileID: 920637667}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1738325565
@@ -5127,13 +5176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cdff0d30ea976840bf5344a0e73537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mappings:
-  - particleSystem: {fileID: 4723654728111432981, guid: f994d622858f69f44aa81381402ccb7b, type: 3}
-    tagScriptableObject: {fileID: 11400000, guid: 4229a30bf6ea6594fbf00ff463dff398, type: 2}
-  - particleSystem: {fileID: 4723654728111432981, guid: f994d622858f69f44aa81381402ccb7b, type: 3}
-    tagScriptableObject: {fileID: 11400000, guid: 23268dc1b2ea86b4dbe99bdcfa32539d, type: 2}
-  groundedTag: {fileID: 11400000, guid: 2088cac3207fc3d4fad1e1519fe2a3e2, type: 2}
-  anchor: {fileID: 11400000, guid: c189e19764a2ef44bbb9bcd29b62a7df, type: 2}
+  emissionStrategyObj: {fileID: 1081310356}
+  tag: {fileID: 11400000, guid: 2088cac3207fc3d4fad1e1519fe2a3e2, type: 2}
 --- !u!1 &1754065615
 GameObject:
   m_ObjectHideFlags: 0
