@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 2232329760135745355}
   - component: {fileID: 422898785289315171}
   - component: {fileID: 5291628570717146814}
-  - component: {fileID: 3619361875597409297}
+  - component: {fileID: 7968591734810866285}
   - component: {fileID: 1746878381986254736}
   - component: {fileID: 2265100715045654484}
   m_Layer: 7
@@ -377,6 +377,16 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 768
+  jumpSoundData:
+    audioScriptableObject: {fileID: 0}
+    playLocation: {fileID: 0}
+    followTransform: 0
+    delay: 0
+  jumpVocalSoundData:
+    audioScriptableObject: {fileID: 0}
+    playLocation: {fileID: 0}
+    followTransform: 0
+    delay: 0
 --- !u!114 &5291628570717146814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,7 +403,7 @@ MonoBehaviour:
   allEntityColliders:
   - {fileID: 8933668129807429666}
   - {fileID: 6364005288740910700}
---- !u!114 &3619361875597409297
+--- !u!114 &7968591734810866285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -402,7 +412,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5382001462561511537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99070df2e7273984eac969fea8249fbf, type: 3}
+  m_Script: {fileID: 11500000, guid: 84083da04a30b414eab5138341816092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1746878381986254736

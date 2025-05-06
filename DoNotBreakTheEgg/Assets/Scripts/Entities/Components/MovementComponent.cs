@@ -65,6 +65,10 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [SerializeField] int verticalRayCount = 4;
     [SerializeField] LayerMask collisionMask;
 
+    [Header("Audio")]
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData jumpSoundData;
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData jumpVocalSoundData;
+
     const float skinWidth = 0.015f;
     float horizontalRaySpacing;
     float verticalRaySpacing;
@@ -81,12 +85,14 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     IEntity entity;
     ICollisionComponent collisionComponent;
     ITagComponent tagComponent;
+    ISoundComponent soundComponent;
 
     private void Start()
     {
         entity = GetComponent<IEntity>();
         collisionComponent = entity.GetEntityComponent<ICollisionComponent>();
         tagComponent = entity.GetEntityComponent<ITagComponent>();
+        soundComponent = entity.GetEntityComponent<IEntitySoundComponent>();
 
         CalculateRaySpacing();
 
@@ -120,6 +126,9 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         jumpFired = true;
         jumpBufferCounter = jumpBufferTime;
+
+        soundComponent.PlaySound(jumpSoundData);
+        soundComponent.PlaySound(jumpVocalSoundData);
     }
 
     public void MoveToTarget(Vector2 target)

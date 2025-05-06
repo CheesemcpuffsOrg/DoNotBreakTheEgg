@@ -23,6 +23,10 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     [SerializeField] TagFilter catchingFilter;
     [SerializeField] TagFilter throwFilter;
 
+    [Header("Audio")]
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData chargeThrowSoundData;
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData maxChargeSoundData;
+
 
     [Header("Draw Trajectory Gizmo")]
     [SerializeField] private float entityWeight = 1f;
@@ -30,14 +34,17 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     [SerializeField] private float timeStep = 0.1f;
 
     IEntity entity;
+    IEntitySoundComponent soundComponent;
 
     float powerCurrent;
 
     bool chargingShot;
+    bool maxPowerReached;
 
     private void Awake()
     {
         entity = GetComponent<IEntity>();
+        soundComponent = entity.GetEntityComponent<IEntitySoundComponent>();
     }
 
     private void Update()
@@ -49,11 +56,13 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     {
         powerCurrent = powerBase; // Reset power to the base value
         chargingShot = true; // Start charging
+        soundComponent.PlaySound(chargeThrowSoundData);
     }
 
     public void Throw()
     {
         chargingShot = false;
+        maxPowerReached = false;
 
         if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
             return;
@@ -63,11 +72,13 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         HoldEntityManager.Instance.RemoveHeldEntity(entity);
 
         heldEntity.GetEntityComponent<IMovementComponent>().Throw(powerCurrent, (Vector2)launchPoint.up);
+
+        soundComponent.StopSound(chargeThrowSoundData);
     }
 
     private void ChargeShot()
     {
-        if (!chargingShot)
+        if (!chargingShot || maxPowerReached)
         {
             return;
         }
@@ -78,6 +89,9 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         if (powerCurrent >= powerMax)
         {
             powerCurrent = powerMax;
+            soundComponent.StopSound(chargeThrowSoundData);
+            soundComponent.PlaySound(maxChargeSoundData);
+            maxPowerReached = true;
         }
     }
 
