@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class TagAddedEntityParticleEmitter : MonoBehaviour, IEmissionStrategy
+public class ParticleEmissionStrategy : MonoBehaviour, IEmissionStrategy
 {
 
     [Serializable]
@@ -35,5 +35,10 @@ public class TagAddedEntityParticleEmitter : MonoBehaviour, IEmissionStrategy
                 vfx.Play();
             }
         }
+    }
+
+    public void Emit()
+    {
+        throw new NotImplementedException();
     }
 }

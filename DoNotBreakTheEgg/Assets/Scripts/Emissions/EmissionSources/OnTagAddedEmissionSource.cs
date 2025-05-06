@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 
-public class EmissionOnTagAdded : MonoBehaviour
+public class OnTagAddedEmissionSource : MonoBehaviour
 {
     [SerializeField] GameObject emissionStrategyObj;
 
