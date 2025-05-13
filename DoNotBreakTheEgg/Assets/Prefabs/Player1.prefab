@@ -300,6 +300,16 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 342baf6bc2d8e544d9a1bd8890fa61d5, type: 2}
     mustHaveAny: []
     cannotHaveAny: []
+  chargeThrowSoundData:
+    audioScriptableObject: {fileID: 11400000, guid: 8fdae2c3da8baae4f8c00b6882fc40d1, type: 2}
+    playLocation: {fileID: 0}
+    followTransform: 1
+    delay: 0
+  maxChargeSoundData:
+    audioScriptableObject: {fileID: 11400000, guid: 8fdae2c3da8baae4f8c00b6882fc40d1, type: 2}
+    playLocation: {fileID: 0}
+    followTransform: 1
+    delay: 0
   entityWeight: 1
   trajectorySteps: 10
   timeStep: 0.1
