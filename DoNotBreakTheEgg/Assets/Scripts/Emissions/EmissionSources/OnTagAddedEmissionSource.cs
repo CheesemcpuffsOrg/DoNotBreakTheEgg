@@ -42,6 +42,8 @@ public class OnTagAddedEmissionSource : MonoBehaviour
             })
             .AddTo(ref subscriptionBag);
 
+        subscriptionBag.RegisterTo(this.destroyCancellationToken);
+
     }
 
 }
