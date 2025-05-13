@@ -19,4 +19,8 @@ public interface IMovementComponent : IEntityComponent
 
     public void EnableMovement();
     public void DisableMovement();
+
+    //Test
+
+    public void TestToggleIgnoreJumpFilter();
 }

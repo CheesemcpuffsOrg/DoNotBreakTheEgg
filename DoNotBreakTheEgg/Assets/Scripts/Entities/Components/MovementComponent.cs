@@ -87,6 +87,16 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     ITagComponent tagComponent;
     ISoundComponent soundComponent;
 
+    #region --TEST--
+
+    bool ignoreFilter;
+
+    public void TestToggleIgnoreJumpFilter()
+    {
+        ignoreFilter = !ignoreFilter;
+    }
+#endregion
+
     private void Start()
     {
         entity = GetComponent<IEntity>();
@@ -122,7 +132,11 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     public void Jump()
     {
-        if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(jumpFilter)) return;
+        if (!ignoreFilter)
+        {
+            if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(jumpFilter)) return;
+        }
+        
 
         jumpFired = true;
         jumpBufferCounter = jumpBufferTime;
@@ -508,4 +522,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         bounds.Expand(skinWidth * -2);
         return bounds;
     }
+
+    
 }

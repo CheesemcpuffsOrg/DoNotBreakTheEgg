@@ -1,4 +1,6 @@
 
+using R3;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,6 +8,10 @@ using UnityEngine;
 public class TagComponent : MonoBehaviour, ITagComponent
 {
     [SerializeField] private List<TagScriptableObject> tags;
+
+    Subject<TagScriptableObject> tagAdded = new Subject<TagScriptableObject>();
+
+    public Observable<TagScriptableObject> TagAddedStream => tagAdded;
 
     private void Awake()
     {
@@ -37,9 +43,8 @@ public class TagComponent : MonoBehaviour, ITagComponent
             tags.Add(tag);
             // Register the GameObject globally with the tag
             gameObject.RegisterGameObjectWithTag(tag);
-        }
 
-       
+        } 
     }
 
     public void AddTags(TagScriptableObject[] tagsToAdd)
