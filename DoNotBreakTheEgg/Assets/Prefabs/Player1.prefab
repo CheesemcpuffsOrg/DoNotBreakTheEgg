@@ -306,7 +306,7 @@ MonoBehaviour:
     followTransform: 1
     delay: 0
   maxChargeSoundData:
-    audioScriptableObject: {fileID: 11400000, guid: 8fdae2c3da8baae4f8c00b6882fc40d1, type: 2}
+    audioScriptableObject: {fileID: 0}
     playLocation: {fileID: 0}
     followTransform: 1
     delay: 0
@@ -388,7 +388,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   jumpSoundData:
-    audioScriptableObject: {fileID: 0}
+    audioScriptableObject: {fileID: 11400000, guid: 4d93d938c95466b42aca64b1317cc847, type: 2}
     playLocation: {fileID: 0}
     followTransform: 0
     delay: 0
