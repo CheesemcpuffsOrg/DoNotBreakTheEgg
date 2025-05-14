@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioClips:
   - obj:
-      audioClip: {fileID: 8300000, guid: d28e1f43f57c1f2489299d5c7c08f208, type: 3}
+      audioClip: {fileID: 8300000, guid: a75ad85db8b601d4193b9332a367a32a, type: 3}
       volume: 1
       pitch: 1
     weight: 1
@@ -23,7 +23,7 @@ MonoBehaviour:
   loop: 0
   playWhilePaused: 0
   pitchShift: 1
-  minPitchShift: 0.9
+  minPitchShift: 1.08
   maxPitchShift: 1.1
   fadeControls:
     fadeIn: 0

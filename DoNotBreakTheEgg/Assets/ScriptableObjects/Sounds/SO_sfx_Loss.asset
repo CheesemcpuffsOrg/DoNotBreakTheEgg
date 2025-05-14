@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 760b1e9d61e78084891ed16194867649, type: 3}
-  m_Name: SO_FF
+  m_Name: SO_sfx_Loss
   m_EditorClassIdentifier: 
   audioClips:
   - obj:
-      audioClip: {fileID: 8300000, guid: 4c6015e29aca2c9429a0fd10d5a911e4, type: 3}
+      audioClip: {fileID: 8300000, guid: d5884d027756ec84382177ea5c619f3b, type: 3}
       volume: 1
       pitch: 1
     weight: 1
