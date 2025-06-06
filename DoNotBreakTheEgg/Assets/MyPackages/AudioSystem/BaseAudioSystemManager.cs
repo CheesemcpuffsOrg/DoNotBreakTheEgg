@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using static AudioSourceFactory;
+using static AudioSourceCreator;
 
-//I want to look at audio instancing per UUID call in the future, similar to something like gunshots, who is the best way to handle it if stop called early.
+//I want to look at audio instancing per UUID call in the future, similar to something like gunshots, what is the best way to handle it if stop called early.
 
 public class BaseAudioSystemManager : MonoBehaviour
 {
@@ -113,6 +113,8 @@ public class BaseAudioSystemManager : MonoBehaviour
         }
 
         var (obj, audioSource) = GenerateAudioSource(audioData, chosenAudioVariant, location, type, transformLocation);
+
+        obj.name = sound.name;
 
         obj.transform.SetParent(activeSounds);
 
