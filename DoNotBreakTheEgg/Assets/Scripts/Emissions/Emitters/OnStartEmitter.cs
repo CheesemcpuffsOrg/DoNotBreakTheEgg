@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OnStartEmissionSource : MonoBehaviour
+public class OnStartEmitter : MonoBehaviour
 {
 
     [SerializeField] GameObject emissionStrategyObj;

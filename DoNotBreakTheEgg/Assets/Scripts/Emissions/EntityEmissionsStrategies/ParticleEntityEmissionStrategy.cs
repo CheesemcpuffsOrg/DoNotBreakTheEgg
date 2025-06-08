@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using R3;
 
-public class ParticleEmissionStrategy : MonoBehaviour, IEmissionStrategy
+public class ParticleEntityEmissionStrategy : MonoBehaviour, IEntityEmissionStrategy
 {
 
     [Serializable]
@@ -14,11 +15,14 @@ public class ParticleEmissionStrategy : MonoBehaviour, IEmissionStrategy
         public ParticleSystem ParticleSystem => particleSystem;
         [SerializeField] TagScriptableObject tagScriptableObject;
         public TagScriptableObject TagScriptableObject => tagScriptableObject;
+        [SerializeField] AnchorScriptableObject anchor;
+        public AnchorScriptableObject Anchor => anchor;
+
     }
 
 
     [SerializeField] List<TagParticleEffectMapping> mappings = new List<TagParticleEffectMapping>();
-    [SerializeField] AnchorScriptableObject anchor;
+    
 
 
     public void Emit(IEntity entity)
@@ -30,15 +34,10 @@ public class ParticleEmissionStrategy : MonoBehaviour, IEmissionStrategy
         {
             if (entity.GetEntityComponent<ITagComponent>().HasTag(mapping.TagScriptableObject))
             {
-                var position = entity.GetEntityComponent<IAnchoringComponent>().GetAnchor(anchor).position;
+                var position = entity.GetEntityComponent<IAnchoringComponent>().GetAnchor(mapping.Anchor).position;
                 var vfx = Instantiate(mapping.ParticleSystem, position, Quaternion.identity);
                 vfx.Play();
             }
         }
-    }
-
-    public void Emit()
-    {
-        throw new NotImplementedException();
     }
 }

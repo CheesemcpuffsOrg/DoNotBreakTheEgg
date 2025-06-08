@@ -11,7 +11,11 @@ public class TagComponent : MonoBehaviour, ITagComponent
 
     Subject<TagScriptableObject> tagAdded = new Subject<TagScriptableObject>();
 
+    Subject<TagScriptableObject> tagRemoved = new Subject<TagScriptableObject>();
+
     public Observable<TagScriptableObject> TagAddedStream => tagAdded;
+
+    public Observable<TagScriptableObject> TagRemovedStream => tagRemoved;
 
     private void Awake()
     {
@@ -43,6 +47,7 @@ public class TagComponent : MonoBehaviour, ITagComponent
             tags.Add(tag);
             // Register the GameObject globally with the tag
             gameObject.RegisterGameObjectWithTag(tag);
+            tagAdded.OnNext(tag);
 
         } 
     }
@@ -81,6 +86,7 @@ public class TagComponent : MonoBehaviour, ITagComponent
         {
             // Unregister the GameObject globally from the tag
             gameObject.UnregisterGameObjectWithTag(tag);
+            tagRemoved.OnNext(tag);
         }  
     }
 

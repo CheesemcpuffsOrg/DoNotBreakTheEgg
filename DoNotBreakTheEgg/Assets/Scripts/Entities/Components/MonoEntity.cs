@@ -16,10 +16,7 @@ public class MonoEntity : MonoBehaviour, IEntity
     private void Awake()
     {
         GetComponents();
-    }
 
-    private void Start()
-    {
         EntityRegistry.RegisterEntity(this);
     }
 

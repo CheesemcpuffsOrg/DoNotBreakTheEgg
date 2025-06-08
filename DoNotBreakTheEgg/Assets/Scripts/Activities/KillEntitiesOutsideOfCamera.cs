@@ -10,8 +10,6 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
 
     ObservableList<IEntity> trackedEntities = new ObservableList<IEntity>();
 
-    bool startCalled;
-
     Subject<IEntity> respawnEntity = new Subject<IEntity>();
 
     private void Start()
@@ -23,11 +21,21 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
             StartTrackingEntity(entity);
         }
 
-        OnStartOrEnable();
-
-        startCalled = true;
-
         var subscriptionBag = Disposable.CreateBuilder();
+
+        EntityRegistry
+            .RegisteredEntities
+            .ObserveAdd()
+            .Select(addEvent => addEvent.Value)
+            .Subscribe(StartTrackingEntity)
+            .AddTo(ref subscriptionBag);
+       
+        EntityRegistry
+            .RegisteredEntities
+            .ObserveRemove()
+            .Select(addEvent => addEvent.Value)
+            .Subscribe(StopTrackingEntity)
+            .AddTo(ref subscriptionBag);
 
         trackedEntities
             .ObserveAdd()
@@ -70,24 +78,5 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
         if (!entity.GetEntityComponent<TagComponent>().PassTagFilterCheck(filter) && !trackedEntities.Contains(entity)) return;
 
         trackedEntities.Remove(entity);
-    }
-
-    private void OnStartOrEnable()
-    {
-        EntityRegistry.EntityRegistered += StartTrackingEntity;
-        EntityRegistry.EntityUnregistered += StopTrackingEntity;
-    }
-
-    private void OnEnable()
-    {
-        if (!startCalled) return;
-
-        OnStartOrEnable();
-    }
-
-    private void OnDisable()
-    {
-        EntityRegistry.EntityRegistered -= StartTrackingEntity;
-        EntityRegistry.EntityUnregistered -= StopTrackingEntity;
     }
 }
