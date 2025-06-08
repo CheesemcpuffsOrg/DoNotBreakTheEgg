@@ -5,46 +5,31 @@ using UnityEngine;
 public class KillEntitiesOutsideOfCamera : MonoBehaviour
 {
     [SerializeField] RespawnEntities respawnEntities;
-    [SerializeField] TagFilter filter;
     [SerializeField] float viewportOffset = 0.05f;
 
-    ObservableList<IEntity> trackedEntities = new ObservableList<IEntity>();
+    [SerializeField] GameObject trackingEntitySourceObj;
+    [SerializeField] GameObject respawnEntitySourceObj;
+
+    IEntitySource trackingEntitySource => trackingEntitySourceObj.GetComponent<IEntitySource>();
+
+    IEntitySource respawnEntitySource => respawnEntitySourceObj.GetComponent<IEntitySource>();
 
     Subject<IEntity> respawnEntity = new Subject<IEntity>();
 
+    
+
     private void Start()
     {
-        var registeredEntities = EntityRegistry.GetRegisteredEntities();
-
-        foreach (var entity in registeredEntities)
-        {
-            StartTrackingEntity(entity);
-        }
-
         var subscriptionBag = Disposable.CreateBuilder();
 
-        EntityRegistry
-            .RegisteredEntities
-            .ObserveAdd()
-            .Select(addEvent => addEvent.Value)
-            .Subscribe(StartTrackingEntity)
-            .AddTo(ref subscriptionBag);
-       
-        EntityRegistry
-            .RegisteredEntities
-            .ObserveRemove()
-            .Select(addEvent => addEvent.Value)
-            .Subscribe(StopTrackingEntity)
-            .AddTo(ref subscriptionBag);
-
-        trackedEntities
-            .ObserveAdd()
+        trackingEntitySource
+            .Entities
             .SelectMany(entity =>
             {
                 return Observable
                     .EveryUpdate()
-                    .Select(_ => entity.Value)
-                    .TakeUntil(trackedEntities.ObserveRemove().Where(trackedEntity => trackedEntity.Value == entity.Value));
+                    .Select(_ => entity)
+                    .TakeUntil(respawnEntitySource.Entities.Where(e => e == entity));
             })
             .Subscribe(entity =>
             {
@@ -58,25 +43,10 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
         respawnEntity
             .Subscribe(entity =>
             {
-                EntityRegistry.UnregisterEntity(entity);
                 respawnEntities.RespawnEntity(entity);
             })
             .AddTo(ref subscriptionBag);
 
         subscriptionBag.RegisterTo(this.destroyCancellationToken);
-    }
-
-    private void StartTrackingEntity(IEntity entity)
-    {
-        if (!entity.GetEntityComponent<TagComponent>().PassTagFilterCheck(filter) || trackedEntities.Contains(entity)) return;  
-
-        trackedEntities.Add(entity);
-    }
-
-    private void StopTrackingEntity(IEntity entity)
-    {
-        if (!entity.GetEntityComponent<TagComponent>().PassTagFilterCheck(filter) && !trackedEntities.Contains(entity)) return;
-
-        trackedEntities.Remove(entity);
     }
 }
