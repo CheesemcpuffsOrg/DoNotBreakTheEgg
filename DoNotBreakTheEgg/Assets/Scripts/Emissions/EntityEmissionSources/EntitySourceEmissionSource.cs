@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EntitySourceEmitter : MonoBehaviour  
+public class EntitySourceEmissionSource : MonoBehaviour  
 {
     
 

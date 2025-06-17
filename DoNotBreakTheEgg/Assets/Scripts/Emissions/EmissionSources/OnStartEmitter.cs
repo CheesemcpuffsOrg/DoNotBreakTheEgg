@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OnStartEmitter : MonoBehaviour
+public class OnStartEmissionSource : MonoBehaviour
 {
 
     [SerializeField] GameObject emissionStrategyObj;
@@ -12,7 +12,6 @@ public class OnStartEmitter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         emissionStrategy.Emit();
     }
 
