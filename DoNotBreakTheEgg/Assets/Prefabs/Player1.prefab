@@ -301,7 +301,7 @@ MonoBehaviour:
     mustHaveAny: []
     cannotHaveAny: []
   chargeThrowSoundData:
-    audioScriptableObject: {fileID: 11400000, guid: 8fdae2c3da8baae4f8c00b6882fc40d1, type: 2}
+    audioScriptableObject: {fileID: 11400000, guid: 0f3a34a70c1cd6d4391e94d90ae95e86, type: 2}
     playLocation: {fileID: 0}
     followTransform: 1
     delay: 0
