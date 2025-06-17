@@ -2213,6 +2213,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2092565735228315554, guid: 23d6046cdea14a348b43dc85cf5dd9aa, type: 3}
+      propertyPath: jumpSoundData.playLocation
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2092565735228315554, guid: 23d6046cdea14a348b43dc85cf5dd9aa, type: 3}
+      propertyPath: jumpSoundData.audioScriptableObject
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6805014060619456806, guid: 23d6046cdea14a348b43dc85cf5dd9aa, type: 3}
       propertyPath: m_Name
       value: Egg
