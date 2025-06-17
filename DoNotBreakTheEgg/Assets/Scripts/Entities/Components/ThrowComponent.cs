@@ -24,6 +24,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     [SerializeField] TagFilter throwFilter;
 
     [Header("Audio")]
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData throwSoundData;
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData chargeThrowSoundData;
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData maxChargeSoundData;
 
@@ -74,6 +75,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         heldEntity.GetEntityComponent<IMovementComponent>().Throw(powerCurrent, (Vector2)launchPoint.up);
 
         soundComponent.StopSound(chargeThrowSoundData);
+        soundComponent.PlaySound(throwSoundData);
     }
 
     private void ChargeShot()
