@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UIElements;
 
 [Serializable]
 public class AudioVariant
@@ -36,7 +37,9 @@ public class AudioScriptableObject : ScriptableObject
 {
     [SerializeField] List<ObjectPool<AudioVariant>> audioClips;
     public List<ObjectPool<AudioVariant>> AudioClips => audioClips;
-    [SerializeField, HideInInspector] bool defaultValuesApplied = false;
+
+    [SerializeField, HideInInspector] private int previousClipCount = 0;
+    //[SerializeField, HideInInspector] bool defaultValuesApplied = false;
 
     [Header ("Basic Controls")]
     [SerializeField] AudioMixerGroup audioMixerGroup;
@@ -83,26 +86,30 @@ public class AudioScriptableObject : ScriptableObject
     [SerializeField] AnimationCurve volumeRollOffCurve;
     public AnimationCurve VolumeRollOffCurve => volumeRollOffCurve;
 
-    
+
 
     //due to how unity handles generics, we need to intialize the values onvalidate
     private void OnValidate()
     {
-        // Ensure audioClips and internal AudioList objects have their default values
-        if (audioClips == null) return;
+        if (audioClips == null)
+            return;
 
-        foreach (var pool in audioClips)
+        // Detect newly added items
+        if (audioClips.Count > previousClipCount)
         {
-            if (pool.obj == null) continue;
+            for (int i = previousClipCount; i < audioClips.Count; i++)
+            {
+                var pool = audioClips[i];
+                if (pool?.obj == null)
+                    continue;
 
-            // Apply default values if not manually set
-            if (!defaultValuesApplied) 
-            { 
                 pool.obj.volume = 1f;
                 pool.obj.pitch = 1f;
                 pool.weight = 1;
-                defaultValuesApplied = true;
             }
         }
+
+        // Update count for future validation checks
+        previousClipCount = audioClips.Count;
     }
 }

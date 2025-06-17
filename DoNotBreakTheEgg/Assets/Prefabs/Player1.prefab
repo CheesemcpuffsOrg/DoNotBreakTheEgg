@@ -300,6 +300,16 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 342baf6bc2d8e544d9a1bd8890fa61d5, type: 2}
     mustHaveAny: []
     cannotHaveAny: []
+  chargeThrowSoundData:
+    audioScriptableObject: {fileID: 11400000, guid: 0f3a34a70c1cd6d4391e94d90ae95e86, type: 2}
+    playLocation: {fileID: 0}
+    followTransform: 1
+    delay: 0
+  maxChargeSoundData:
+    audioScriptableObject: {fileID: 0}
+    playLocation: {fileID: 0}
+    followTransform: 1
+    delay: 0
   entityWeight: 1
   trajectorySteps: 10
   timeStep: 0.1
@@ -378,7 +388,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 768
   jumpSoundData:
-    audioScriptableObject: {fileID: 0}
+    audioScriptableObject: {fileID: 11400000, guid: 4d93d938c95466b42aca64b1317cc847, type: 2}
     playLocation: {fileID: 0}
     followTransform: 0
     delay: 0

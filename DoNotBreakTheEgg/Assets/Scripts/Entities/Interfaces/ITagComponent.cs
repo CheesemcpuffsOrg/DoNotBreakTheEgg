@@ -8,6 +8,8 @@ public interface ITagComponent : ITags, IEntityComponent
 {
     public Observable<TagScriptableObject> TagAddedStream { get; }
 
+    public Observable<TagScriptableObject> TagRemovedStream { get; }
+
     public bool HasTag(TagScriptableObject tag); 
 
     
