@@ -420,3 +420,13 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
+  jumpSoundData:
+    audioScriptableObject: {fileID: 11400000, guid: b1aaa97b57897c54699698bd2a75d723, type: 2}
+    playLocation: {fileID: 0}
+    followTransform: 0
+    delay: 0
+  jumpVocalSoundData:
+    audioScriptableObject: {fileID: 0}
+    playLocation: {fileID: 0}
+    followTransform: 0
+    delay: 0

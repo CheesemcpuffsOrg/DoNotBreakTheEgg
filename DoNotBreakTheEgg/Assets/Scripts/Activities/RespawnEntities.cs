@@ -13,6 +13,9 @@ public class RespawnEntities : MonoBehaviour
 
     [SerializeField] Tilemap tilemap;
 
+    [SerializeField] TagScriptableObject respawnTag;
+
+
     Subject<(Transform, Vector2, Vector2, IEntity)> moveStream = new Subject<(Transform, Vector2, Vector2, IEntity)>();
 
     Subject<(IEntity, Transform)> destinationReached = new Subject<(IEntity, Transform)>();
@@ -63,7 +66,8 @@ public class RespawnEntities : MonoBehaviour
                 movementComponent.EnableGravity();
                 movementComponent.EnableMovement();
                 entity.GetEntityComponent<IAnchoringComponent>().SetParent(null);
-                EntityRegistry.RegisterEntity(entity);
+                entity.GetEntityComponent<ITagComponent>().RemoveTag(respawnTag);
+                //EntityRegistry.RegisterEntity(entity);
                 Destroy(transporterPad.gameObject);
             })
             .AddTo(ref subscriptionBag);
@@ -73,6 +77,9 @@ public class RespawnEntities : MonoBehaviour
 
     public void RespawnEntity(IEntity entity)
     {
+
+        entity.GetEntityComponent<ITagComponent>().AddTag(respawnTag);
+
         var spawnLocation = CameraUtility.GetRandomLocationOutsideViewport(Camera.main, 1, ViewportSide.XAxis);
 
         var landingZone = FindLandingZone(spawnLocation);

@@ -14,11 +14,6 @@ public class SoundEmissionStrategy : MonoBehaviour, IEmissionStrategy, ISoundCom
         PlaySound(soundEmission);
     }
 
-    public void Emit(IEntity entity)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void PlaySound(SoundData data)
     {
         if (data.AudioScriptableObject == null) return; //fails quitely if empty
