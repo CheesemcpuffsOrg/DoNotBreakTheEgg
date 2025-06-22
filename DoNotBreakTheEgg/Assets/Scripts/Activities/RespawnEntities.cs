@@ -15,6 +15,9 @@ public class RespawnEntities : MonoBehaviour
 
     [SerializeField] TagScriptableObject respawnTag;
 
+    [Header("Audio")]
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData destinationReachedSoundData;
+
 
     Subject<(Transform, Vector2, Vector2, IEntity)> moveStream = new Subject<(Transform, Vector2, Vector2, IEntity)>();
 
@@ -30,7 +33,7 @@ public class RespawnEntities : MonoBehaviour
             {
                 var (transporterPad, spawnLocation, landingZone, entity) = tuple;
 
-                var adjustedLandingZone = new Vector3(landingZone.x, landingZone.y + 1);
+                var adjustedLandingZone = new Vector3(landingZone.x, landingZone.y + 1); 
 
                 return Observable
                     .EveryUpdate()
@@ -40,6 +43,8 @@ public class RespawnEntities : MonoBehaviour
             })
             .Subscribe(tuple =>
             {
+
+                SoundStreams.instance.PlaySound(destinationReachedSoundData);
 
                 var (transporterPad, spawnLocation, landingZone, entity, t) = tuple;
 
@@ -67,7 +72,6 @@ public class RespawnEntities : MonoBehaviour
                 movementComponent.EnableMovement();
                 entity.GetEntityComponent<IAnchoringComponent>().SetParent(null);
                 entity.GetEntityComponent<ITagComponent>().RemoveTag(respawnTag);
-                //EntityRegistry.RegisterEntity(entity);
                 Destroy(transporterPad.gameObject);
             })
             .AddTo(ref subscriptionBag);

@@ -10,13 +10,12 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
     [SerializeField] GameObject trackingEntitySourceObj;
     [SerializeField] GameObject respawnEntitySourceObj;
 
+    [Header("Sound")]
+    [SerializeField] SoundData deathSound;
+
     IEntitySource trackingEntitySource => trackingEntitySourceObj.GetComponent<IEntitySource>();
 
     IEntitySource respawnEntitySource => respawnEntitySourceObj.GetComponent<IEntitySource>();
-
-    Subject<IEntity> respawnEntity = new Subject<IEntity>();
-
-    
 
     private void Start()
     {
@@ -35,15 +34,9 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
             {
                 if (!CameraUtility.IsInsideViewport(Camera.main, entity.GetEntityComponent<IAnchoringComponent>().GetPosition(), viewportOffset))
                 {
-                    respawnEntity.OnNext(entity);
+                    SoundStreams.instance.PlaySound(deathSound);
+                    respawnEntities.RespawnEntity(entity);
                 }
-            })
-            .AddTo(ref subscriptionBag);
-
-        respawnEntity
-            .Subscribe(entity =>
-            {
-                respawnEntities.RespawnEntity(entity);
             })
             .AddTo(ref subscriptionBag);
 

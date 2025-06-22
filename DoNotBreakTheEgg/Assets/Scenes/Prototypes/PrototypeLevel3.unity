@@ -15401,6 +15401,12 @@ MonoBehaviour:
   stoppingDistance: 0.1
   tilemap: {fileID: 416495419}
   respawnTag: {fileID: 11400000, guid: 34497fcf5b909e041aea5c5d14cc207d, type: 2}
+  soundComponent: {fileID: 0}
+  destinationReachedSoundData:
+    audioScriptableObject: {fileID: 0}
+    playLocation: {fileID: 0}
+    followTransform: 0
+    delay: 0
 --- !u!1 &1259729181
 GameObject:
   m_ObjectHideFlags: 0
@@ -16009,8 +16015,53 @@ Transform:
   - {fileID: 1307455622}
   - {fileID: 249866771}
   - {fileID: 2033031065}
+  - {fileID: 1784534601}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1784534600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1784534601}
+  - component: {fileID: 1784534602}
+  m_Layer: 0
+  m_Name: SoundStreams
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1784534601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784534600}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1754065616}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1784534602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784534600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b88ae28c22d676e4388276cb6c2c2d81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1809574014
 GameObject:
   m_ObjectHideFlags: 0

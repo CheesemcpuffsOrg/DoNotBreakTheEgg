@@ -55,6 +55,9 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
 
     public void ChargeThrow()
     {
+        if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
+            return;
+
         powerCurrent = powerBase; // Reset power to the base value
         chargingShot = true; // Start charging
         soundComponent.PlaySound(chargeThrowSoundData);
@@ -64,9 +67,6 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     {
         chargingShot = false;
         maxPowerReached = false;
-
-        if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
-            return;
 
         var heldEntity = HoldEntityManager.Instance.GetHeldEntity(entity);
         
@@ -96,28 +96,6 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
             maxPowerReached = true;
         }
     }
-
-    /*private void TriggerEnter(Collider2D collision)
-    {
-        if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity)
-            || !collisionEntity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(catchableEntityFilter)
-            || !entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(catchingFilter))
-            return;
-            
-        HoldEntityManager.Instance.AddHeldEntity(entity, collisionEntity, holdAnchor);
-    }*/
-
-    private void OnEnable()
-    {
-        //collision.OnTriggerEnter2D_Action += TriggerEnter;
-    }
-
-    private void OnDisable()
-    {
-       // collision.OnTriggerEnter2D_Action -= TriggerEnter;
-    }
-
-
 
 //I think this logic is invalid now
 #if UNITY_EDITOR

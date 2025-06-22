@@ -275,8 +275,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         collisionInfo.Reset();
         collisionInfo.velocityOld = velocity;
 
-        
-
         // Only descend slope if ground is directly below center ray
         if (ShouldDescendSlope(velocity))
         {
@@ -286,7 +284,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         HorizontalCollisions(ref velocity);
 
         // Add a downward nudge to help stick to slopes when falling or going down slopes quickly
-        if (!collisionInfo.below && velocity.y <= 0)
+        if (gravityEnabled && !collisionInfo.below && velocity.y <= 0)
         {
             const float stickToGroundNudge = 3f; // You can tweak this value (e.g. 2f or 3f)
             velocity.y -= stickToGroundNudge * Time.deltaTime;
