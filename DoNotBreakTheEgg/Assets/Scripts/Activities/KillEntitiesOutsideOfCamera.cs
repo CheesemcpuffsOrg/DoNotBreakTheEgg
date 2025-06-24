@@ -11,7 +11,7 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
     [SerializeField] GameObject respawnEntitySourceObj;
 
     [Header("Sound")]
-    [SerializeField] SoundData deathSound;
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData deathSound;
 
     IEntitySource trackingEntitySource => trackingEntitySourceObj.GetComponent<IEntitySource>();
 

@@ -174,6 +174,55 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 2088cac3207fc3d4fad1e1519fe2a3e2, type: 2}
     - {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
     - {fileID: 11400000, guid: 34497fcf5b909e041aea5c5d14cc207d, type: 2}
+--- !u!1 &66142318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 66142319}
+  - component: {fileID: 66142320}
+  m_Layer: 0
+  m_Name: SoundEmissionStrategy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &66142319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66142318}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 559038200}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &66142320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66142318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f883c300852294f931f73383077110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEmission:
+    audioScriptableObject: {fileID: 0}
+    playLocation: {fileID: 0}
+    followTransform: 0
+    delay: 0
 --- !u!1 &180163524
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,6 +922,55 @@ MonoBehaviour:
   entityToFollow: {fileID: 733060796}
   smoothSpeed: 2
   minY: -3.97
+--- !u!1 &559038199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 559038200}
+  - component: {fileID: 559038201}
+  m_Layer: 0
+  m_Name: AndStrategy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &559038200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559038199}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1081310357}
+  - {fileID: 66142319}
+  m_Father: {fileID: 1738325564}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &559038201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559038199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1c46615cb15e54799c35df990c7424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emissionStrategiesObjects:
+  - {fileID: 1081310356}
+  - {fileID: 66142318}
 --- !u!1 &601731297
 GameObject:
   m_ObjectHideFlags: 0
@@ -15179,12 +15277,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081310356}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1738325564}
+  m_Father: {fileID: 559038200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1081310358
 MonoBehaviour:
@@ -15307,7 +15405,7 @@ MonoBehaviour:
     m_Bits: 256
   moveSpeed: 1
   stoppingDistance: 0.1
-  tilemap: {fileID: 0}
+  tilemap: {fileID: 991972609}
   respawnTag: {fileID: 11400000, guid: 34497fcf5b909e041aea5c5d14cc207d, type: 2}
   destinationReachedSoundData:
     audioScriptableObject: {fileID: 0}
@@ -15869,7 +15967,7 @@ Transform:
   m_Children:
   - {fileID: 6053410}
   - {fileID: 284469941}
-  - {fileID: 1081310357}
+  - {fileID: 559038200}
   m_Father: {fileID: 920637667}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1738325566
@@ -15887,7 +15985,7 @@ MonoBehaviour:
   distanceToTravel: 2
   airbornEntitySourceObj: {fileID: 6053409}
   groundedEntitySourceObj: {fileID: 284469940}
-  entityEmissionStrategyObj: {fileID: 1081310356}
+  entityEmissionStrategyObj: {fileID: 559038199}
 --- !u!1 &1754065615
 GameObject:
   m_ObjectHideFlags: 0

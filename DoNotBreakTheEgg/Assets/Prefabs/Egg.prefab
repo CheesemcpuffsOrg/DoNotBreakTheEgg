@@ -244,6 +244,7 @@ GameObject:
   - component: {fileID: 4976031343907318434}
   - component: {fileID: 209267930390857747}
   - component: {fileID: 2092565735228315554}
+  - component: {fileID: 2710822658836739419}
   m_Layer: 0
   m_Name: Egg
   m_TagString: Untagged
@@ -336,6 +337,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdAnchor: {fileID: 11400000, guid: c189e19764a2ef44bbb9bcd29b62a7df, type: 2}
+  pickUpSound:
+    audioScriptableObject: {fileID: 0}
+    playLocation: {fileID: 0}
+    followTransform: 0
+    delay: 0
 --- !u!114 &28718426000266360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,3 +436,15 @@ MonoBehaviour:
     playLocation: {fileID: 0}
     followTransform: 0
     delay: 0
+--- !u!114 &2710822658836739419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805014060619456806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84083da04a30b414eab5138341816092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
