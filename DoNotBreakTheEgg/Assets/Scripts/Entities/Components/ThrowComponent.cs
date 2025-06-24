@@ -24,6 +24,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     [SerializeField] TagFilter throwFilter;
 
     [Header("Audio")]
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData throwSoundData;
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData chargeThrowSoundData;
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData maxChargeSoundData;
 
@@ -54,6 +55,9 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
 
     public void ChargeThrow()
     {
+        if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
+            return;
+
         powerCurrent = powerBase; // Reset power to the base value
         chargingShot = true; // Start charging
         soundComponent.PlaySound(chargeThrowSoundData);
@@ -64,9 +68,6 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         chargingShot = false;
         maxPowerReached = false;
 
-        if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
-            return;
-
         var heldEntity = HoldEntityManager.Instance.GetHeldEntity(entity);
         
         HoldEntityManager.Instance.RemoveHeldEntity(entity);
@@ -74,6 +75,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         heldEntity.GetEntityComponent<IMovementComponent>().Throw(powerCurrent, (Vector2)launchPoint.up);
 
         soundComponent.StopSound(chargeThrowSoundData);
+        soundComponent.PlaySound(throwSoundData);
     }
 
     private void ChargeShot()
@@ -94,28 +96,6 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
             maxPowerReached = true;
         }
     }
-
-    /*private void TriggerEnter(Collider2D collision)
-    {
-        if (!EntityCollisionService.TryGetEntity(collision, out IEntity collisionEntity)
-            || !collisionEntity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(catchableEntityFilter)
-            || !entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(catchingFilter))
-            return;
-            
-        HoldEntityManager.Instance.AddHeldEntity(entity, collisionEntity, holdAnchor);
-    }*/
-
-    private void OnEnable()
-    {
-        //collision.OnTriggerEnter2D_Action += TriggerEnter;
-    }
-
-    private void OnDisable()
-    {
-       // collision.OnTriggerEnter2D_Action -= TriggerEnter;
-    }
-
-
 
 //I think this logic is invalid now
 #if UNITY_EDITOR

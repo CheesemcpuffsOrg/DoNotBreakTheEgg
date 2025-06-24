@@ -7,15 +7,23 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
 
     [SerializeField] AnchorScriptableObject holdAnchor;
 
+
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData pickUpSound;
+
     IEntity entity;
     IMovementComponent movementComponent;
+    IEntitySoundComponent soundComponent;
 
     private void Awake()
     {
         entity = GetComponent<IEntity>();
-        movementComponent = GetComponent<MovementComponent>();
     }
 
+    private void Start()
+    {
+        movementComponent = entity.GetEntityComponent<IMovementComponent>();
+        soundComponent = entity.GetEntityComponent<IEntitySoundComponent>();
+    }
 
     public void Hold(Transform anchor)
     {
@@ -34,6 +42,8 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
     public void Interact(IEntity interactingEntity)
     {
         if (HoldEntityManager.Instance.IsEntityHolding(entity)) return;
+
+        soundComponent.PlaySound(pickUpSound);
 
         HoldEntityManager.Instance.AddHeldEntity(interactingEntity, entity, interactingEntity.GetEntityComponent<AnchoringComponent>().GetAnchor(holdAnchor));
     }

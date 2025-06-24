@@ -4,10 +4,5 @@ using UnityEngine;
 
 public interface IEmissionStrategy
 {
-
     public void Emit();
-
-    public void Emit(IEntity entity);
-
-    
 }

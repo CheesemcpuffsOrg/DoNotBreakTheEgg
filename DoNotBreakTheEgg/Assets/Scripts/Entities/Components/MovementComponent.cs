@@ -69,7 +69,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData jumpSoundData;
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData jumpVocalSoundData;
 
-    const float skinWidth = 0.015f;
+    const float skinWidth = 0.01f;
     float horizontalRaySpacing;
     float verticalRaySpacing;
     
@@ -117,8 +117,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     {
         IsCeilinged();
 
-        IsGrounded();
-
         ProcessJump();
 
         ProcessThrow();
@@ -127,7 +125,10 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         Gravity();
 
-        Move(velocity * Time.deltaTime);  
+        Move(velocity * Time.deltaTime);
+
+        IsGrounded();
+
     }
 
     public void Jump()
@@ -274,14 +275,39 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         collisionInfo.Reset();
         collisionInfo.velocityOld = velocity;
 
-        DescendSlope(ref velocity);
+        // Only descend slope if ground is directly below center ray
+        if (ShouldDescendSlope(velocity))
+        {
+            DescendSlope(ref velocity);
+        }
 
         HorizontalCollisions(ref velocity);
+
+        // Add a downward nudge to help stick to slopes when falling or going down slopes quickly
+        if (gravityEnabled && !collisionInfo.below && velocity.y <= 0)
+        {
+            const float stickToGroundNudge = 3f; // You can tweak this value (e.g. 2f or 3f)
+            velocity.y -= stickToGroundNudge * Time.deltaTime;
+        }
 
         VerticalCollisions(ref velocity);
 
         transform.Translate(velocity);
         Physics2D.SyncTransforms(); //sync all child objects with parent object
+    }
+
+    private bool ShouldDescendSlope(Vector3 velocity)
+    {
+        var rayOrigin = raycastOrigins.bottomLeft + Vector2.right * (GetBounds().size.x / 2f);
+        var hit = Physics2D.Raycast(rayOrigin, Vector2.down, Mathf.Infinity, collisionMask);
+
+        if (hit)
+        {
+            float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+            return slopeAngle > 0 && slopeAngle <= data.MaxDescendAngle;
+        }
+
+        return false;
     }
 
     void HorizontalCollisions(ref Vector3 velocity)
@@ -452,47 +478,40 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void DescendSlope(ref Vector3 velocity)
     {
-        if(velocity.y >= 0) 
-            return;
+        if (velocity.y >= 0) return;
 
-        var directionX = Mathf.Sign(velocity.x);
+        float directionX = Mathf.Sign(velocity.x);
+        Vector2 rayOrigin = directionX == -1 ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
 
-        var rayOrigin = (directionX == -1) ? raycastOrigins.bottomRight : raycastOrigins.bottomLeft;
-        var hits = Physics2D.RaycastAll(rayOrigin, Vector2.down, Mathf.Infinity, collisionMask);
+        // Cast diagonally down toward where the entity will go
+        RaycastHit2D hit = Physics2D.Raycast(
+            rayOrigin,
+            new Vector2(directionX, -1f).normalized,
+            Mathf.Infinity,
+            collisionMask
+        );
 
-        foreach (var hit in hits)
+        if (hit && !collisionComponent.IsEntityCollider(hit.collider) &&
+            !EntityCollisionService.IsIgnoredCollider(entity, hit.collider))
         {
-            //ignore colliders if they are entities own colliders
-            if (collisionComponent.IsEntityCollider(hit.collider)) continue;
-
-            //Ignore colliders if they are on the ignore list
-            if (EntityCollisionService.IsIgnoredCollider(entity, hit.collider)) continue;
-
-            if (hit)
+            float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+            if (slopeAngle <= data.MaxDescendAngle)
             {
-                var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
-                if (slopeAngle != 0 && slopeAngle <= data.MaxDescendAngle)
+                // Calculate distance the player will move horizontally
+                float moveDistance = Mathf.Abs(velocity.x);
+                float descendVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+
+                if (hit.distance - skinWidth <= Mathf.Tan(slopeAngle * Mathf.Deg2Rad) * moveDistance)
                 {
-                    if (Mathf.Sign(hit.normal.x) == directionX)
-                    {
-                        if (hit.distance - skinWidth <= Mathf.Tan(slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x))
-                        {
-                            var moveDistance = Mathf.Abs(velocity.x);
-                            var descendVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+                    velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * directionX;
+                    velocity.y -= descendVelocityY;
 
-                            velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
-                            velocity.y -= descendVelocityY;
-
-                            collisionInfo.slopeAngle = slopeAngle;
-                            collisionInfo.descendingSlope = true;
-                            collisionInfo.below = true;
-
-                            break;
-                        }
-                    }
+                    collisionInfo.slopeAngle = slopeAngle;
+                    collisionInfo.descendingSlope = true;
+                    collisionInfo.below = true;
                 }
             }
-        }        
+        }
     }
 
     void CalculateRaySpacing()

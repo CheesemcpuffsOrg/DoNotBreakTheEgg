@@ -13,6 +13,12 @@ public class RespawnEntities : MonoBehaviour
 
     [SerializeField] Tilemap tilemap;
 
+    [SerializeField] TagScriptableObject respawnTag;
+
+    [Header("Audio")]
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData destinationReachedSoundData;
+
+
     Subject<(Transform, Vector2, Vector2, IEntity)> moveStream = new Subject<(Transform, Vector2, Vector2, IEntity)>();
 
     Subject<(IEntity, Transform)> destinationReached = new Subject<(IEntity, Transform)>();
@@ -27,7 +33,7 @@ public class RespawnEntities : MonoBehaviour
             {
                 var (transporterPad, spawnLocation, landingZone, entity) = tuple;
 
-                var adjustedLandingZone = new Vector3(landingZone.x, landingZone.y + 1);
+                var adjustedLandingZone = new Vector3(landingZone.x, landingZone.y + 1); 
 
                 return Observable
                     .EveryUpdate()
@@ -37,6 +43,8 @@ public class RespawnEntities : MonoBehaviour
             })
             .Subscribe(tuple =>
             {
+
+                SoundStreams.instance.PlaySound(destinationReachedSoundData);
 
                 var (transporterPad, spawnLocation, landingZone, entity, t) = tuple;
 
@@ -63,7 +71,7 @@ public class RespawnEntities : MonoBehaviour
                 movementComponent.EnableGravity();
                 movementComponent.EnableMovement();
                 entity.GetEntityComponent<IAnchoringComponent>().SetParent(null);
-                EntityRegistry.RegisterEntity(entity);
+                entity.GetEntityComponent<ITagComponent>().RemoveTag(respawnTag);
                 Destroy(transporterPad.gameObject);
             })
             .AddTo(ref subscriptionBag);
@@ -73,6 +81,9 @@ public class RespawnEntities : MonoBehaviour
 
     public void RespawnEntity(IEntity entity)
     {
+
+        entity.GetEntityComponent<ITagComponent>().AddTag(respawnTag);
+
         var spawnLocation = CameraUtility.GetRandomLocationOutsideViewport(Camera.main, 1, ViewportSide.XAxis);
 
         var landingZone = FindLandingZone(spawnLocation);

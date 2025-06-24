@@ -5,89 +5,41 @@ using UnityEngine;
 public class KillEntitiesOutsideOfCamera : MonoBehaviour
 {
     [SerializeField] RespawnEntities respawnEntities;
-    [SerializeField] TagFilter filter;
     [SerializeField] float viewportOffset = 0.05f;
 
-    ObservableList<IEntity> trackedEntities = new ObservableList<IEntity>();
+    [SerializeField] GameObject trackingEntitySourceObj;
+    [SerializeField] GameObject respawnEntitySourceObj;
 
-    bool startCalled;
+    [Header("Sound")]
+    [SerializeField] SoundData deathSound;
 
-    Subject<IEntity> respawnEntity = new Subject<IEntity>();
+    IEntitySource trackingEntitySource => trackingEntitySourceObj.GetComponent<IEntitySource>();
+
+    IEntitySource respawnEntitySource => respawnEntitySourceObj.GetComponent<IEntitySource>();
 
     private void Start()
     {
-        var registeredEntities = EntityRegistry.GetRegisteredEntities();
-
-        foreach (var entity in registeredEntities)
-        {
-            StartTrackingEntity(entity);
-        }
-
-        OnStartOrEnable();
-
-        startCalled = true;
-
         var subscriptionBag = Disposable.CreateBuilder();
 
-        trackedEntities
-            .ObserveAdd()
+        trackingEntitySource
+            .Entities
             .SelectMany(entity =>
             {
                 return Observable
                     .EveryUpdate()
-                    .Select(_ => entity.Value)
-                    .TakeUntil(trackedEntities.ObserveRemove().Where(trackedEntity => trackedEntity.Value == entity.Value));
+                    .Select(_ => entity)
+                    .TakeUntil(respawnEntitySource.Entities.Where(e => e == entity));
             })
             .Subscribe(entity =>
             {
                 if (!CameraUtility.IsInsideViewport(Camera.main, entity.GetEntityComponent<IAnchoringComponent>().GetPosition(), viewportOffset))
                 {
-                    respawnEntity.OnNext(entity);
+                    SoundStreams.instance.PlaySound(deathSound);
+                    respawnEntities.RespawnEntity(entity);
                 }
             })
             .AddTo(ref subscriptionBag);
 
-        respawnEntity
-            .Subscribe(entity =>
-            {
-                EntityRegistry.UnregisterEntity(entity);
-                respawnEntities.RespawnEntity(entity);
-            })
-            .AddTo(ref subscriptionBag);
-
         subscriptionBag.RegisterTo(this.destroyCancellationToken);
-    }
-
-    private void StartTrackingEntity(IEntity entity)
-    {
-        if (!entity.GetEntityComponent<TagComponent>().PassTagFilterCheck(filter) || trackedEntities.Contains(entity)) return;  
-
-        trackedEntities.Add(entity);
-    }
-
-    private void StopTrackingEntity(IEntity entity)
-    {
-        if (!entity.GetEntityComponent<TagComponent>().PassTagFilterCheck(filter) && !trackedEntities.Contains(entity)) return;
-
-        trackedEntities.Remove(entity);
-    }
-
-    private void OnStartOrEnable()
-    {
-        EntityRegistry.EntityRegistered += StartTrackingEntity;
-        EntityRegistry.EntityUnregistered += StopTrackingEntity;
-    }
-
-    private void OnEnable()
-    {
-        if (!startCalled) return;
-
-        OnStartOrEnable();
-    }
-
-    private void OnDisable()
-    {
-        EntityRegistry.EntityRegistered -= StartTrackingEntity;
-        EntityRegistry.EntityUnregistered -= StopTrackingEntity;
     }
 }

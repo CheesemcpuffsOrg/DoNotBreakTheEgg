@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b1e9d61e78084891ed16194867649, type: 3}
+  m_Name: SO_sfx_Help
+  m_EditorClassIdentifier: 
+  audioClips:
+  - obj:
+      audioClip: {fileID: 8300000, guid: 856e16dbea1145842ba5278f6042d00d, type: 3}
+      volume: 1
+      pitch: 0.99
+    weight: 15
+  - obj:
+      audioClip: {fileID: 8300000, guid: b65edf9cb61bc9f4196c2003ef2927dc, type: 3}
+      volume: 1
+      pitch: 1
+    weight: 15
+  defaultValuesApplied: 1
+  audioMixerGroup: {fileID: -4562355553656741050, guid: 219101960e5b7994c9f3c9a1c082bf41, type: 2}
+  loop: 0
+  playWhilePaused: 0
+  pitchShift: 1
+  minPitchShift: 0.93
+  maxPitchShift: 1.1
+  fadeControls:
+    fadeIn: 0
+    fadeInDuration: 1
+    fadeOut: 0
+    fadeOutDuration: 1
+  spatialBlend: 0
+  dopplerLevel: 0
+  pan: 0
+  minDistance: 1
+  maxDistance: 30
+  volumeRollOffMode: 1
+  volumeRollOffCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 30
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
