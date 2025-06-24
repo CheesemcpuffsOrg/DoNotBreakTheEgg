@@ -428,55 +428,6 @@ MonoBehaviour:
     mustHaveAny: []
     cannotHaveAny:
     - {fileID: 11400000, guid: 34497fcf5b909e041aea5c5d14cc207d, type: 2}
---- !u!1 &284469940
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 284469941}
-  - component: {fileID: 284469942}
-  m_Layer: 0
-  m_Name: GroundedSource
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &284469941
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 284469940}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1738325564}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &284469942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 284469940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 150b4ca155b6dc34ab06c5d3b0f64642, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  filter:
-    mustHaveAll:
-    - {fileID: 11400000, guid: 2088cac3207fc3d4fad1e1519fe2a3e2, type: 2}
-    mustHaveAny: []
-    cannotHaveAny: []
 --- !u!1 &322040437
 GameObject:
   m_ObjectHideFlags: 0
@@ -15331,7 +15282,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 262516442}
-  - {fileID: 1284799162}
   m_Father: {fileID: 920637667}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113701480
@@ -15349,7 +15299,6 @@ MonoBehaviour:
   respawnEntities: {fileID: 1160536153}
   viewportOffset: 0.01
   trackingEntitySourceObj: {fileID: 262516441}
-  respawnEntitySourceObj: {fileID: 1284799161}
   deathSound:
     audioScriptableObject: {fileID: 0}
     playLocation: {fileID: 0}
@@ -15458,55 +15407,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHeldTag: {fileID: 11400000, guid: 6d045bc1c3850e040aa6c2b0e69b72f4, type: 2}
   isHoldingTag: {fileID: 11400000, guid: 342baf6bc2d8e544d9a1bd8890fa61d5, type: 2}
---- !u!1 &1284799161
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1284799162}
-  - component: {fileID: 1284799163}
-  m_Layer: 0
-  m_Name: RespawningEntitySource
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1284799162
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1284799161}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1113701479}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1284799163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1284799161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 150b4ca155b6dc34ab06c5d3b0f64642, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  filter:
-    mustHaveAll:
-    - {fileID: 11400000, guid: 34497fcf5b909e041aea5c5d14cc207d, type: 2}
-    mustHaveAny: []
-    cannotHaveAny: []
 --- !u!1 &1307455621
 GameObject:
   m_ObjectHideFlags: 0
@@ -15966,7 +15866,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6053410}
-  - {fileID: 284469941}
   - {fileID: 559038200}
   m_Father: {fileID: 920637667}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15984,7 +15883,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceToTravel: 2
   airbornEntitySourceObj: {fileID: 6053409}
-  groundedEntitySourceObj: {fileID: 284469940}
   entityEmissionStrategyObj: {fileID: 559038199}
 --- !u!1 &1754065615
 GameObject:
