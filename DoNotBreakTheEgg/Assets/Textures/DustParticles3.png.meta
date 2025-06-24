@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 69aa0a201ebce5d49b48bce03df1ada8
+guid: c4014e9a2f81eae47ba2b67023b953b3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DustParticles2_0
+      name: DustParticles3_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b18d099aff9b0841a84664603db45b1
-      internalID: -830540414
+      spriteID: f8d5848d15eb3cd4f9e84fa7081c9c0d
+      internalID: 746835569
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles2_1
+      name: DustParticles3_1
       rect:
         serializedVersion: 2
         x: 21
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9f4537f1ea0de34fba9bcc7c4f0af77
-      internalID: -830388270
+      spriteID: 1739704ba26b00f40863c47bb4193cb6
+      internalID: 1422873316
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles2_2
+      name: DustParticles3_2
       rect:
         serializedVersion: 2
         x: 0
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6cd116e1c8156044892a7a28c312296d
-      internalID: -780262874
+      spriteID: ff04e2e8afbbc7545bd038084bf64989
+      internalID: 1763504500
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles2_3
+      name: DustParticles3_3
       rect:
         serializedVersion: 2
         x: 18
@@ -174,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d60999fdcfb1cc44ab22e2976029069
-      internalID: -559677957
+      spriteID: 4d26fd6510d1f6e4a9b4f0fc7cf9c8b3
+      internalID: 376025880
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles2_4
+      name: DustParticles3_4
       rect:
         serializedVersion: 2
         x: 2
@@ -195,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99a3b79ffd7dbee408e9996d750eafa0
-      internalID: 1230391165
+      spriteID: 56ee484c05fc9df46b0134e115156769
+      internalID: 77301342
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles2_5
+      name: DustParticles3_5
       rect:
         serializedVersion: 2
         x: 19
@@ -216,8 +216,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 173851c5f8c89c141a3c42276a0c38fd
-      internalID: -2097059191
+      spriteID: 05d7dd3d2ae679848a52084b488a4071
+      internalID: 1863815614
       vertices: []
       indices: 
       edges: []
@@ -233,12 +233,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DustParticles2_0: -830540414
-      DustParticles2_1: -830388270
-      DustParticles2_2: -780262874
-      DustParticles2_3: -559677957
-      DustParticles2_4: 1230391165
-      DustParticles2_5: -2097059191
+      DustParticles3_0: 746835569
+      DustParticles3_1: 1422873316
+      DustParticles3_2: 1763504500
+      DustParticles3_3: 376025880
+      DustParticles3_4: 77301342
+      DustParticles3_5: 1863815614
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

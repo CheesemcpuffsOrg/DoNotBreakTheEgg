@@ -69,7 +69,7 @@ public class DistanceFellEntityEmissionSource : MonoBehaviour
                         if (startedDescending)
                         {
                             float distanceDescended = startPosition.Value.y - currentPos.y;
-                            return distanceDescended >= 1;
+                            return distanceDescended >= distanceToTravel;
                         }
 
                         return false;
