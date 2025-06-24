@@ -65,6 +65,9 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
 
     public void Throw()
     {
+        if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
+            return;
+
         chargingShot = false;
         maxPowerReached = false;
 

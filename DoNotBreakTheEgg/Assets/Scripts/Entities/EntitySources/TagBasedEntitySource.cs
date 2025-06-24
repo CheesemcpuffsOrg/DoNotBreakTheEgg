@@ -9,60 +9,59 @@ public class TagBasedEntitySource : MonoBehaviour, IEntitySource
 
     [SerializeField] TagFilter filter;
 
-    private Dictionary<IEntity, bool> _entityPassStates = new();
+    //With how these streams are handled, it is a good idea to subscribe to them instantly and fire off the emissions you obtain with a subject.  
 
     public Observable<IEntity> Entities =>
         Observable.Defer(() =>
-        {// 1. Fresh snapshot of currently passing entities at subscription time
+        {
             var currentPassingEntities = EntityRegistry.GetRegisteredEntities()
                 .Where(e => e.GetEntityComponent<ITagComponent>().PassTagFilterCheck(filter))
                 .ToObservable();
 
-            // 2. Future entities added (all entities)
             var futureEntities = EntityRegistry.RegisteredEntities.ObserveAdd()
-                .Select(evt => evt.Value);
+                .Select(evt => evt.Value)
+                .Where(e => e.GetEntityComponent<ITagComponent>().PassTagFilterCheck(filter));
 
-            // 3. All entities to listen to (current + future)
-            var allEntities = EntityRegistry.GetRegisteredEntities()
+            var tagUpdates = EntityRegistry.GetRegisteredEntities()
                 .ToObservable()
-                .Concat(futureEntities);
-
-            // 4. Observable emitting when entities newly pass the filter
-            var tagUpdates = allEntities
+                .Concat(EntityRegistry.RegisteredEntities.ObserveAdd().Select(evt => evt.Value))
                 .SelectMany(entity =>
                 {
                     var tagComponent = entity.GetEntityComponent<ITagComponent>();
 
-                    // Initialize lastPassed only once per entity globally
-                    if (!_entityPassStates.ContainsKey(entity))
-                    {
-                        _entityPassStates[entity] = tagComponent.PassTagFilterCheck(filter);
-                    }
-
-                    return tagComponent.TagAddedStream
-                        .Merge(tagComponent.TagRemovedStream)
-                        .Select(_ =>
-                        {
-                            bool nowPasses = tagComponent.PassTagFilterCheck(filter);
-                            bool lastPassed = _entityPassStates[entity];
-                            bool shouldEmit = !lastPassed && nowPasses;
-
-                            _entityPassStates[entity] = nowPasses;
-                            return shouldEmit ? entity : null;
-                        })
-                        .Where(e => e != null);
+                    return Observable.Return(tagComponent.PassTagFilterCheck(filter)) // initial state emitted first
+                        .Concat(
+                            tagComponent.TagAddedStream
+                                .Merge(tagComponent.TagRemovedStream)
+                                .Select(_ => tagComponent.PassTagFilterCheck(filter))
+                        )
+                        .Scan((prev: false, curr: false), (acc, now) => (acc.curr, now))
+                        .Where(p => !p.prev && p.curr) // transition from not passing to passing
+                        .Select(_ => entity);
                 });
 
-            // 5. Future entities that already pass filter on add
-            var futurePassingEntities = futureEntities
-                .Where(e => e.GetEntityComponent<ITagComponent>().PassTagFilterCheck(filter));
-
-            // 6. Combine:
-            // - fresh current snapshot at subscription
-            // - future entities that already pass
-            // - entities passing filter due to tag changes
             return currentPassingEntities
-                .Concat(futurePassingEntities)
-                .Merge(tagUpdates); // avoid duplicates
-        });
+                .Concat(futureEntities)
+                .Merge(tagUpdates);
+        })
+        .Share();
+
+    public Observable<IEntity> LostEntities =>
+        Entities
+            .SelectMany(entity =>
+            {
+                var tagComponent = entity.GetEntityComponent<ITagComponent>();
+
+                return Observable.Return(tagComponent.PassTagFilterCheck(filter)) // initial state emitted first
+                    .Concat(
+                        tagComponent.TagAddedStream
+                            .Merge(tagComponent.TagRemovedStream)
+                            .Select(_ => tagComponent.PassTagFilterCheck(filter))
+                    )
+                    .Scan((prev: true, curr: true), (acc, now) => (acc.curr, now))
+                    .Where(p => p.prev && !p.curr) // transition from passing to not passing
+                    .Take(1) // emit only once per pass/loss cycle
+                    .Select(_ => entity);
+            })
+            .Share();
 }

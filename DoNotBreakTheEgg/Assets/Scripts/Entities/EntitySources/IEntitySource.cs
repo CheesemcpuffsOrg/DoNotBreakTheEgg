@@ -6,4 +6,5 @@ using UnityEngine;
 public interface IEntitySource
 {
     public Observable<IEntity> Entities { get; }
+    public Observable<IEntity> LostEntities { get; }
 }
