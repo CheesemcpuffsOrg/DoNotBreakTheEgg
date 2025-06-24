@@ -12,10 +12,8 @@ public class DistanceFellEntityEmissionSource : MonoBehaviour
 
     [Header("Entity Sources")]
     [SerializeField] GameObject airbornEntitySourceObj;
-    [SerializeField] GameObject groundedEntitySourceObj;
 
     IEntitySource airbornEntitySource => airbornEntitySourceObj.GetComponent<IEntitySource>();
-    IEntitySource groundedEntitySource => groundedEntitySourceObj.GetComponent<IEntitySource>();
 
 
     [Header("Emission Strategy")]
@@ -28,28 +26,29 @@ public class DistanceFellEntityEmissionSource : MonoBehaviour
     {
         var subscriptionBag = Disposable.CreateBuilder();
         
-        var sourceTwo = new Subject<IEntity>();
-        var sourceOne = new Subject<IEntity>();
+        var lostSource = new Subject<IEntity>();
+        var gainedSource = new Subject<IEntity>();
         var thresholdReached = new Subject<IEntity>();
 
-        groundedEntitySource
-            .Entities
+        airbornEntitySource
+            .LostEntities
             .Subscribe(entity =>
             {
-                sourceTwo.OnNext(entity);
+                lostSource.OnNext(entity);
             })
             .AddTo(ref subscriptionBag);
+
 
         airbornEntitySource
             .Entities
             .Subscribe(entity =>
             {
-               sourceOne.OnNext(entity);
+               gainedSource.OnNext(entity);
             })
             .AddTo(ref subscriptionBag);
 
 
-        sourceOne
+        gainedSource
             .SelectMany(entity =>
             {
                 Vector3? startPosition = null;
@@ -77,7 +76,7 @@ public class DistanceFellEntityEmissionSource : MonoBehaviour
                     })
                     .Take(1) // emit only once, then complete)
                     .Select(_ => entity)
-                    .TakeUntil(sourceTwo.Where(e => e == entity)); // you can select what you want to emit during tracking
+                    .TakeUntil(lostSource.Where(e => e == entity)); // you can select what you want to emit during tracking
             })
             .Subscribe(entity =>
             {
@@ -88,7 +87,7 @@ public class DistanceFellEntityEmissionSource : MonoBehaviour
         thresholdReached
             .SelectMany(entity =>
             {
-                return sourceTwo
+                return lostSource
                     .Where(e => e == entity)
                     .Take(1);
             })
