@@ -1,3 +1,0 @@
-Add grass audio SFX
-Change the jump
-Change max charge 0.1s  (fast and sharp like notification)
