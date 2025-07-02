@@ -72,7 +72,7 @@ public class BaseAudioSystemManager : MonoBehaviour
         }
     }
 
-    public static BaseAudioSystemManager Instance;
+    public static BaseAudioSystemManager Instance { get; protected set; }
 
     protected List<AudioReference> audioReferences = new List<AudioReference>();
 
@@ -81,7 +81,14 @@ public class BaseAudioSystemManager : MonoBehaviour
 
     protected virtual void Awake()
     {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
+        DontDestroyOnLoad(gameObject);
 
         audioPoolContainer = new GameObject("AudioPoolContainer").transform;
         audioPoolContainer.SetParent(this.transform, false);
@@ -120,6 +127,8 @@ public class BaseAudioSystemManager : MonoBehaviour
 
         var audioReference = CreateAudioReference(sound, UUID, obj, audioSource, chosenAudioVariant, type);
 
+        // consider a separate implementation for PlayScheduled, for more insync audio calls
+        //Play functions well for one shot audio
         audioSource.Play();
 
         return new ActiveSound(audioReference);

@@ -15,8 +15,6 @@ public class AndEntityEmissionStrategy : MonoBehaviour, IEntityEmissionStrategy
     {
         foreach (var emissionStrategy in emissionStrategies)
         {
-            Debug.Log(entity);
-            Debug.Log(emissionStrategy);
             emissionStrategy.Emit(entity);
         }
     }

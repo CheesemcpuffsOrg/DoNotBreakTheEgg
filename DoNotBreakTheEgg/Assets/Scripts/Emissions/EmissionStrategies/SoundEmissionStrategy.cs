@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,14 +15,14 @@ public class SoundEmissionStrategy : MonoBehaviour, IEmissionStrategy, ISoundCom
         PlaySound(soundEmission);
     }
 
-    public void PlaySound(SoundData data)
+    public void PlaySound(SoundData data, Action onEndOfClip = null)
     {
         if (data.AudioScriptableObject == null) return; //fails quitely if empty
 
-        StartCoroutine(DelayTimer(data));
+        StartCoroutine(DelayTimer(data, onEndOfClip));
     }
 
-    private IEnumerator DelayTimer(SoundData data)
+    private IEnumerator DelayTimer(SoundData data, Action onEndOfClip = null)
     {
         yield return new WaitForSeconds(data.Delay);
 
@@ -32,7 +33,7 @@ public class SoundEmissionStrategy : MonoBehaviour, IEmissionStrategy, ISoundCom
             playLocation = transform;
         }
 
-        AdvancedAudioSystemManager.Instance.PlaySound(data.AudioScriptableObject, UUID, playLocation, data.FollowTransform);
+        AdvancedAudioSystemManager.Instance.PlaySound(data.AudioScriptableObject, UUID, playLocation, data.FollowTransform, onEndOfClip);
     }
 
     public bool IsSoundPlaying(SoundData data)

@@ -22,20 +22,22 @@ public class AdvancedAudioSystemManager : BaseAudioSystemManager
         public float FadeOutDuration => fadeOutDuration;
     }
 
-    public static new AdvancedAudioSystemManager Instance;
-
-    protected override void Awake()
+    public static AdvancedAudioSystemManager Instance
     {
-        base.Awake();
-        Instance = this;
+        get => BaseAudioSystemManager.Instance as AdvancedAudioSystemManager;
     }
 
     /// <summary>
     /// Play a sound and fire an event when the sound finishes or is stopped.
     /// </summary>
-    public void PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Vector3 location)
+    public void PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Vector3 location, Action onEndOfClip = null)
     {
         var activeSound = PlaySound(sound, UUID, location, false, null);
+
+        if (onEndOfClip != null)
+        {
+            activeSound.AddListener(onEndOfClip);
+        }
 
         if (sound.FadeControls.FadeIn)
         {
@@ -43,7 +45,7 @@ public class AdvancedAudioSystemManager : BaseAudioSystemManager
             {
                 var cancellationTokenSource = new CancellationTokenSource();
                 activeSound.AddListener(() => cancellationTokenSource.Cancel());
-
+                
                 StartCoroutine(FadeIn(audioReference.AudioSource, sound.FadeControls.FadeInDuration, audioReference.DefaultVolume, cancellationTokenSource.Token));
             }
         }
@@ -52,9 +54,15 @@ public class AdvancedAudioSystemManager : BaseAudioSystemManager
     /// <summary>
     /// Play a sound and position the audio source at a transforms location, define if it follows and fire event when finished.
     /// </summary>
-    public void PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Transform transformToTrack, bool followTransform = false)
+    public void PlaySound(AudioScriptableObject sound, UniqueSoundID UUID, Transform transformToTrack, bool followTransform = false, Action onEndOfClip = null)
     {
         var activeSound = PlaySound(sound, UUID, transformToTrack.position, followTransform, transformToTrack);
+
+        if (onEndOfClip != null)
+        {
+
+            activeSound.AddListener(onEndOfClip);
+        }
 
         if (sound.FadeControls.FadeIn)
         {
@@ -216,5 +224,47 @@ public class AdvancedAudioSystemManager : BaseAudioSystemManager
         // Ensure the volume is set to the targetVolume once finished
         audioSource.volume = 0;
     }
-    
+
+    public IEnumerator AdjustVolume(AudioScriptableObject sound, UniqueSoundID UUID, float targetVolume, float duration = 0f)
+    {
+        if (!TryGetNewestAudioReference(sound, UUID, out var audioReference)) yield break;
+
+        if(duration <= 0f)
+        {
+            audioReference.AudioSource.volume = targetVolume;
+            yield break;
+        }
+
+        var currentTime = 0f;
+        var currentVolume = audioReference.AudioSource.volume;
+
+        while(currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audioReference.AudioSource.volume = Mathf.Lerp(currentVolume, targetVolume, currentTime / duration);
+            yield return null;
+        }
+    }
+
+    public IEnumerator AdjustPitch(AudioScriptableObject sound, UniqueSoundID UUID, float targetPitch, float duration = 0f)
+    {
+        if (!TryGetNewestAudioReference(sound, UUID, out var audioReference)) yield break;
+
+        if (duration <= 0f)
+        {
+            audioReference.AudioSource.pitch = targetPitch;
+            yield break;
+        }
+
+        var currentTime = 0f;
+        var currentPitch = audioReference.AudioSource.pitch;
+
+        while (currentTime < duration)
+        {
+            currentTime += Time.deltaTime;
+            audioReference.AudioSource.pitch = Mathf.Lerp(currentPitch, targetPitch, currentTime / duration);
+            yield return null;
+        }
+    }
+
 }

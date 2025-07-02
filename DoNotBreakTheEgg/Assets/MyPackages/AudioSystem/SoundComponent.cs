@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,14 +9,14 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
 
     UniqueSoundID UUID = new UniqueSoundID();
 
-    public void PlaySound(SoundData data)
+    public void PlaySound(SoundData data, Action onEndOfClip = null)
     {
         if (data.AudioScriptableObject == null) return; //fails quitely if empty
 
-        StartCoroutine(DelayTimer(data));
+        StartCoroutine(DelayTimer(data, onEndOfClip));
     }
 
-    private IEnumerator DelayTimer(SoundData data)
+    private IEnumerator DelayTimer(SoundData data, Action onEndOfClip = null)
     {
         yield return new WaitForSeconds(data.Delay);
 
@@ -26,7 +27,7 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
             playLocation = transform;
         }
 
-        AdvancedAudioSystemManager.Instance.PlaySound(data.AudioScriptableObject, UUID, playLocation, data.FollowTransform);
+        AdvancedAudioSystemManager.Instance.PlaySound(data.AudioScriptableObject, UUID, playLocation, data.FollowTransform, onEndOfClip);
     }
 
     public bool IsSoundPlaying(SoundData data)
@@ -39,5 +40,19 @@ public class SoundComponent : MonoBehaviour, ISoundComponent
         if (data.AudioScriptableObject == null) return; //fails quitely if empty
 
         AdvancedAudioSystemManager.Instance.StopSound(data.AudioScriptableObject, UUID);
+    }
+
+    public void AdjustVolume(SoundData data, float targetVolume, float duration = 0f)
+    {
+        if(data.AudioScriptableObject == null) return; //fails quitely if empty
+
+        AdvancedAudioSystemManager.Instance.AdjustVolume(data.AudioScriptableObject, UUID, targetVolume, duration);
+    }
+
+    public void AdjustPitch(SoundData data, float targetPitch, float duration = 0f)
+    {
+        if (data.AudioScriptableObject == null) return; //fails quitely if empty
+
+        AdvancedAudioSystemManager.Instance.AdjustPitch(data.AudioScriptableObject, UUID, targetPitch, duration);
     }
 }
