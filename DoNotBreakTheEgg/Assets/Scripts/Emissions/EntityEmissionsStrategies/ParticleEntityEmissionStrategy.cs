@@ -22,13 +22,23 @@ public class ParticleEntityEmissionStrategy : MonoBehaviour, IEntityEmissionStra
 
 
     [SerializeField] List<TagParticleEffectMapping> mappings = new List<TagParticleEffectMapping>();
-    
+
+    [Header("Default Fall Back")]
+    [SerializeField] ParticleSystem defaultParticleSystem;
+    [SerializeField] AnchorScriptableObject anchor;
+
 
 
     public void Emit(IEntity entity)
     {
 
-        if (!mappings.Any(mapping => entity.GetEntityComponent<ITagComponent>().HasTag(mapping.TagScriptableObject))) return;
+        if (!mappings.Any(mapping => entity.GetEntityComponent<ITagComponent>().HasTag(mapping.TagScriptableObject)) && defaultParticleSystem != null && anchor != null)
+        {
+            var position = entity.GetEntityComponent<IAnchoringComponent>().GetAnchor(anchor).position;
+            var vfx = Instantiate(defaultParticleSystem, position, Quaternion.identity);
+            vfx.Play();
+        }
+
 
         foreach (var mapping in mappings)
         {

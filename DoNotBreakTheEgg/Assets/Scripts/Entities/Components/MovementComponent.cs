@@ -141,9 +141,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         jumpFired = true;
         jumpBufferCounter = jumpBufferTime;
-
-        soundComponent.PlaySound(jumpSoundData);
-        soundComponent.PlaySound(jumpVocalSoundData);
     }
 
     public void MoveToTarget(Vector2 target)
@@ -253,6 +250,8 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         {
             if (collisionInfo.below)
             {
+                soundComponent.PlaySound(jumpSoundData);
+                soundComponent.PlaySound(jumpVocalSoundData);
                 velocity.y = jumpVelocity;
                 jumpFired = false;
             }

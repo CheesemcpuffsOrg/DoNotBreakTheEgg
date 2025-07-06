@@ -218,76 +218,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f883c300852294f931f73383077110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEmission:
+  mappings:
+  - soundEmission:
+      audioScriptableObject: {fileID: 0}
+      playLocation: {fileID: 0}
+      followTransform: 0
+      delay: 0
+    tagScriptableObject: {fileID: 0}
+  defaultSoundEmission:
     audioScriptableObject: {fileID: 0}
     playLocation: {fileID: 0}
     followTransform: 0
     delay: 0
---- !u!1001 &76985786
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5382001462561511537, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_Name
-      value: Player1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5522167855184101424, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: pickUpSound.audioScriptableObject
-      value: 
-      objectReference: {fileID: 11400000, guid: d740ddd997ab2e646ae02ee9d6b7b5a1, type: 2}
-    - target: {fileID: 6694469969121223086, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: maxChargeSoundData.audioScriptableObject
-      value: 
-      objectReference: {fileID: 11400000, guid: 4782fdbf11df2c946b2b206b8afa58e6, type: 2}
-    - target: {fileID: 9064841143096759055, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064841143096759055, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064841143096759055, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064841143096759055, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064841143096759055, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064841143096759055, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064841143096759055, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064841143096759055, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064841143096759055, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064841143096759055, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
 --- !u!1 &180163524
 GameObject:
   m_ObjectHideFlags: 0
@@ -15312,10 +15254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b735087d83e16c14281307a0710cebfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mappings:
-  - particleSystem: {fileID: 8534242970038136096, guid: 4eca17266d2c21a4cbef6c45443a8cad, type: 3}
-    tagScriptableObject: {fileID: 11400000, guid: 4229a30bf6ea6594fbf00ff463dff398, type: 2}
-    anchor: {fileID: 11400000, guid: 2438d2694f08c454dae9dff51a6236e7, type: 2}
+  mappings: []
+  defaultParticleSystem: {fileID: 8534242970038136096, guid: 4eca17266d2c21a4cbef6c45443a8cad, type: 3}
+  anchor: {fileID: 11400000, guid: 2438d2694f08c454dae9dff51a6236e7, type: 2}
 --- !u!1 &1113701478
 GameObject:
   m_ObjectHideFlags: 0
@@ -16281,4 +16222,3 @@ SceneRoots:
   - {fileID: 467676460}
   - {fileID: 1588666481}
   - {fileID: 1814699258}
-  - {fileID: 76985786}

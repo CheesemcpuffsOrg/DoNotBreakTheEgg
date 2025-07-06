@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ThrowComponent : MonoBehaviour, IThrowComponent
 {
@@ -13,8 +14,11 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     [SerializeField] float powerMax = 10f;
     [SerializeField] float powerIncrease = 0.02f;
 
-    [Header("Collision Proxies")]
-    [SerializeField] CollisionProxy collision;
+    [Header("Power Slider")]
+    [SerializeField] Canvas canvas;
+    [SerializeField] private Slider powerSlider;
+    [SerializeField] private Image fillImage;
+    [SerializeField] private Gradient throwStrengthGradient;
 
     [Header("Tags")]
     [SerializeField] TagScriptableObject isHeldTag;
@@ -48,6 +52,14 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         soundComponent = entity.GetEntityComponent<IEntitySoundComponent>();
     }
 
+    private void Start()
+    {
+        canvas.worldCamera = Camera.main;
+        powerSlider.gameObject.SetActive(false);
+        powerSlider.maxValue = powerMax;
+        powerSlider.minValue = powerBase;
+    }
+
     private void Update()
     {
         ChargeShot();
@@ -58,6 +70,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
             return;
 
+        powerSlider.gameObject.SetActive(true);
         powerCurrent = powerBase; // Reset power to the base value
         chargingShot = true; // Start charging
         soundComponent.PlaySound(chargeThrowSoundData);
@@ -79,6 +92,8 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
 
         soundComponent.StopSound(chargeThrowSoundData);
         soundComponent.PlaySound(throwSoundData);
+
+        powerSlider.gameObject.SetActive(false);
     }
 
     private void ChargeShot()
@@ -98,6 +113,11 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
             soundComponent.PlaySound(maxChargeSoundData);
             maxPowerReached = true;
         }
+
+        //slider
+        powerSlider.value = powerCurrent;
+        float normalizedPower = Mathf.InverseLerp(powerBase, powerMax, powerCurrent);
+        fillImage.color = throwStrengthGradient.Evaluate(normalizedPower);
     }
 
 //I think this logic is invalid now
