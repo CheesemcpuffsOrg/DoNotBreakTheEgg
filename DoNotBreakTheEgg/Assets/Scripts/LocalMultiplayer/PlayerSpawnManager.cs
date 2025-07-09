@@ -74,6 +74,8 @@ public class PlayerSpawnManager : MonoBehaviour
 
         inputControllerObj.GetComponent<InputHandler>().SetEntity(entity);
 
+        entity.GetEntityComponent<IAimComponent>().SetInputDevice(inputActionCollectionAndUser.UserData.Device);
+
         userDataStorage.Add(inputActionCollectionAndUser.UserData.Id, new EntityControllerMapping(inputController, entity));
     }
 
