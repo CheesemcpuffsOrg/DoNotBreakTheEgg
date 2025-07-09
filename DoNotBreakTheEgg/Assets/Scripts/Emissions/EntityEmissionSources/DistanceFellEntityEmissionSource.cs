@@ -76,7 +76,7 @@ public class DistanceFellEntityEmissionSource : MonoBehaviour
                     })
                     .Take(1) // emit only once, then complete)
                     .Select(_ => entity)
-                    .TakeUntil(lostSource.Where(e => e == entity)); // you can select what you want to emit during tracking
+                    .TakeUntil(lostSource.Where(e => e == entity).Merge(entity.Destroyed.Where(e => e == entity))); // you can select what you want to emit during tracking
             })
             .Subscribe(entity =>
             {
