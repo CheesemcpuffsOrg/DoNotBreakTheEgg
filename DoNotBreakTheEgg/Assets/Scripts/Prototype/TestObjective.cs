@@ -15,11 +15,11 @@ public class TestObjective : MonoBehaviour
 
     private void TriggerEnter(Collider2D collision)
     {
-        if (!EntityCollisionService.TryGetEntity(collision, out var entity)
-            || !HoldEntityManager.Instance.IsEntityHolding(entity)) 
+        if (!EntityCollisionService.TryGetEntity(collision, out var entity)) 
             return;
 
-        var heldEntity = HoldEntityManager.Instance.GetHeldEntity(entity);
+        if (!HoldEntityManager.Instance.TryGetHeldEntity(entity, out var heldEntity))
+            return;
 
         if (!heldEntity.GetEntityComponent<TagComponent>().HasTag(eggTag))
             return;

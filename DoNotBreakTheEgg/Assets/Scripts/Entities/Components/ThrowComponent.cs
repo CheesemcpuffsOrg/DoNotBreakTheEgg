@@ -81,10 +81,11 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
             return;
 
+        if (!HoldEntityManager.Instance.TryGetHeldEntity(entity, out var heldEntity)) 
+            return;
+
         chargingShot = false;
         maxPowerReached = false;
-
-        var heldEntity = HoldEntityManager.Instance.GetHeldEntity(entity);
         
         HoldEntityManager.Instance.RemoveHeldEntity(entity);
 

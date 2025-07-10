@@ -9,6 +9,8 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
 
     [SerializeField] GameObject trackingEntitySourceObj;
 
+    [SerializeField] TagFilter heldItemFilter;
+
     [Header("Sound")]
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData deathSound;
 
@@ -47,6 +49,9 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
             })
             .Subscribe(entity =>
             {
+                if (HoldEntityManager.Instance.TryGetHeldEntity(entity, out var heldEntity) && heldEntity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(heldItemFilter))
+                    return;
+
                 if (!CameraUtility.IsInsideViewport(Camera.main, entity.GetEntityComponent<IAnchoringComponent>().GetPosition(), viewportOffset))
                 {
                     SoundStreams.instance.PlaySound(deathSound);
