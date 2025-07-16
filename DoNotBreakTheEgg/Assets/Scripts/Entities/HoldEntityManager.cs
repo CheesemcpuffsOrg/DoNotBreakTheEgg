@@ -34,12 +34,12 @@ public class HoldEntityManager : MonoBehaviour
         return heldObjects.ContainsValue(entity);
     }
 
-    public IEntity GetHeldEntity(IEntity holdingEntity)
+    public bool TryGetHeldEntity(IEntity holdingEntity, out IEntity heldEntity)
     {
-        if (!heldObjects.TryGetValue(holdingEntity, out var heldEntity))
-            return null;
+        if (!heldObjects.TryGetValue(holdingEntity, out heldEntity))
+            return false;
 
-        return heldEntity;
+        return true;
     }
 
     public void AddHeldEntity(IEntity holdingEntity, IEntity heldEntity, Transform holdAnchor)

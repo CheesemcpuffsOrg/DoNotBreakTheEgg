@@ -12,7 +12,7 @@ public class AimComponent : MonoBehaviour, IAimComponent
     }
 
     [SerializeField] Transform transformToRotate;
-    [SerializeField] ControllerType controllerType;
+    ControllerType controllerType;
 
 
     private Vector2 aimInput;
@@ -69,5 +69,15 @@ public class AimComponent : MonoBehaviour, IAimComponent
         return input;
     }
 
-    
+    public void SetInputDevice(InputDevice inputDevice)
+    {
+        if(inputDevice is Mouse || inputDevice is Keyboard)
+        {
+            controllerType = ControllerType.Mouse;
+        }
+        else
+        {
+            controllerType = ControllerType.Gamepad;
+        }
+    }
 }

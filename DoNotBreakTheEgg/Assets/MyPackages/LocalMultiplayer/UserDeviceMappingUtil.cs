@@ -42,10 +42,13 @@ public class InputUserData
 
     public int Id { get; }
 
-    public InputUserData(int index, int id)
+    public InputDevice Device { get; }
+
+    public InputUserData(int index, int id, InputDevice device)
     {
         Index = index;
         Id = id;
+        Device = device;
     }
 
 }
@@ -88,7 +91,7 @@ public static class UserDeviceMappingUtil
                 
         userInputActions.Enable();
 
-        inputActionsAndUser = new(userInputActions, new InputUserData(user.index, (int)user.id));
+        inputActionsAndUser = new(userInputActions, new InputUserData(user.index, (int)user.id, device));
         
         return true;
     }
@@ -128,7 +131,7 @@ public static class UserDeviceMappingUtil
 
         userInputActions.Enable();
 
-        inputActionsAndUser = new(userInputActions, new InputUserData(user.index, (int)user.id));
+        inputActionsAndUser = new(userInputActions, new InputUserData(user.index, (int)user.id, device));
 
         return true;
     }
@@ -154,7 +157,7 @@ public static class UserDeviceMappingUtil
             return false;
         }
 
-        userData = new InputUserData(userToRemove.index, (int)userToRemove.id);
+        userData = new InputUserData(userToRemove.index, (int)userToRemove.id, device);
 
         userToRemove.actions.Disable();
         userToRemove.UnpairDevicesAndRemoveUser();

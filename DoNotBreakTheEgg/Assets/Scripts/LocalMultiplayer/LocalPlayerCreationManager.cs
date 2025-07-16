@@ -62,7 +62,15 @@ public class LocalPlayerCreationManager : MonoBehaviour
 
         joinedCount++;
 
-        DisableJoinActionForDevice(device);
+        if(device is Keyboard || device is Mouse)
+        {
+            DisableJoinActionForDevice(Keyboard.current);
+            DisableJoinActionForDevice(Mouse.current);
+        }
+        else
+        {
+            DisableJoinActionForDevice(device);
+        }
     }
 
     private void LeaveLobby(InputAction.CallbackContext context)
