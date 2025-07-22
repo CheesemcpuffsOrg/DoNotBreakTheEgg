@@ -752,12 +752,12 @@ MonoBehaviour:
     followTransform: 0
     delay: 0
   chargeThrowSoundData:
-    audioScriptableObject: {fileID: 11400000, guid: 0f3a34a70c1cd6d4391e94d90ae95e86, type: 2}
+    audioScriptableObject: {fileID: 11400000, guid: 4782fdbf11df2c946b2b206b8afa58e6, type: 2}
     playLocation: {fileID: 0}
     followTransform: 1
     delay: 0
   maxChargeSoundData:
-    audioScriptableObject: {fileID: 11400000, guid: 4782fdbf11df2c946b2b206b8afa58e6, type: 2}
+    audioScriptableObject: {fileID: 11400000, guid: d740ddd997ab2e646ae02ee9d6b7b5a1, type: 2}
     playLocation: {fileID: 0}
     followTransform: 1
     delay: 0
