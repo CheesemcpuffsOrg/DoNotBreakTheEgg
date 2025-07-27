@@ -107,7 +107,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         CalculateRaySpacing();
 
         localGravity = GlobalDataManager.Instance.Gravity * data.weight;
-        Debug.Log("Gravity is " +  localGravity);
         jumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(localGravity) * data.JumpHeight);
 
         gravityEnabled = data.GravityEnabledOnStart;
