@@ -89,7 +89,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         
         HoldEntityManager.Instance.RemoveHeldEntity(entity);
 
-        heldEntity.GetEntityComponent<IMovementComponent>().Throw(powerCurrent, (Vector2)launchPoint.up);
+        heldEntity.GetEntityComponent<IMovementComponent>().Throw(powerCurrent, (Vector2)launchPoint.up.normalized);
 
         soundComponent.StopSound(chargeThrowSoundData);
         soundComponent.PlaySound(throwSoundData);

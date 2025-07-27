@@ -689,8 +689,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdAnchor: {fileID: 3192593221783738279}
   launchPoint: {fileID: 8136978824323319624}
-  powerBase: 1
-  powerMax: 25
+  powerBase: 7.5
+  powerMax: 20
   powerIncrease: 0.05
   canvas: {fileID: 6503859065492415109}
   powerSlider: {fileID: 4306460782776656724}
@@ -812,7 +812,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transformToRotate: {fileID: 3619819734028530941}
-  controllerType: 0
 --- !u!114 &422898785289315171
 MonoBehaviour:
   m_ObjectHideFlags: 0

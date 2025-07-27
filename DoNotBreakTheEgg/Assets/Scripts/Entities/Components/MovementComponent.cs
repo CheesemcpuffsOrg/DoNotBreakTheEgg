@@ -42,7 +42,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     [SerializeField] EntityDataScriptableObject data;
 
-    float gravity;
+    float localGravity;
     bool gravityEnabled;
     bool movementEnabled;
 
@@ -106,14 +106,15 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         CalculateRaySpacing();
 
-        gravity = GlobalDataManager.Instance.Gravity;
-        jumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * data.JumpHeight);
+        localGravity = GlobalDataManager.Instance.Gravity * data.weight;
+        Debug.Log("Gravity is " +  localGravity);
+        jumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(localGravity) * data.JumpHeight);
 
         gravityEnabled = data.GravityEnabledOnStart;
         movementEnabled = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         IsCeilinged();
 
@@ -125,7 +126,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         Gravity();
 
-        Move(velocity * Time.deltaTime);
+        Move(velocity * Time.fixedDeltaTime);
 
         IsGrounded();
 
@@ -222,7 +223,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         if(!gravityEnabled)
             return;
 
-        velocity.y += gravity * Time.deltaTime;
+        velocity.y += localGravity * Time.fixedDeltaTime;
     }
 
     private void ProcessThrow()
@@ -257,7 +258,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
             }
             else
             {
-                jumpBufferCounter -= Time.deltaTime;
+                jumpBufferCounter -= Time.fixedDeltaTime;
                 if (jumpBufferCounter < 0)
                 {
                     jumpFired = false;
@@ -286,7 +287,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         if (gravityEnabled && !collisionInfo.below && velocity.y <= 0)
         {
             const float stickToGroundNudge = 3f; // You can tweak this value (e.g. 2f or 3f)
-            velocity.y -= stickToGroundNudge * Time.deltaTime;
+            velocity.y -= stickToGroundNudge * Time.fixedDeltaTime;
         }
 
         VerticalCollisions(ref velocity);
