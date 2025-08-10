@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -47,7 +48,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     bool movementEnabled;
 
     float jumpVelocity;
-    
+
     Vector3 velocity;
     public Vector3 Velocity => velocity;
     float VelocityXSmoothing;
@@ -64,6 +65,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [SerializeField] int horizontalRayCount = 4;
     [SerializeField] int verticalRayCount = 4;
     [SerializeField] LayerMask collisionMask;
+    private readonly RaycastHit2D[] raycastBuffer = new RaycastHit2D[20]; // Tune size
 
     [Header("Audio")]
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData jumpSoundData;
@@ -72,7 +74,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     const float skinWidth = 0.01f;
     float horizontalRaySpacing;
     float verticalRaySpacing;
-    
+
     RaycastOrigins raycastOrigins;
     CollisionInfo collisionInfo;
 
@@ -95,7 +97,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     {
         ignoreFilter = !ignoreFilter;
     }
-#endregion
+    #endregion
 
     private void Start()
     {
@@ -113,7 +115,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         movementEnabled = true;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         IsCeilinged();
 
@@ -125,7 +127,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         Gravity();
 
-        Move(velocity * Time.fixedDeltaTime);
+        Move(velocity * Time.deltaTime);
 
         IsGrounded();
 
@@ -135,9 +137,10 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     {
         if (!ignoreFilter)
         {
+            //Debug.Log(entity + "" + entity.GetEntityComponent<ITagComponent>() + "" + entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(jumpFilter));
             if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(jumpFilter)) return;
         }
-        
+
 
         jumpFired = true;
         jumpBufferCounter = jumpBufferTime;
@@ -184,19 +187,23 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         velocity.y = 0;
     }
 
+    //might be firing more than expected
     private void IsGrounded()
     {
-        if(throwFired) 
+        if (throwFired)
             return;
 
         if (collisionInfo.below)
         {
             velocity.y = 0;
-            tagComponent.AddTag(isGroundedTag);
+
+            if (!tagComponent.HasTag(isGroundedTag))
+                tagComponent.AddTag(isGroundedTag);
         }
         else
         {
-            tagComponent.RemoveTag(isGroundedTag);
+            if (tagComponent.HasTag(isGroundedTag))
+                tagComponent.RemoveTag(isGroundedTag);
         }
     }
 
@@ -219,24 +226,24 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     private void Gravity()
     {
-        if(!gravityEnabled)
+        if (!gravityEnabled)
             return;
 
-        velocity.y += localGravity * Time.fixedDeltaTime;
+        velocity.y += localGravity * Time.deltaTime;
     }
 
     private void ProcessThrow()
     {
         if (throwFired)
-        {   
+        {
             //skip frame incase entity is already grounded
-            if(frameSkipper > 0)
+            if (frameSkipper > 0)
             {
                 frameSkipper--;
                 return;
             }
 
-            if(collisionInfo.below || collisionInfo.left || collisionInfo.right)
+            if (collisionInfo.below || collisionInfo.left || collisionInfo.right)
             {
                 velocity.x = 0;
                 throwFired = false;
@@ -250,14 +257,14 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         {
             if (collisionInfo.below)
             {
-                soundComponent.PlaySound(jumpSoundData);
-                soundComponent.PlaySound(jumpVocalSoundData);
+                //soundComponent.PlaySound(jumpSoundData);
+                // soundComponent.PlaySound(jumpVocalSoundData);
                 velocity.y = jumpVelocity;
                 jumpFired = false;
             }
             else
             {
-                jumpBufferCounter -= Time.fixedDeltaTime;
+                jumpBufferCounter -= Time.deltaTime;
                 if (jumpBufferCounter < 0)
                 {
                     jumpFired = false;
@@ -286,13 +293,14 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         if (gravityEnabled && !collisionInfo.below && velocity.y <= 0)
         {
             const float stickToGroundNudge = 3f; // You can tweak this value (e.g. 2f or 3f)
-            velocity.y -= stickToGroundNudge * Time.fixedDeltaTime;
+            velocity.y -= stickToGroundNudge * Time.deltaTime;
         }
 
         VerticalCollisions(ref velocity);
 
         transform.Translate(velocity);
-        Physics2D.SyncTransforms(); //sync all child objects with parent object
+        // Physics2D.SyncTransforms(); //sync all child objects with parent object
+        //may not need this anymore ^^
     }
 
     private bool ShouldDescendSlope(Vector3 velocity)
@@ -311,7 +319,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void HorizontalCollisions(ref Vector3 velocity)
     {
-        if(velocity.x == 0)
+        if (velocity.x == 0)
             return;
 
         var directionX = Mathf.Sign(velocity.x);
@@ -321,11 +329,71 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         {
             var rayOrigin = (directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight;
             rayOrigin += Vector2.up * (horizontalRaySpacing * i);
-            var hits = Physics2D.RaycastAll(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+            // var hits = Physics2D.RaycastAll(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+
+            int hitCount = FilteredRaycastAll(rayOrigin, Vector2.right * directionX, rayLength, collisionMask, out RaycastHit2D[] hits);
 
             Debug.DrawRay(rayOrigin, Vector2.right * directionX * rayLength, Color.red);
 
-            foreach (var hit in hits)
+            for (int j = 0; j < hitCount; j++)
+            {
+                var hit = hits[j];
+
+                if (hit)
+                {
+                    var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+                    // Handle slope climbing logic
+                    if (i == 0 && slopeAngle <= data.MaxClimbAngle)
+                    {
+                        if (collisionInfo.descendingSlope)
+                        {
+                            collisionInfo.descendingSlope = false;
+                            velocity = collisionInfo.velocityOld;
+                        }
+
+                        var distanceToSlopeStart = 0f;
+
+                        // Smoother transition when slope angle changes
+                        if (slopeAngle != collisionInfo.oldSlopeAngle)
+                        {
+                            distanceToSlopeStart = hit.distance - skinWidth;
+                            velocity.x -= distanceToSlopeStart * directionX;
+
+                            // Gradual reset of slope data when reaching flat ground
+                            if (slopeAngle == 0)
+                            {
+                                collisionInfo.climbingSlope = false;
+                                collisionInfo.slopeAngle = 0;
+                            }
+                        }
+
+                        ClimbSlope(ref velocity, slopeAngle);
+                        velocity.x += distanceToSlopeStart * directionX;
+                    }
+
+                    // Adjust for horizontal collisions when not climbing slopes
+                    if (!collisionInfo.climbingSlope || slopeAngle > data.MaxClimbAngle)
+                    {
+                        velocity.x = (hit.distance - skinWidth) * directionX;
+                        rayLength = hit.distance;
+
+                        // Smooth out vertical adjustment when transitioning to flat ground
+                        if (collisionInfo.climbingSlope && slopeAngle == 0)
+                        {
+                            velocity.y = Mathf.Tan(collisionInfo.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x);
+                            collisionInfo.climbingSlope = false;
+                            collisionInfo.slopeAngle = 0;
+                        }
+
+                        collisionInfo.left = directionX == -1;
+                        collisionInfo.right = directionX == 1;
+                    }
+                }
+
+            }
+
+            /*foreach (var hit in hits)
             {
                 // Ignore colliders if they are the entity's own colliders
                 if (collisionComponent.IsEntityCollider(hit.collider)) continue;
@@ -384,13 +452,13 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                         collisionInfo.right = directionX == 1;
                     }
                 }
-            }
+            }*/
         }
     }
 
     void VerticalCollisions(ref Vector3 velocity)
     {
-        if(velocity.y == 0)
+        if (velocity.y == 0)
             return;
 
         var directionY = Mathf.Sign(velocity.y);
@@ -400,11 +468,32 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         {
             var rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topleft;
             rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
-            var hits = Physics2D.RaycastAll(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+            //var hits = Physics2D.RaycastAll(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+
+            int hitCount = FilteredRaycastAll(rayOrigin, Vector2.up * directionY, rayLength, collisionMask, out RaycastHit2D[] hits);
 
             Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
 
-            foreach (var hit in hits)
+            for (int j = 0; j < hitCount; j++)
+            {
+                var hit = hits[j];
+
+                // Process the valid hit
+                velocity.y = (hit.distance - skinWidth) * directionY;
+                rayLength = hit.distance;
+
+                if (collisionInfo.climbingSlope)
+                {
+                    velocity.x = velocity.y / Mathf.Tan(collisionInfo.slopeAngle * Mathf.Deg2Rad) * Mathf.Sign(velocity.x);
+                }
+
+                collisionInfo.below = directionY == -1;
+                collisionInfo.above = directionY == 1;
+
+                break;
+            }
+
+            /*foreach (var hit in hits)
             {
 
                 //ignore colliders if they are entities own colliders
@@ -426,7 +515,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                 collisionInfo.above = directionY == 1;
 
                 break;
-            }
+            }*/
         }
 
         if (collisionInfo.climbingSlope)
@@ -435,9 +524,28 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
             rayLength = Mathf.Abs(velocity.x) + skinWidth;
             var rayOrigin = ((directionX == -1) ? raycastOrigins.bottomLeft : raycastOrigins.bottomRight) + Vector2.up * velocity.y;
 
-            var hits = Physics2D.RaycastAll(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
+            // var hits = Physics2D.RaycastAll(rayOrigin, Vector2.right * directionX, rayLength, collisionMask);
 
-            foreach (var hit in hits)
+            int hitCount = FilteredRaycastAll(rayOrigin, Vector2.right * directionX, rayLength, collisionMask, out RaycastHit2D[] hits);
+
+            for (int j = 0; j < hitCount; j++)
+            {
+                var hit = hits[j];
+
+                if (hit)
+                {
+                    var slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+                    if (slopeAngle != collisionInfo.slopeAngle)
+                    {
+                        velocity.x = (hit.distance - skinWidth) * directionX;
+                        collisionInfo.slopeAngle = slopeAngle;
+
+                        break;
+                    }
+                }
+            }
+
+            /*foreach (var hit in hits)
             {
 
                 //ignore colliders if they are entities own colliders
@@ -457,7 +565,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                         break;
                     }
                 }
-            }
+            }*/
         }
     }
 
@@ -467,7 +575,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         var climbVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
 
         if (velocity.y > climbVelocityY) return;
-        
+
         velocity.y = climbVelocityY;
         velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
         collisionInfo.below = true;
@@ -541,5 +649,26 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         return bounds;
     }
 
-    
+    private int FilteredRaycastAll(Vector2 origin, Vector2 direction, float distance, LayerMask mask, out RaycastHit2D[] results)
+    {
+        int hitCount = Physics2D.RaycastNonAlloc(origin, direction, raycastBuffer, distance, mask);
+        int validHitCount = 0;
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            var hit = raycastBuffer[i];
+            if (hit.collider == null) continue;
+
+            var hitEntity = hit.collider.GetComponentInParent<IEntity>();
+            if (collisionComponent.IsEntityCollider(hit.collider) || EntityCollisionService.IsIgnoredCollider(entity, hit.collider))
+                continue;
+
+            raycastBuffer[validHitCount++] = hit;
+        }
+
+        results = raycastBuffer;
+        return validHitCount;
+    }
+
+
 }
