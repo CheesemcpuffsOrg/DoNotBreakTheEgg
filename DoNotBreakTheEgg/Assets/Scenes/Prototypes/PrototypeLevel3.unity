@@ -481,7 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEmission:
-    audioScriptableObject: {fileID: 0}
+    audioScriptableObject: {fileID: 11400000, guid: bd3e0bc4bbc2be54e89de5672072acbc, type: 2}
     playLocation: {fileID: 0}
     followTransform: 0
     delay: 0
