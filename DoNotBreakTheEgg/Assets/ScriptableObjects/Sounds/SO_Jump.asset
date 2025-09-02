@@ -17,8 +17,8 @@ MonoBehaviour:
       audioClip: {fileID: 8300000, guid: a75ad85db8b601d4193b9332a367a32a, type: 3}
       volume: 1
       pitch: 1
-    weight: 1
-  defaultValuesApplied: 1
+    weight: 50
+  previousClipCount: 1
   audioMixerGroup: {fileID: -4562355553656741050, guid: 219101960e5b7994c9f3c9a1c082bf41, type: 2}
   loop: 0
   playWhilePaused: 0
