@@ -9,9 +9,10 @@ public class OnTagAddedEntityEmissionSource : MonoBehaviour
 {
     [SerializeField] GameObject emissionStrategyObj;
 
-    [SerializeField] TagScriptableObject tag;
+    [SerializeField] TagScriptableObject tagSO;
 
-    IEntityEmissionStrategy emissionStrategy => emissionStrategyObj.GetComponent<IEntityEmissionStrategy>();
+    IEntityEmissionStrategy emissionStrategy;
+    IEntityEmissionStrategy EmissionStrategy => emissionStrategy ??= emissionStrategyObj.GetComponent<IEntityEmissionStrategy>();
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +30,7 @@ public class OnTagAddedEntityEmissionSource : MonoBehaviour
 
                 return Observable
                     .EveryUpdate()
-                    .Select(_ => tagComponent.HasTag(tag))
+                    .Select(_ => tagComponent.HasTag(tagSO))
                     .DistinctUntilChanged() // Only emit when value changes
                     .Pairwise() // Get the previous and current value as a tuple
                     .Where(pair => !pair.Previous && pair.Current) 
@@ -38,7 +39,7 @@ public class OnTagAddedEntityEmissionSource : MonoBehaviour
             })
             .Subscribe(entity =>
             {
-                emissionStrategy.Emit(entity);
+                EmissionStrategy.Emit(entity);
             })
             .AddTo(ref subscriptionBag);
 

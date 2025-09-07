@@ -34,9 +34,9 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
 
 
     [Header("Draw Trajectory Gizmo")]
-    [SerializeField] private float entityWeight = 1f;
-    [SerializeField] private int trajectorySteps = 10; // Number of points to simulate for the trajectory
-    [SerializeField] private float timeStep = 0.1f;
+    //[SerializeField] private float entityWeight = 1f;
+    //[SerializeField] private int trajectorySteps = 10; // Number of points to simulate for the trajectory
+   // [SerializeField] private float timeStep = 0.1f;
 
     IEntity entity;
     IEntitySoundComponent soundComponent;

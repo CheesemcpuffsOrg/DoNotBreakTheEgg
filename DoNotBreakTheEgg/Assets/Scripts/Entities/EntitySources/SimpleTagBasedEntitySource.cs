@@ -57,7 +57,6 @@ public class SimpleTagBasedEntitySource : MonoBehaviour, IEntitySource
                 {
                     if (currentlyGainedEntities.Add(entity))
                     {
-                        Debug.Log("Entity gained");
                         entityGained.OnNext(entity);
                         PassingEntitySet.Add(entity);
                     }
@@ -67,7 +66,6 @@ public class SimpleTagBasedEntitySource : MonoBehaviour, IEntitySource
                 {
                     if (currentlyGainedEntities.Remove(entity))
                     {
-                        Debug.Log("Entity Lost");
                         entityLost.OnNext(entity);
                         PassingEntitySet.Remove(entity);
                     }

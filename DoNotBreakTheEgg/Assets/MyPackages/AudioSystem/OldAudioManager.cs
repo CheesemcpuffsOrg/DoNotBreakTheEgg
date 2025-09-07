@@ -36,8 +36,8 @@ public class OldAudioManager : MonoBehaviour
 
     [SerializeField] bool logStackTrace;
 
-    int activeAudioPriority = 0;
-    float reductionAmount = 0.5f;
+  //  int activeAudioPriority = 0;
+  //  float reductionAmount = 0.5f;
 
     private void Awake()
     {
