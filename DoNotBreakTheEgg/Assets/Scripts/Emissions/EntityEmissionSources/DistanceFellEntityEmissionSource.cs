@@ -3,7 +3,6 @@ using R3;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Profiling;
 
 public class DistanceFellEntityEmissionSource : MonoBehaviour
 {
@@ -30,12 +29,14 @@ public class DistanceFellEntityEmissionSource : MonoBehaviour
 
         subscriptionBag = new CompositeDisposable();
 
+
+        var apexReached = new Subject<IEntity>();
+
         airbornEntitySource
             .Entities
             .SelectMany(entity =>
             {
-                Debug.Log("It has fired");
-
+              
                 var anchoring = entity.GetEntityComponent<IAnchoringComponent>();
 
                 var startPosition = anchoring.GetPosition();
@@ -50,9 +51,22 @@ public class DistanceFellEntityEmissionSource : MonoBehaviour
             })
             .Subscribe(entity =>
             {
-                Debug.Log("What the fuck");
-                // entityEmissionStrategy.Emit(entity);
+                apexReached.OnNext(entity);
             });
+
+        apexReached
+            .SelectMany(entity =>
+            {
+                return airbornEntitySource
+                    .LostEntities
+                    .Where(e => e == entity)
+                    .Take(1);
+            })
+            .Subscribe(entity =>
+            {
+                entityEmissionStrategy.Emit(entity);
+            });
+
 
         subscriptionBag.RegisterTo(this.destroyCancellationToken);
     }
