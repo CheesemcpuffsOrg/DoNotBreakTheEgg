@@ -761,9 +761,6 @@ MonoBehaviour:
     playLocation: {fileID: 0}
     followTransform: 1
     delay: 0
-  entityWeight: 1
-  trajectorySteps: 10
-  timeStep: 0.1
 --- !u!114 &5522167855184101424
 MonoBehaviour:
   m_ObjectHideFlags: 0

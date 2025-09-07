@@ -19,7 +19,7 @@ public readonly struct InputActionAssetAndUserData
     public InputActionAssetAndUserData(InputActionAsset userInputActions, InputUserData userData)
     {
         UserInputActions = userInputActions;
-        UserData = userData; 
+        UserData = userData;
     }
 }
 
@@ -57,7 +57,7 @@ public class InputUserData
 
 //NOTE: I have only tested this with KBM and Gamepads, it is unknown how many devices this will work for.
 public static class UserDeviceMappingUtil
-{ 
+{
     static List<InputDevice> inputDevicesPairedWithUsers = new List<InputDevice>();
 
     /// <summary>
@@ -206,6 +206,14 @@ public static class UserDeviceMappingUtil
         }
 
         inputDevicesPairedWithUsers.Clear();
+    }
+
+    /// <summary>
+    /// Returns true if device is paired with user.
+    /// </summary>
+    public static bool IsDevicePairedWithUser(InputDevice device)
+    {
+        return inputDevicesPairedWithUsers.Contains(device);
     }
 
     /// <summary>
