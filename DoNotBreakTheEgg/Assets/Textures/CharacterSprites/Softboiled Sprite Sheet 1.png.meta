@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: efb6a618ae608754fb147bb0810e5912
+guid: 2917b0331fb951e45a1cac7083e5c206
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -50,7 +50,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -71,7 +71,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 256
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -97,253 +97,337 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DustParticles_0
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 26
-        width: 6
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ac1f9f14540fed6418bb0dd31a025d59
-      internalID: -492326349
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DustParticles_1
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 25
-        width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3cbca31958d37934880ee4fc50bf180d
-      internalID: -79452593
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DustParticles_2
-      rect:
-        serializedVersion: 2
-        x: 5
-        y: 18
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 609de8eca4dbb7348a3c556ac1f2174a
-      internalID: -876406544
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DustParticles_3
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 8
-        width: 6
-        height: 6
-      alignment: 9
-      pivot: {x: 0.5721207, y: 0.554091}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1cbd5d25a47fac747ab21e7ca6223a63
-      internalID: 1678805542
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DustParticles_4
+      name: Softboiled Sprite Sheet 1_0
       rect:
         serializedVersion: 2
         x: 24
-        y: 25
-        width: 5
-        height: 5
+        y: 160
+        width: 31
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a66b74946040e2b4fa1a72803507bb47
-      internalID: -598435412
+      spriteID: 41e2a423fb0eb8a4ea3ae9625caef728
+      internalID: 1093840984
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_5
+      name: Softboiled Sprite Sheet 1_1
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 160
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7251b02140840b458b293ad93c6f349
+      internalID: -641351789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet 1_2
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 173
+        width: 35
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d41c82e5cdd7e154eafad22a1cb8979e
+      internalID: -277229102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet 1_3
       rect:
         serializedVersion: 2
         x: 24
-        y: 18
-        width: 5
-        height: 5
+        y: 128
+        width: 32
+        height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d6db6b2341ca6174a9d07c3088ba8c6d
-      internalID: -1146800369
+      spriteID: c71811217560afe43938c8198fdc59fc
+      internalID: -2007369436
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_6
+      name: Softboiled Sprite Sheet 1_4
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 127
+        width: 34
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ab9fca2ab180334e909b634a8720944
+      internalID: -2013967592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet 1_5
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 119
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e0c1e408e0f7eb4d9e6f2f359549738
+      internalID: 314595486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet 1_6
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 96
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c312434217153894e93b1a09d76033b4
+      internalID: -1902140570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet 1_7
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 91
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca91804d925883749aa187db157b9f0d
+      internalID: -815987959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet 1_8
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 89
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4253fd9fe826fa54c817327d433b4d39
+      internalID: -865482318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet 1_9
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 96
+        width: 32
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25bd18d4336b8ac4288a059c6f98deff
+      internalID: -1414318611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet 1_10
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 96
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9dac9e18e7a20424e884e5531b11c66c
+      internalID: -1783156020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet 1_11
       rect:
         serializedVersion: 2
         x: 24
-        y: 9
-        width: 5
-        height: 5
+        y: 64
+        width: 32
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b51e150c2bafd81488685f55429616fa
-      internalID: -2023046039
+      spriteID: 40e7ab38661a3e84db2d0a816dda25ea
+      internalID: 1543500285
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_7
+      name: Softboiled Sprite Sheet 1_12
       rect:
         serializedVersion: 2
-        x: 24
-        y: 2
-        width: 5
-        height: 5
+        x: 72
+        y: 48
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7fe2250d53173ed4bbb3bbd747c0286a
-      internalID: -2059617779
+      spriteID: f853e3f1bf0108d4687493e8205956fb
+      internalID: 741828036
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_8
+      name: Softboiled Sprite Sheet 1_13
       rect:
         serializedVersion: 2
-        x: 15
-        y: 9
-        width: 5
-        height: 5
+        x: 113
+        y: 60
+        width: 29
+        height: 24
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db61b6f66ad29274986191ffbfb53c64
-      internalID: 534770569
+      spriteID: 792b027134dd87a43a893d35b2e3c52a
+      internalID: -1110541244
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_9
+      name: Softboiled Sprite Sheet 1_14
       rect:
         serializedVersion: 2
-        x: 13
-        y: 1
-        width: 5
-        height: 5
+        x: 159
+        y: 64
+        width: 31
+        height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 804f3dc69914f1d479d082aa8ccfcdfe
-      internalID: 1225312490
+      spriteID: c7826a5d515cc0049bfffa7e61ac0a11
+      internalID: -1602931302
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_10
+      name: Softboiled Sprite Sheet 1_15
       rect:
         serializedVersion: 2
-        x: 15
-        y: 18
-        width: 5
-        height: 5
+        x: 198
+        y: 64
+        width: 35
+        height: 28
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ed6de19bcca37646a508cb771f21021
-      internalID: -2105190558
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DustParticles_11
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 2
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2bba60ab6c4dc9246b4654e9ced893d8
-      internalID: -1679713266
+      spriteID: 76419344635e660458b40e11980e0d0d
+      internalID: 717319093
       vertices: []
       indices: 
       edges: []
@@ -359,18 +443,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DustParticles_0: -492326349
-      DustParticles_1: -79452593
-      DustParticles_10: -2105190558
-      DustParticles_11: -1679713266
-      DustParticles_2: -876406544
-      DustParticles_3: 1678805542
-      DustParticles_4: -598435412
-      DustParticles_5: -1146800369
-      DustParticles_6: -2023046039
-      DustParticles_7: -2059617779
-      DustParticles_8: 534770569
-      DustParticles_9: 1225312490
+      Softboiled Sprite Sheet 1_0: 1093840984
+      Softboiled Sprite Sheet 1_1: -641351789
+      Softboiled Sprite Sheet 1_10: -1783156020
+      Softboiled Sprite Sheet 1_11: 1543500285
+      Softboiled Sprite Sheet 1_12: 741828036
+      Softboiled Sprite Sheet 1_13: -1110541244
+      Softboiled Sprite Sheet 1_14: -1602931302
+      Softboiled Sprite Sheet 1_15: 717319093
+      Softboiled Sprite Sheet 1_2: -277229102
+      Softboiled Sprite Sheet 1_3: -2007369436
+      Softboiled Sprite Sheet 1_4: -2013967592
+      Softboiled Sprite Sheet 1_5: 314595486
+      Softboiled Sprite Sheet 1_6: -1902140570
+      Softboiled Sprite Sheet 1_7: -815987959
+      Softboiled Sprite Sheet 1_8: -865482318
+      Softboiled Sprite Sheet 1_9: -1414318611
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
