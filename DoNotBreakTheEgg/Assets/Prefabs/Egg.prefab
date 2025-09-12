@@ -369,6 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f70bde0c080966c489921fcd4fb46d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eggExplosion: {fileID: 2566987535563177699, guid: 448b21b76bd56cf4d8c57fe983686a7c, type: 3}
   collision: {fileID: 2101802133023683639}
   isDeadTag: {fileID: 11400000, guid: 14dabdc80a081ad48a9aa49178a19f1e, type: 2}
   breakFilter:

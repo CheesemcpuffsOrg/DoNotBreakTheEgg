@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BreakableComponent : MonoBehaviour, IBreakableComponent
 {
+
+    [SerializeField] ParticleSystem eggExplosion;
+
     [Header("Collisions")]
     [SerializeField] CollisionProxy collision;
 
@@ -34,7 +37,11 @@ public class BreakableComponent : MonoBehaviour, IBreakableComponent
 
         entity.GetEntityComponent<ITagComponent>().AddTag(isDeadTag);
 
-        entity.Destroy(1);
+        var particles = Instantiate(eggExplosion, entity.GetEntityComponent<IAnchoringComponent>().GetPosition(), Quaternion.Euler(new Vector3(-90, 0, 0)), null);
+
+        particles.Play();
+
+        entity.Destroy(.01f);
     }
 
     private void OnEnable()
