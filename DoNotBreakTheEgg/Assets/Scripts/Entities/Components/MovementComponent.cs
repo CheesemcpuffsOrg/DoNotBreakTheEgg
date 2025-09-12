@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -42,12 +43,12 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     [SerializeField] EntityDataScriptableObject data;
 
-    float gravity;
+    float localGravity;
     bool gravityEnabled;
     bool movementEnabled;
 
     float jumpVelocity;
-    
+
     Vector3 velocity;
     public Vector3 Velocity => velocity;
     float VelocityXSmoothing;
@@ -64,6 +65,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [SerializeField] int horizontalRayCount = 4;
     [SerializeField] int verticalRayCount = 4;
     [SerializeField] LayerMask collisionMask;
+    private readonly RaycastHit2D[] raycastBuffer = new RaycastHit2D[20]; // Tune size
 
     [Header("Audio")]
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData jumpSoundData;
@@ -72,7 +74,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     const float skinWidth = 0.01f;
     float horizontalRaySpacing;
     float verticalRaySpacing;
-    
+
     RaycastOrigins raycastOrigins;
     CollisionInfo collisionInfo;
 
@@ -95,7 +97,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     {
         ignoreFilter = !ignoreFilter;
     }
-#endregion
+    #endregion
 
     private void Start()
     {
@@ -106,8 +108,8 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         CalculateRaySpacing();
 
-        gravity = GlobalDataManager.Instance.Gravity;
-        jumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * data.JumpHeight);
+        localGravity = GlobalDataManager.Instance.Gravity * data.weight;
+        jumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(localGravity) * data.JumpHeight);
 
         gravityEnabled = data.GravityEnabledOnStart;
         movementEnabled = true;
@@ -135,9 +137,10 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     {
         if (!ignoreFilter)
         {
+            //Debug.Log(entity + "" + entity.GetEntityComponent<ITagComponent>() + "" + entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(jumpFilter));
             if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(jumpFilter)) return;
         }
-        
+
 
         jumpFired = true;
         jumpBufferCounter = jumpBufferTime;
@@ -184,19 +187,23 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         velocity.y = 0;
     }
 
+    //might be firing more than expected
     private void IsGrounded()
     {
-        if(throwFired) 
+        if (throwFired)
             return;
 
         if (collisionInfo.below)
         {
             velocity.y = 0;
-            tagComponent.AddTag(isGroundedTag);
+
+            if (!tagComponent.HasTag(isGroundedTag))
+                tagComponent.AddTag(isGroundedTag);
         }
         else
         {
-            tagComponent.RemoveTag(isGroundedTag);
+            if (tagComponent.HasTag(isGroundedTag))
+                tagComponent.RemoveTag(isGroundedTag);
         }
     }
 
@@ -219,24 +226,24 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     private void Gravity()
     {
-        if(!gravityEnabled)
+        if (!gravityEnabled)
             return;
 
-        velocity.y += gravity * Time.deltaTime;
+        velocity.y += localGravity * Time.deltaTime;
     }
 
     private void ProcessThrow()
     {
         if (throwFired)
-        {   
+        {
             //skip frame incase entity is already grounded
-            if(frameSkipper > 0)
+            if (frameSkipper > 0)
             {
                 frameSkipper--;
                 return;
             }
 
-            if(collisionInfo.below || collisionInfo.left || collisionInfo.right)
+            if (collisionInfo.below || collisionInfo.left || collisionInfo.right)
             {
                 velocity.x = 0;
                 throwFired = false;
@@ -250,8 +257,8 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         {
             if (collisionInfo.below)
             {
-                soundComponent.PlaySound(jumpSoundData);
-                soundComponent.PlaySound(jumpVocalSoundData);
+                //soundComponent.PlaySound(jumpSoundData);
+                // soundComponent.PlaySound(jumpVocalSoundData);
                 velocity.y = jumpVelocity;
                 jumpFired = false;
             }
@@ -292,7 +299,8 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         VerticalCollisions(ref velocity);
 
         transform.Translate(velocity);
-        Physics2D.SyncTransforms(); //sync all child objects with parent object
+        // Physics2D.SyncTransforms(); //sync all child objects with parent object
+        //may not need this anymore ^^
     }
 
     private bool ShouldDescendSlope(Vector3 velocity)
@@ -311,7 +319,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void HorizontalCollisions(ref Vector3 velocity)
     {
-        if(velocity.x == 0)
+        if (velocity.x == 0)
             return;
 
         var directionX = Mathf.Sign(velocity.x);
@@ -331,7 +339,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
                 if (collisionComponent.IsEntityCollider(hit.collider)) continue;
 
                 //Ignore colliders if they are on the ignore list
-                if(EntityCollisionService.IsIgnoredCollider(entity, hit.collider)) continue;
+                if (EntityCollisionService.IsIgnoredCollider(entity, hit.collider)) continue;
 
                 if (hit)
                 {
@@ -390,7 +398,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     void VerticalCollisions(ref Vector3 velocity)
     {
-        if(velocity.y == 0)
+        if (velocity.y == 0)
             return;
 
         var directionY = Mathf.Sign(velocity.y);
@@ -400,7 +408,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         {
             var rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topleft;
             rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
-            var hits = Physics2D.RaycastAll(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+           var hits = Physics2D.RaycastAll(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
             Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
 
@@ -467,7 +475,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         var climbVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
 
         if (velocity.y > climbVelocityY) return;
-        
+
         velocity.y = climbVelocityY;
         velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
         collisionInfo.below = true;
@@ -541,5 +549,4 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         return bounds;
     }
 
-    
 }

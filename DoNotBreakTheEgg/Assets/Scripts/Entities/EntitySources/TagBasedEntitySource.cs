@@ -64,4 +64,6 @@ public class TagBasedEntitySource : MonoBehaviour, IEntitySource
                     .Select(_ => entity);
             })
             .Share();
+
+    public List<IEntity> PassingEntitySet => throw new System.NotImplementedException();
 }
