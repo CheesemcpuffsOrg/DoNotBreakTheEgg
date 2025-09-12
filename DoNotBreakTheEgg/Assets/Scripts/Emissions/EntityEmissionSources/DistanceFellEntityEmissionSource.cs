@@ -1,7 +1,7 @@
+using ObservableCollections;
 using R3;
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DistanceFellEntityEmissionSource : MonoBehaviour
@@ -21,82 +21,52 @@ public class DistanceFellEntityEmissionSource : MonoBehaviour
 
     IEntityEmissionStrategy entityEmissionStrategy => entityEmissionStrategyObj.GetComponent<IEntityEmissionStrategy>();
 
+    private CompositeDisposable subscriptionBag;
+
     // Start is called before the first frame update
     void Start()
     {
-        var subscriptionBag = Disposable.CreateBuilder();
-        
-        var lostSource = new Subject<IEntity>();
-        var gainedSource = new Subject<IEntity>();
-        var thresholdReached = new Subject<IEntity>();
 
-        airbornEntitySource
-            .LostEntities
-            .Subscribe(entity =>
-            {
-                lostSource.OnNext(entity);
-            })
-            .AddTo(ref subscriptionBag);
+        subscriptionBag = new CompositeDisposable();
 
+
+        var apexReached = new Subject<IEntity>();
 
         airbornEntitySource
             .Entities
-            .Subscribe(entity =>
-            {
-               gainedSource.OnNext(entity);
-            })
-            .AddTo(ref subscriptionBag);
-
-
-        gainedSource
             .SelectMany(entity =>
             {
-                Vector3? startPosition = null;
-                bool startedDescending = false;
+              
+                var anchoring = entity.GetEntityComponent<IAnchoringComponent>();
+
+                var startPosition = anchoring.GetPosition();
 
                 return Observable
                     .EveryUpdate(UnityFrameProvider.PostLateUpdate)
-                    .Where(_ =>
-                    {
-                        Vector3 currentPos = entity.GetEntityComponent<IAnchoringComponent>().GetPosition();
-
-                        if (startPosition == null)
-                            startPosition = currentPos;
-
-                        if (!startedDescending && currentPos.y < startPosition.Value.y)
-                            startedDescending = true;
-
-                        if (startedDescending)
-                        {
-                            float distanceDescended = startPosition.Value.y - currentPos.y;
-                            return distanceDescended >= distanceToTravel;
-                        }
-
-                        return false;
-                    })
-                    .Take(1) // emit only once, then complete)
+                    .Select(_ => startPosition.y - anchoring.GetPosition().y >= distanceToTravel)
+                    .Where(_ => _)
+                    .Take(1)
                     .Select(_ => entity)
-                    .TakeUntil(lostSource.Where(e => e == entity).Merge(entity.Destroyed.Where(e => e == entity))); // you can select what you want to emit during tracking
+                    .TakeUntil(airbornEntitySource.LostEntities.Merge(entity.Destroyed.Where(e => e == entity)));
             })
             .Subscribe(entity =>
             {
-                thresholdReached.OnNext(entity);
-            })
-            .AddTo(ref subscriptionBag);
+                apexReached.OnNext(entity);
+            });
 
-        thresholdReached
+        apexReached
             .SelectMany(entity =>
             {
-                return lostSource
+                return airbornEntitySource
+                    .LostEntities
                     .Where(e => e == entity)
                     .Take(1);
             })
             .Subscribe(entity =>
             {
                 entityEmissionStrategy.Emit(entity);
-            })
-            .AddTo(ref subscriptionBag);
-        
+            });
+
 
         subscriptionBag.RegisterTo(this.destroyCancellationToken);
     }

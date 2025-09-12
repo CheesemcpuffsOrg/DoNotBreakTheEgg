@@ -6,6 +6,7 @@ using UnityEngine;
 public class EntityDataScriptableObject : ScriptableObject
 {
     [Header("Movement Stats")]
+    public float weight = 1;
     public float JumpHeight = 2.5f;
     public float TimeToJumpApex = 0.3f;
     public float MoveSpeed = 10f;

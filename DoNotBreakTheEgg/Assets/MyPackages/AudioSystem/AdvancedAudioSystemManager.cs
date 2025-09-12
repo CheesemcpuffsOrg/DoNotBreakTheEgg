@@ -22,7 +22,7 @@ public class AdvancedAudioSystemManager : BaseAudioSystemManager
         public float FadeOutDuration => fadeOutDuration;
     }
 
-    public static AdvancedAudioSystemManager Instance
+    public new static AdvancedAudioSystemManager Instance
     {
         get => BaseAudioSystemManager.Instance as AdvancedAudioSystemManager;
     }

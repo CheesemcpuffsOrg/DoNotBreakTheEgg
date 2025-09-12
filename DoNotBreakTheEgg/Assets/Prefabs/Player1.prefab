@@ -153,7 +153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1123436948084759036
 RectTransform:
   m_ObjectHideFlags: 0
@@ -530,7 +530,7 @@ RectTransform:
   m_Father: {fileID: 9038708877440194782}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -4.899994, y: 0}
   m_SizeDelta: {x: 0.21, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -689,12 +689,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdAnchor: {fileID: 3192593221783738279}
   launchPoint: {fileID: 8136978824323319624}
-  powerBase: 1
-  powerMax: 25
+  powerBase: 7.5
+  powerMax: 20
   powerIncrease: 0.05
   canvas: {fileID: 6503859065492415109}
   powerSlider: {fileID: 4306460782776656724}
-  fillImage: {fileID: 4472213960670178483}
+  fillImage: {fileID: 6454145600469608726}
   throwStrengthGradient:
     serializedVersion: 2
     key0: {r: 1, g: 0.9584457, b: 0, a: 1}
@@ -812,7 +812,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transformToRotate: {fileID: 3619819734028530941}
-  controllerType: 0
 --- !u!114 &422898785289315171
 MonoBehaviour:
   m_ObjectHideFlags: 0
