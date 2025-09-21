@@ -26,6 +26,10 @@ public class PlayerSpawnManager : MonoBehaviour
 
         public GameObject PlayerPrefab => playerPrefab;
 
+        [SerializeField] Transform spawnpoint;
+
+        public Transform SpawnPoint => spawnpoint;
+
         public bool InUse { get; private set; }
 
         public int PlayerId { get; private set; }
@@ -51,12 +55,35 @@ public class PlayerSpawnManager : MonoBehaviour
 
     private void Start()
     {
-        OnStartOrEnable();
+      //  OnStartOrEnable();
         startCalled = true;   
+
+        foreach (var mapping in PlayerDataStorage.GetAllPlayerData())
+        {
+
+            var data = mapping.Value;
+
+            var inputControllerObj = Instantiate(inputControllerPrefab);
+
+            var inputController = inputControllerObj.GetComponent<InputController>();
+
+            inputController.InitializeControls(data.UserInputActions);
+
+            var playerIndex = data.UserData.Index;
+
+            var playerPrefab = playerPrefabs[playerIndex].PlayerPrefab;
+            var spawnPosition = playerPrefabs[playerIndex].SpawnPoint;
+
+            var entity = Instantiate(playerPrefab, spawnPosition.position, Quaternion.identity).GetComponent<IEntity>();
+
+            inputControllerObj.GetComponent<InputHandler>().SetEntity(entity);
+
+            entity.GetEntityComponent<IAimComponent>().SetInputDevice(data.UserData.Device);
+        }
     }
 
 
-    void SpawnPlayer(InputActionCollectionAndUserData inputActionCollectionAndUser)
+    /*void SpawnPlayer(InputActionCollectionAndUserData inputActionCollectionAndUser)
     {
         var inputControllerObj = Instantiate(inputControllerPrefab);
 
@@ -134,5 +161,5 @@ public class PlayerSpawnManager : MonoBehaviour
     {
         LocalPlayerCreationManager.Instance.UserCreated -= SpawnPlayer;
         LocalPlayerCreationManager.Instance.UserDeleted -= DespawnPlayer;
-    }
+    }*/
 }
