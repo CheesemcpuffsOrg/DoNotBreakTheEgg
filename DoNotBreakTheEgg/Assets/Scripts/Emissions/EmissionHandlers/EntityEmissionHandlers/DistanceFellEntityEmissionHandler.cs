@@ -4,22 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class DistanceFellEntityEmissionSource : MonoBehaviour
+public class DistanceFellEntityEmissionHandler : MonoBehaviour
 {
 
     [SerializeField] float distanceToTravel;
 
 
     [Header("Entity Sources")]
-    [SerializeField] GameObject airbornEntitySourceObj;
-
-    IEntitySource airbornEntitySource => airbornEntitySourceObj.GetComponent<IEntitySource>();
-
+    [SerializeField] EntitySource airbornEntitySource;
 
     [Header("Emission Strategy")]
     [SerializeField] GameObject entityEmissionStrategyObj;
 
-    IEntityEmissionStrategy entityEmissionStrategy => entityEmissionStrategyObj.GetComponent<IEntityEmissionStrategy>();
+    IEmission _entityEmission;
+
+    IEmission entityEmissionStrategy => _entityEmission ??= entityEmissionStrategyObj.GetComponent<IEmission>();
 
     private CompositeDisposable subscriptionBag;
 
@@ -33,7 +32,7 @@ public class DistanceFellEntityEmissionSource : MonoBehaviour
         var apexReached = new Subject<IEntity>();
 
         airbornEntitySource
-            .Entities
+            .GainedEntities
             .SelectMany(entity =>
             {
               

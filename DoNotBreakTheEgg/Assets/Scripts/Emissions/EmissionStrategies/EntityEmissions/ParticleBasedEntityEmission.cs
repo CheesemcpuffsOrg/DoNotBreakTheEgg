@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using R3;
 
-public class ParticleEntityEmissionStrategy : MonoBehaviour, IEntityEmissionStrategy
+public class ParticleBasedEntityEmission : EmissionBase<IEntity>
 {
 
     [Serializable]
@@ -27,11 +27,8 @@ public class ParticleEntityEmissionStrategy : MonoBehaviour, IEntityEmissionStra
     [SerializeField] ParticleSystem defaultParticleSystem;
     [SerializeField] AnchorScriptableObject anchor;
 
-
-
-    public void Emit(IEntity entity)
+    public override void Emit(IEntity entity)
     {
-
         if (!mappings.Any(mapping => entity.GetEntityComponent<ITagComponent>().HasTag(mapping.TagScriptableObject)) && defaultParticleSystem != null && anchor != null)
         {
             var position = entity.GetEntityComponent<IAnchoringComponent>().GetAnchor(anchor).position;

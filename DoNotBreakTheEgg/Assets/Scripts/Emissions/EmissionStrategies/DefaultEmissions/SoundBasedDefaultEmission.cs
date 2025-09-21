@@ -2,15 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using R3;
 
-public class SoundEmissionStrategy : MonoBehaviour, IEmissionStrategy, ISoundComponent
+public class SoundBasedDefaultEmission : EmissionBase<Unit>, ISoundComponent
 {
 
     UniqueSoundID UUID = new UniqueSoundID();
 
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData soundEmission;
 
-    public void Emit()
+    public override void Emit(Unit obj)
     {
         PlaySound(soundEmission);
     }
@@ -47,4 +48,6 @@ public class SoundEmissionStrategy : MonoBehaviour, IEmissionStrategy, ISoundCom
 
         AdvancedAudioSystemManager.Instance.StopSound(data.AudioScriptableObject, UUID);
     }
+
+    
 }

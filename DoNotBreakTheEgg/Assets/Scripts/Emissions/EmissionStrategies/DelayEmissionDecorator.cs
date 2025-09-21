@@ -4,41 +4,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DelayEntityEmissionStrategy : MonoBehaviour, IEntityEmissionStrategy
+public class DelayEmissionDecorator : EmissionBase<object>
 {
 
     [SerializeField] float delay;
 
     [SerializeField] GameObject emissionStrategyObj;
 
-    private IEntityEmissionStrategy emissionStrategy => emissionStrategyObj.GetComponent<IEntityEmissionStrategy>();
+    private IEmission emissionStrategy => emissionStrategyObj.GetComponent<IEmission>();
 
-    Subject<IEntity> emissionDelay = new Subject<IEntity> ();
+    Subject<object> emissionDelay = new Subject<object> ();
 
     private void Awake()
     {
         var subscriptionBag = Disposable.CreateBuilder();
 
         emissionDelay
-            .Select(entity =>
+            .Select(obj =>
             {
                 return Observable
                     .Timer(TimeSpan.FromSeconds(delay))
-                    .Select(_ => entity);
+                    .Select(_ => obj);
             })
             .Switch()
-            .Subscribe(entity =>
+            .Subscribe(obj =>
             {
-                emissionStrategy.Emit(entity);
+                emissionStrategy.Emit(obj);
             })
             .AddTo(ref subscriptionBag);
 
         subscriptionBag.RegisterTo(this.destroyCancellationToken);
     }
 
-    public void Emit(IEntity entity)
+    public override void Emit(object obj)
     {
-        emissionDelay.OnNext(entity);
+        emissionDelay.OnNext(obj);
     }
 
     

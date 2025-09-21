@@ -6,27 +6,27 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
 
-public class SimpleTagBasedEntitySource : MonoBehaviour, IEntitySource
+public class TagBasedEntitySource : EntitySource
 {
     [SerializeField] private TagFilter filter;
 
-    public List<IEntity> PassingEntitySet { get; private set; }
+   /* // Strongly-typed observable for subscribers who know it's IEntity
+    public Observable<IEntity> GainedEntities => gainedSubject;
+    public Observable<IEntity> LostEntities => lostSubject;
 
-    Subject<IEntity> entityGained = new Subject<IEntity>();
-    Subject<IEntity> entityLost = new Subject<IEntity>();
+    // Optional: override base object observables if needed
+    public override Observable<object> Gained => gainedSubject.Select(e => (object)e);
+    public override Observable<object> Lost => lostSubject.Select(e => (object)e);
 
-    private IDisposable subscriptionBag; // use this if you have less than 8 disposables
-    public Observable<IEntity> Entities => entityGained;
+    // Optional: strongly typed list
+    public List<IEntity> PassingEntities => passingSet;*/
 
-    public Observable<IEntity> LostEntities => entityLost;
+    IDisposable subscriptionBag;
 
     private readonly HashSet<IEntity> currentlyGainedEntities = new();
 
     private void Start()
     {
-
-        PassingEntitySet = new();
-
         var unregisteredEntities = EntityRegistry
             .RegisteredEntities
             .ObserveRemove()
@@ -57,8 +57,8 @@ public class SimpleTagBasedEntitySource : MonoBehaviour, IEntitySource
                 {
                     if (currentlyGainedEntities.Add(entity))
                     {
-                        entityGained.OnNext(entity);
-                        PassingEntitySet.Add(entity);
+                        gainedSubject.OnNext(entity);
+                        PassingSet.Add(entity);
                     }
 
                 }
@@ -66,8 +66,8 @@ public class SimpleTagBasedEntitySource : MonoBehaviour, IEntitySource
                 {
                     if (currentlyGainedEntities.Remove(entity))
                     {
-                        entityLost.OnNext(entity);
-                        PassingEntitySet.Remove(entity);
+                        gainedSubject.OnNext(entity);
+                        PassingSet.Remove(entity);
                     }
 
                 }
@@ -79,9 +79,9 @@ public class SimpleTagBasedEntitySource : MonoBehaviour, IEntitySource
             {
                 var entity = removeEvent.Value;
 
-                entityLost.OnNext(entity);
+                lostSubject.OnNext(entity);
 
-                PassingEntitySet.Remove(entity);
+                PassingSet.Remove(entity);
             });
 
         subscriptionBag = Disposable.Combine(disposable1, disposable2);

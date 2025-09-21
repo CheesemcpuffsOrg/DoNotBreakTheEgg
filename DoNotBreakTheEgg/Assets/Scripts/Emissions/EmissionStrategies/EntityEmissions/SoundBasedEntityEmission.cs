@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SoundEntityEmissionStrategy : MonoBehaviour, IEntityEmissionStrategy
+public class SoundBasedEntityEmission : EmissionBase<IEntity>
 {
     [Serializable]
     private class TagSoundDataMapping
@@ -20,7 +20,7 @@ public class SoundEntityEmissionStrategy : MonoBehaviour, IEntityEmissionStrateg
     [Header("Default Fall Back")]
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData defaultSoundEmission;
 
-    public void Emit(IEntity entity)
+    public override void Emit(IEntity entity)
     {
         if (!mappings.Any(mapping => entity.GetEntityComponent<ITagComponent>().HasTag(mapping.TagScriptableObject)) && defaultSoundEmission.AudioScriptableObject != null)
         {

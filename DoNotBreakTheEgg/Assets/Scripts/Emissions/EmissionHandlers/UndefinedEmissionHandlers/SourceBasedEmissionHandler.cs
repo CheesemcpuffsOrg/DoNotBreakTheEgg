@@ -5,17 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EntitySourceEmissionSource : MonoBehaviour  
+public class SourceBasedEmissionHandler : MonoBehaviour  
 {
     
-
     [SerializeField] GameObject entitySourceObj;
-    IEntitySource entitySource => entitySourceObj.GetComponent<IEntitySource>();
+    ISource entitySource => entitySourceObj.GetComponent<ISource>();
 
 
     [SerializeField] GameObject entityEmissionStrategyObj;
 
-    IEntityEmissionStrategy entityEmissionStrategy => entityEmissionStrategyObj.GetComponent<IEntityEmissionStrategy>();
+    IEmission entityEmissionStrategy => entityEmissionStrategyObj.GetComponent<IEmission>();
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +24,7 @@ public class EntitySourceEmissionSource : MonoBehaviour
 
       
         entitySource
-            .Entities
+            .Gained
             .Subscribe(entity =>
             {
                 entityEmissionStrategy.Emit(entity);

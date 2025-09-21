@@ -5,14 +5,14 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 
-public class OnTagAddedEntityEmissionSource : MonoBehaviour
+public class OnTagAddedEntityEmissionHandler : MonoBehaviour
 {
     [SerializeField] GameObject emissionStrategyObj;
 
     [SerializeField] TagScriptableObject tagSO;
 
-    IEntityEmissionStrategy emissionStrategy;
-    IEntityEmissionStrategy EmissionStrategy => emissionStrategy ??= emissionStrategyObj.GetComponent<IEntityEmissionStrategy>();
+    IEmission emissionStrategy;
+    IEmission EmissionStrategy => emissionStrategy ??= emissionStrategyObj.GetComponent<IEmission>();
 
     // Start is called before the first frame update
     void Start()
