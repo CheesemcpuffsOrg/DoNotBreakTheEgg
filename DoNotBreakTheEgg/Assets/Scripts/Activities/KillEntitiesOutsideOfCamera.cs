@@ -7,14 +7,12 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
     [SerializeField] RespawnEntities respawnEntities;
     [SerializeField] float viewportOffset = 0.05f;
 
-    [SerializeField] GameObject trackingEntitySourceObj;
+    [SerializeField] EntitySource entitySource;
 
     [SerializeField] TagFilter heldItemFilter;
 
     [Header("Sound")]
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData deathSound;
-
-    IEntitySource trackingEntitySource => trackingEntitySourceObj.GetComponent<IEntitySource>();
 
     private void Start()
     {
@@ -23,7 +21,7 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
         var entityLost = new Subject<IEntity>();
         var entityGained = new Subject<IEntity>();
 
-        trackingEntitySource
+        entitySource
             .LostEntities
             .Subscribe(entity =>
             {
@@ -31,8 +29,8 @@ public class KillEntitiesOutsideOfCamera : MonoBehaviour
             })
             .AddTo(ref subscriptionBag);
         
-        trackingEntitySource
-            .Entities
+        entitySource
+            .GainedEntities
             .Subscribe(entity =>
             {
                 entityGained.OnNext(entity);
