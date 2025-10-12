@@ -299,7 +299,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         VerticalCollisions(ref velocity);
 
         transform.Translate(velocity);
-        // Physics2D.SyncTransforms(); //sync all child objects with parent object
+        Physics2D.SyncTransforms(); //sync all child objects with parent object
         //may not need this anymore ^^
     }
 
@@ -335,6 +335,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
             foreach (var hit in hits)
             {
+
                 // Ignore colliders if they are the entity's own colliders
                 if (collisionComponent.IsEntityCollider(hit.collider)) continue;
 
@@ -408,7 +409,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         {
             var rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topleft;
             rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
-           var hits = Physics2D.RaycastAll(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
+            var hits = Physics2D.RaycastAll(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
             Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
 
