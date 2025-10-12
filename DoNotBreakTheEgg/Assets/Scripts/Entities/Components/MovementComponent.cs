@@ -300,7 +300,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         transform.Translate(velocity);
         Physics2D.SyncTransforms(); //sync all child objects with parent object
-        //may not need this anymore ^^
     }
 
     private bool ShouldDescendSlope(Vector3 velocity)
