@@ -1,0 +1,810 @@
+fileFormatVersion: 2
+guid: acf8aa3ccced4084096231c5a3d280a2
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: eggman_Jump_4
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 198
+        width: 31
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71aac95431668474397983841ff148b1
+      internalID: -48001474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_9
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 192
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bc98b5ce5c11d648b3f267d11cdb27b
+      internalID: -2008279542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_10
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 177
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1274a9c38b84f8844992f9b8d0479413
+      internalID: -1461760436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman_Jump_3
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 164
+        width: 32
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0deb9283b66eef242a3ff2c8fab2cbd8
+      internalID: -79613738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman_Jump_2
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 130
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b9f5766b934306488242743b586384c
+      internalID: 188219278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_15
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 648ffcc6b39fe4345ac6fedca48f1b5f
+      internalID: 196141134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_16
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c04e025c67afa3c4c83c4564edb2cc87
+      internalID: -526004152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_19
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 128
+        width: 26
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f09f73bde89f0504fa219d94e211cc40
+      internalID: -1457964640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_20
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 136
+        width: 24
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88909a8c0c2573f4e9afd9ea37a7fda3
+      internalID: 1221125101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman_Jump_1
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 99
+        width: 33
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7db88b20b7f0a8c4da404dbd30375c1a
+      internalID: 1320903642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman_Idle_1
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 95
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fe73e3d6758e60429c2671286743ae4
+      internalID: -1120576146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_25
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 94
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4371b2e31de79c148afd22a4da9c282f
+      internalID: 1031875624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_26
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 98
+        width: 26
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3bcb7734e5a7184bb1a849fbaad87a7
+      internalID: 444109119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_27
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 102
+        width: 19
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28fac271de70eb84d80a2ee8867fa4c1
+      internalID: 1713197862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_28
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 80
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4a94116ab9fa3d45a43d0b05bf46257
+      internalID: 442615519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman_Idle_2
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 63
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 444ddf60ec3dcc740868412586f38c7a
+      internalID: -1892628446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_33
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 87
+        width: 23
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e0c91203899b594d974a0473ab37e25
+      internalID: -1616255198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_35
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 69
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fec7d1e7cdb08c4438f7f6b01b2f959d
+      internalID: 1568005377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman_walk_1
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 48
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8be175dfb3edc0418aaa49c80ad115e
+      internalID: -101488415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggma_Idle_3
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 32
+        width: 30
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97b073f5ff1db974fa2d552936450e93
+      internalID: -661789958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_38
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 48
+        width: 29
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc569cb6dfd372a4c80a56ddece14286
+      internalID: 1773694636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_39
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 48
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e109635ed4deb9e42b51ea2710fdb3c5
+      internalID: 1854556888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_40
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 37
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3f45620698cd6e49a72de4583dd2e9a
+      internalID: 1577172240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_41
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 47
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40ee5ed515c3cc44686896e42e6dbf6d
+      internalID: -1895401319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman_walk_2
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 15
+        width: 34
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb64bdde5f6397249b061d83bd635353
+      internalID: 353640375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_43
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 16
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7645e093566f8a04aa78e699a9bf8239
+      internalID: 1486354534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_44
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 40
+        width: 22
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0468146d6ecb02a40bfcf33f1c517ce5
+      internalID: -827593593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_46
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 19
+        width: 33
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5130e7090404624ea7e667aceef6c51
+      internalID: 1028069969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman_Idle_4
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 1
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6ea7d63666dc5249aa84361398730f3
+      internalID: 1345281425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_48
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 19
+        width: 32
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0068d68a0e79b044196ef8d16b452f9c
+      internalID: -1865935093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eggman sprite sheet2_49
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 7
+        width: 23
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16c8cc3be5700d94c8ee1a5b9615d4d8
+      internalID: -1264822474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      eggma_Idle_3: -661789958
+      eggman sprite sheet2_0: 1510227406
+      eggman sprite sheet2_10: -1461760436
+      eggman sprite sheet2_11: -2123227336
+      eggman sprite sheet2_12: -2011861775
+      eggman sprite sheet2_15: 196141134
+      eggman sprite sheet2_16: -526004152
+      eggman sprite sheet2_17: -146683524
+      eggman sprite sheet2_18: -76227008
+      eggman sprite sheet2_19: -1457964640
+      eggman sprite sheet2_20: 1221125101
+      eggman sprite sheet2_21: 183624755
+      eggman sprite sheet2_22: 643388702
+      eggman sprite sheet2_25: 1031875624
+      eggman sprite sheet2_26: 444109119
+      eggman sprite sheet2_27: 1713197862
+      eggman sprite sheet2_28: 442615519
+      eggman sprite sheet2_29: -1705043944
+      eggman sprite sheet2_30: -1056209201
+      eggman sprite sheet2_31: -1783154487
+      eggman sprite sheet2_33: -1616255198
+      eggman sprite sheet2_34: -324548612
+      eggman sprite sheet2_35: 1568005377
+      eggman sprite sheet2_38: 1773694636
+      eggman sprite sheet2_39: 1854556888
+      eggman sprite sheet2_40: 1577172240
+      eggman sprite sheet2_41: -1895401319
+      eggman sprite sheet2_43: 1486354534
+      eggman sprite sheet2_44: -827593593
+      eggman sprite sheet2_45: -175713150
+      eggman sprite sheet2_46: 1028069969
+      eggman sprite sheet2_48: -1865935093
+      eggman sprite sheet2_49: -1264822474
+      eggman sprite sheet2_50: -1376694864
+      eggman sprite sheet2_7: -1492580181
+      eggman sprite sheet2_9: -2008279542
+      eggman_Idle_1: -1120576146
+      eggman_Idle_2: -1892628446
+      eggman_Idle_4: 1345281425
+      eggman_Jump_1: 1320903642
+      eggman_Jump_2: 188219278
+      eggman_Jump_3: -79613738
+      eggman_Jump_4: -48001474
+      eggman_walk_1: -101488415
+      eggman_walk_2: 353640375
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

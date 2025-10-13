@@ -1,0 +1,799 @@
+fileFormatVersion: 2
+guid: f054ece8357ac03419f2ef672b64735a
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 198
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34ba4f3c86eca954b9d86f80944405c2
+      internalID: 1327088689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_1
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57a561cf62c18cb4892e5cb38ef24803
+      internalID: -263396673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_2
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 177
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56693a63d7226e449a2719077e26534d
+      internalID: -567794778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_3
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 164
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a014272e8cee0814ea299fed1b9fc0bf
+      internalID: -743324467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 100b80a63e094a942950476433ed1cbc
+      internalID: 388443655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_5
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3194a5d502a274e4092b52cd7a7c5d67
+      internalID: 75906328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_6
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 130
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3a0195d3f36af04587beea0d445ba0b
+      internalID: 1370366412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_7
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 128
+        width: 30
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19bf1db37ce36604e8300103f09e8566
+      internalID: 696408611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_8
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 135
+        width: 28
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a8b613d8b03c0147b596aa0174b2958
+      internalID: 1041436795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_9
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 100
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c41d172c2c0a51428caf412ed111829
+      internalID: -1831307258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_10
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 96
+        width: 33
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc1a88bc907c3cb4b938529315fa4253
+      internalID: -830132370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_11
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 33
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69519444dd633d24ea3e519717ff9830
+      internalID: -26371772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_12
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 98
+        width: 26
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae0901f00fc5a6144a1b9ddd2c5b09a5
+      internalID: -1215486668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_13
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 102
+        width: 19
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 516953cc19a68cc4984e8471ff09270c
+      internalID: -1534466934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_14
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 80
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1e09a91841f5c2449eefed0a60608bc
+      internalID: -495500225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_15
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81e7c5a5a6521cb429f19604d9dc9a36
+      internalID: 682955461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_16
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 87
+        width: 23
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2a7ea68e1444db4089a5e27195a3aab
+      internalID: -323959923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_18
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 69
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f0fbbdf780fc7047a81f24ba70777d9
+      internalID: -1976211535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_19
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 48
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75e8718eafb64fa4bb543d386b1e7f6e
+      internalID: 356631832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_20
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 32
+        width: 32
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d16ed647322469489810151d05f2ca0
+      internalID: 1545462697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_21
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 48
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23b3d664fc12e6d40bd36d330cae2807
+      internalID: 170995133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_22
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 48
+        width: 34
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb7af1cba74f062488f20fb20f2c8901
+      internalID: 169426665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_23
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 37
+        width: 13
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53aef0a01f6c6c84bbd4b7deeca2969f
+      internalID: 909561457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_24
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 48
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10183febae26071428311e08b3a88862
+      internalID: -903460258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_25
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 15
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6bf1564daf51f64bb0ee2aca1a88343
+      internalID: -1041941388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_26
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 16
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f9c0441a984f0d44b4c72028530a687
+      internalID: -2071428639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_27
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 40
+        width: 23
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b332b61bc00090249b767bd8b73c143a
+      internalID: -652688531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_29
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 19
+        width: 33
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7af7591a182ed9248a792b788ee0c0c0
+      internalID: 1909813050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_30
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 1
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a06cfc5981a88624b8993b11e775c250
+      internalID: -322085509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_31
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 19
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af7c8b41b8a81b6458a70406a36c798b
+      internalID: -714272934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Softboiled Sprite Sheet2_32
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 7
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9495e336c9cb59448da57fbf844ac0d
+      internalID: -1563484478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Softboiled Sprite Sheet2_0: 1327088689
+      Softboiled Sprite Sheet2_1: -263396673
+      Softboiled Sprite Sheet2_10: -830132370
+      Softboiled Sprite Sheet2_11: -26371772
+      Softboiled Sprite Sheet2_12: -1215486668
+      Softboiled Sprite Sheet2_13: -1534466934
+      Softboiled Sprite Sheet2_14: -495500225
+      Softboiled Sprite Sheet2_15: 682955461
+      Softboiled Sprite Sheet2_16: -323959923
+      Softboiled Sprite Sheet2_17: 1059742058
+      Softboiled Sprite Sheet2_18: -1976211535
+      Softboiled Sprite Sheet2_19: 356631832
+      Softboiled Sprite Sheet2_2: -567794778
+      Softboiled Sprite Sheet2_20: 1545462697
+      Softboiled Sprite Sheet2_21: 170995133
+      Softboiled Sprite Sheet2_22: 169426665
+      Softboiled Sprite Sheet2_23: 909561457
+      Softboiled Sprite Sheet2_24: -903460258
+      Softboiled Sprite Sheet2_25: -1041941388
+      Softboiled Sprite Sheet2_26: -2071428639
+      Softboiled Sprite Sheet2_27: -652688531
+      Softboiled Sprite Sheet2_28: -155609277
+      Softboiled Sprite Sheet2_29: 1909813050
+      Softboiled Sprite Sheet2_3: -743324467
+      Softboiled Sprite Sheet2_30: -322085509
+      Softboiled Sprite Sheet2_31: -714272934
+      Softboiled Sprite Sheet2_32: -1563484478
+      Softboiled Sprite Sheet2_33: -525360820
+      Softboiled Sprite Sheet2_4: 388443655
+      Softboiled Sprite Sheet2_5: 75906328
+      Softboiled Sprite Sheet2_6: 1370366412
+      Softboiled Sprite Sheet2_7: 696408611
+      Softboiled Sprite Sheet2_8: 1041436795
+      Softboiled Sprite Sheet2_9: -1831307258
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
