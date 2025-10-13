@@ -17,7 +17,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     [Header("Power Slider")]
     [SerializeField] Canvas canvas;
     [SerializeField] private Slider powerSlider;
-    [SerializeField] private Image fillImage;
+    [SerializeField] private SpriteRenderer fillImage;
     [SerializeField] private Gradient throwStrengthGradient;
 
     [Header("Tags")]
@@ -34,9 +34,9 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
 
 
     [Header("Draw Trajectory Gizmo")]
-    [SerializeField] private float entityWeight = 1f;
-    [SerializeField] private int trajectorySteps = 10; // Number of points to simulate for the trajectory
-    [SerializeField] private float timeStep = 0.1f;
+    //[SerializeField] private float entityWeight = 1f;
+    //[SerializeField] private int trajectorySteps = 10; // Number of points to simulate for the trajectory
+   // [SerializeField] private float timeStep = 0.1f;
 
     IEntity entity;
     IEntitySoundComponent soundComponent;
@@ -55,7 +55,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     private void Start()
     {
         canvas.worldCamera = Camera.main;
-        powerSlider.gameObject.SetActive(false);
+       // powerSlider.gameObject.SetActive(false);
         powerSlider.maxValue = powerMax;
         powerSlider.minValue = powerBase;
     }
@@ -70,7 +70,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
             return;
 
-        powerSlider.gameObject.SetActive(true);
+      //  powerSlider.gameObject.SetActive(true);
         powerCurrent = powerBase; // Reset power to the base value
         chargingShot = true; // Start charging
         soundComponent.PlaySound(chargeThrowSoundData);
@@ -89,7 +89,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         
         HoldEntityManager.Instance.RemoveHeldEntity(entity);
 
-        heldEntity.GetEntityComponent<IMovementComponent>().Throw(powerCurrent, (Vector2)launchPoint.up);
+        heldEntity.GetEntityComponent<IMovementComponent>().Throw(powerCurrent, (Vector2)launchPoint.up.normalized);
 
         soundComponent.StopSound(chargeThrowSoundData);
         soundComponent.PlaySound(throwSoundData);

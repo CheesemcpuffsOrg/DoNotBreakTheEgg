@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: efb6a618ae608754fb147bb0810e5912
+guid: f8824e3ba168c734490323b5bb2aec73
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -50,7 +50,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -71,7 +71,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 256
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -97,253 +97,337 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DustParticles_0
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 26
-        width: 6
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ac1f9f14540fed6418bb0dd31a025d59
-      internalID: -492326349
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DustParticles_1
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 25
-        width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3cbca31958d37934880ee4fc50bf180d
-      internalID: -79452593
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DustParticles_2
-      rect:
-        serializedVersion: 2
-        x: 5
-        y: 18
-        width: 5
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 609de8eca4dbb7348a3c556ac1f2174a
-      internalID: -876406544
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DustParticles_3
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 8
-        width: 6
-        height: 6
-      alignment: 9
-      pivot: {x: 0.5721207, y: 0.554091}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1cbd5d25a47fac747ab21e7ca6223a63
-      internalID: 1678805542
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DustParticles_4
+      name: Eggcita Sprite Sheet 1_0
       rect:
         serializedVersion: 2
         x: 24
-        y: 25
-        width: 5
-        height: 5
+        y: 160
+        width: 31
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a66b74946040e2b4fa1a72803507bb47
-      internalID: -598435412
+      spriteID: 2c499ff790cad384098f9086f10b555e
+      internalID: 1479139812
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_5
+      name: Eggcita Sprite Sheet 1_1
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 160
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fae5e04477237ad4f8300f6a2cec7a84
+      internalID: -553119155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita Sprite Sheet 1_2
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 173
+        width: 35
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbb0647305f548149a539ff9f07d102d
+      internalID: -1658469555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita Sprite Sheet 1_3
       rect:
         serializedVersion: 2
         x: 24
-        y: 18
-        width: 5
-        height: 5
+        y: 128
+        width: 32
+        height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d6db6b2341ca6174a9d07c3088ba8c6d
-      internalID: -1146800369
+      spriteID: dbd3a9461da58f94c9cb7513cf1b7527
+      internalID: -676354856
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_6
+      name: Eggcita Sprite Sheet 1_4
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 127
+        width: 34
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a005ec6d1e144174ba0743a81615dc64
+      internalID: -874482083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita Sprite Sheet 1_5
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 119
+        width: 32
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d81a0afdbaf2db946ad2073a8965de14
+      internalID: 1479067412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita Sprite Sheet 1_6
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 96
+        width: 28
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59d99542c744e744a960c63a240b9947
+      internalID: 2024477365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita Sprite Sheet 1_7
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 91
+        width: 29
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42a0f87c92605a949b957e243b073689
+      internalID: 2121639379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita Sprite Sheet 1_8
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 89
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 729e485ba3319e647b9b5e8034b90c3c
+      internalID: 1029063537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita Sprite Sheet 1_9
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 96
+        width: 32
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c5bb86a186a87b4bbac35a75a379e50
+      internalID: 1534894451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita Sprite Sheet 1_10
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 96
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 027f8f5effda55e44ab700adddeccd55
+      internalID: 676151510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita Sprite Sheet 1_11
       rect:
         serializedVersion: 2
         x: 24
-        y: 9
-        width: 5
-        height: 5
+        y: 64
+        width: 32
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b51e150c2bafd81488685f55429616fa
-      internalID: -2023046039
+      spriteID: ee53226c3c6d609409ec871b3cf7041e
+      internalID: 1068037262
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_7
+      name: Eggcita Sprite Sheet 1_12
       rect:
         serializedVersion: 2
-        x: 24
-        y: 2
-        width: 5
-        height: 5
+        x: 72
+        y: 48
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7fe2250d53173ed4bbb3bbd747c0286a
-      internalID: -2059617779
+      spriteID: f41281d841fb2804fb9a09dbfe0d6d27
+      internalID: 1435608171
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_8
+      name: Eggcita Sprite Sheet 1_13
       rect:
         serializedVersion: 2
-        x: 15
-        y: 9
-        width: 5
-        height: 5
+        x: 110
+        y: 60
+        width: 33
+        height: 24
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db61b6f66ad29274986191ffbfb53c64
-      internalID: 534770569
+      spriteID: 2afb68b71a7e1704cacba7b4ff464fc9
+      internalID: -813672152
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_9
+      name: Eggcita Sprite Sheet 1_14
       rect:
         serializedVersion: 2
-        x: 13
-        y: 1
-        width: 5
-        height: 5
+        x: 159
+        y: 64
+        width: 31
+        height: 31
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 804f3dc69914f1d479d082aa8ccfcdfe
-      internalID: 1225312490
+      spriteID: de180d3c54de419469aa8bfc00b7c90f
+      internalID: -1720603838
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: DustParticles_10
+      name: Eggcita Sprite Sheet 1_15
       rect:
         serializedVersion: 2
-        x: 15
-        y: 18
-        width: 5
-        height: 5
+        x: 198
+        y: 64
+        width: 35
+        height: 28
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ed6de19bcca37646a508cb771f21021
-      internalID: -2105190558
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: DustParticles_11
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 2
-        width: 7
-        height: 4
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2bba60ab6c4dc9246b4654e9ced893d8
-      internalID: -1679713266
+      spriteID: 22d5ae6c8ac949f458ff5dd44f59d3f3
+      internalID: 1837544151
       vertices: []
       indices: 
       edges: []
@@ -359,18 +443,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      DustParticles_0: -492326349
-      DustParticles_1: -79452593
-      DustParticles_10: -2105190558
-      DustParticles_11: -1679713266
-      DustParticles_2: -876406544
-      DustParticles_3: 1678805542
-      DustParticles_4: -598435412
-      DustParticles_5: -1146800369
-      DustParticles_6: -2023046039
-      DustParticles_7: -2059617779
-      DustParticles_8: 534770569
-      DustParticles_9: 1225312490
+      Eggcita Sprite Sheet 1_0: 1479139812
+      Eggcita Sprite Sheet 1_1: -553119155
+      Eggcita Sprite Sheet 1_10: 676151510
+      Eggcita Sprite Sheet 1_11: 1068037262
+      Eggcita Sprite Sheet 1_12: 1435608171
+      Eggcita Sprite Sheet 1_13: -813672152
+      Eggcita Sprite Sheet 1_14: -1720603838
+      Eggcita Sprite Sheet 1_15: 1837544151
+      Eggcita Sprite Sheet 1_2: -1658469555
+      Eggcita Sprite Sheet 1_3: -676354856
+      Eggcita Sprite Sheet 1_4: -874482083
+      Eggcita Sprite Sheet 1_5: 1479067412
+      Eggcita Sprite Sheet 1_6: 2024477365
+      Eggcita Sprite Sheet 1_7: 2121639379
+      Eggcita Sprite Sheet 1_8: 1029063537
+      Eggcita Sprite Sheet 1_9: 1534894451
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
