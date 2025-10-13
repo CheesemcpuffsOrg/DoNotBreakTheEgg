@@ -164,7 +164,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6053409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 150b4ca155b6dc34ab06c5d3b0f64642, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f191c29f39e7664eb747fb161e1572c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   filter:
@@ -395,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 262516442}
-  - component: {fileID: 262516443}
+  - component: {fileID: 262516444}
   m_Layer: 0
   m_Name: TrackingEntitySource
   m_TagString: Untagged
@@ -418,7 +418,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1113701479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &262516443
+--- !u!114 &262516444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 262516441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 150b4ca155b6dc34ab06c5d3b0f64642, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f191c29f39e7664eb747fb161e1572c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   filter:
@@ -15521,7 +15521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnEntities: {fileID: 1160536153}
   viewportOffset: 0.01
-  trackingEntitySourceObj: {fileID: 262516441}
+  entitySource: {fileID: 262516444}
   heldItemFilter:
     mustHaveAll:
     - {fileID: 11400000, guid: 23268dc1b2ea86b4dbe99bdcfa32539d, type: 2}
@@ -15905,7 +15905,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1588666481}
-  - component: {fileID: 1588666480}
+  - component: {fileID: 1588666482}
   m_Layer: 0
   m_Name: BackgroundMusic
   m_TagString: Untagged
@@ -15913,19 +15913,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1588666480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588666479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09b8b18ed52666247a2b5debc91de255, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emissionStrategyObj: {fileID: 322040437}
 --- !u!4 &1588666481
 Transform:
   m_ObjectHideFlags: 0
@@ -15942,6 +15929,19 @@ Transform:
   - {fileID: 322040438}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1588666482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588666479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cc1342af7dfe47489a93c5dae3402b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emissionObject: {fileID: 322040439}
 --- !u!1 &1733276157
 GameObject:
   m_ObjectHideFlags: 0
@@ -16110,7 +16110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceToTravel: 2
-  airbornEntitySourceObj: {fileID: 6053409}
+  airbornEntitySource: {fileID: 6053411}
   entityEmissionStrategyObj: {fileID: 559038199}
 --- !u!1 &1754065615
 GameObject:
