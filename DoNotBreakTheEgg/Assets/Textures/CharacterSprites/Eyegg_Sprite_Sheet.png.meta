@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 589a26e41cc8cdc4ca11f9b2c09c744d
+guid: e92712d9f1b98be478497665bda76d16
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -67,7 +67,7 @@ TextureImporter:
   swizzle: 50462976
   cookieLightType: 0
   platformSettings:
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -80,7 +80,7 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -97,657 +97,601 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_0
+      name: Eyegg_sprite_Jump_4
       rect:
         serializedVersion: 2
-        x: 17
-        y: 198
-        width: 31
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1ba8a6b9e896f5f49a1a174c8c367428
-      internalID: -558657362
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_1
-      rect:
-        serializedVersion: 2
-        x: 66
+        x: 32
         y: 192
-        width: 29
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2a2270976fb1c6a4ba87cabbe3c422c5
-      internalID: -74273483
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_2
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 177
-        width: 30
-        height: 31
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 128c1f278200c5e49b2d555aa7d0704f
-      internalID: 358290274
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_3
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 164
-        width: 32
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4a4f1f9433529074a933458d9d64c555
-      internalID: -1126437132
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_6
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 144
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e11eba20122a1842a4c549a91093ee8
-      internalID: -1178670114
+      spriteID: c9709139f93153c4ba54f0b0d79b9d9f
+      internalID: -824770639
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_7
+      name: Eyegg_sprite_Launched_SIDE
       rect:
         serializedVersion: 2
-        x: 112
-        y: 144
-        width: 34
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1d93deeb303e47446ac331a9576964e9
-      internalID: -274392107
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_11
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 130
-        width: 28
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6ca4e33c78f117b42a77f3d2622fd23f
-      internalID: 1759864909
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_12
-      rect:
-        serializedVersion: 2
-        x: 162
-        y: 128
-        width: 26
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ae246351097a7474a86b17a53b47047d
-      internalID: -1666644749
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_13
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 133
-        width: 33
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5957f7a7970f2524d9ce4a258a36bda0
-      internalID: -146167559
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_14
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 100
+        x: 192
+        y: 64
         width: 32
-        height: 21
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba51dd751d02f2847806bc24e50727ab
-      internalID: 2064090419
+      spriteID: 7ad8c094000586846b837c6d685cc985
+      internalID: -1764661773
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_15
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 96
-        width: 33
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dccc7ca679c7f66488e3b9b1f6541e86
-      internalID: 803587705
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_16
+      name: Eyegg_sprite_throwegg_1
       rect:
         serializedVersion: 2
         x: 96
-        y: 96
-        width: 33
-        height: 31
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c21e43c0c1f775c4291b701afa173f7f
-      internalID: 1049336357
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_17
-      rect:
-        serializedVersion: 2
-        x: 145
-        y: 98
-        width: 26
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c7c4c566fb8f12d40b718e6d1c14163d
-      internalID: -1031880838
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_18
-      rect:
-        serializedVersion: 2
-        x: 183
-        y: 102
-        width: 19
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cd5638cfdbcfc6c44ada9afed635f35b
-      internalID: -1677595192
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_19
-      rect:
-        serializedVersion: 2
-        x: 221
-        y: 79
+        y: 192
         width: 32
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ac9b5d2de3cff434b842293d1dccb0d5
-      internalID: -1563330998
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_20
-      rect:
-        serializedVersion: 2
-        x: 63
-        y: 64
-        width: 32
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 96d7c6f1e94b09148af8f622ddad9411
-      internalID: -741333786
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_21
-      rect:
-        serializedVersion: 2
-        x: 147
-        y: 87
-        width: 23
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9551b3e278d511643bea6aa3dbd39564
-      internalID: -1274586840
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_23
-      rect:
-        serializedVersion: 2
-        x: 182
-        y: 69
-        width: 19
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 14b2e87232d6f3f4ebc1640693768d84
-      internalID: -370690895
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_24
-      rect:
-        serializedVersion: 2
-        x: 18
-        y: 48
-        width: 29
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7cd17c28a2fd1f245b5d0febea308014
-      internalID: 2080221318
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_25
-      rect:
-        serializedVersion: 2
-        x: 65
-        y: 32
-        width: 32
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aaf2c343b2e899541b3fa5adeb2e4bc2
-      internalID: 1119939658
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_26
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 48
-        width: 29
-        height: 31
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 30671952d9debf744bff7fe484ad26f0
-      internalID: 949864902
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_27
-      rect:
-        serializedVersion: 2
-        x: 138
-        y: 48
-        width: 34
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21312012b5dc9284dbc805f7362c5862
-      internalID: 1789508771
+      spriteID: 3a52cefdae4b3da48857ca7c16d1ebf2
+      internalID: 1340021420
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_28
+      name: Eyegg_sprite_Cannon_1
       rect:
         serializedVersion: 2
-        x: 186
-        y: 37
-        width: 13
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 16061fbd31357344180c76d60b62e0eb
-      internalID: -689906549
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_29
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 47
-        width: 29
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 84f15d941428ba24592365ba6e4558e7
-      internalID: -1938154458
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_30
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 12
-        width: 34
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8d2faf80a04b3cc4f8c14c567b08aa7c
-      internalID: 779883574
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_31
-      rect:
-        serializedVersion: 2
-        x: 98
-        y: 16
+        x: 128
+        y: 192
         width: 32
-        height: 27
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9fa1750567cb5d943828bc8cfe626e5a
-      internalID: -1154337717
+      spriteID: 7b443c96f4e814742a43e34a436fc461
+      internalID: -1519788758
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_32
+      name: Eyegg_sprite_Jump_3
       rect:
         serializedVersion: 2
-        x: 148
-        y: 40
-        width: 22
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2432027f669bff7489b6bea676cc69b1
-      internalID: 217426915
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_34
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 19
-        width: 33
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a989d4f1aaf3c75449da6a23f5f8968d
-      internalID: 876448835
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_35
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 1
-        width: 33
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b851c10c5bed3da45bdd02d7e7870bef
-      internalID: 2055424101
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_36
-      rect:
-        serializedVersion: 2
-        x: 143
-        y: 19
+        x: 32
+        y: 160
         width: 32
-        height: 19
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca0022846b8cfc64f95cd2525ea98423
-      internalID: -1433013732
+      spriteID: b1d6457f020487b4cbb7b98387bf51c4
+      internalID: 1037397115
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eggcita Sprite Sheet2_37
+      name: Eyegg_sprite_throwegg_2
       rect:
         serializedVersion: 2
-        x: 148
-        y: 7
-        width: 22
-        height: 7
+        x: 96
+        y: 160
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e2671049a8495c4a8b8a55788182caa
-      internalID: 481256191
+      spriteID: c333f112621469c48b2d565bb8f04f93
+      internalID: 2076442969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Cannon_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00d48d42d60167747995d2125fd732b3
+      internalID: 1740889587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Carried_Idle
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84aae8ab9be1f2a459dacc00f0de7a73
+      internalID: -1972729049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Jump_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a751c0c8efaea5449f6b2aff1577fe1
+      internalID: -499136517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Cannon_Legs_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 759c691bd9893244b80dd737cdf203b2
+      internalID: -852242003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Being_Thrown_1
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47322f10e0146674a8446fb6b811ec6d
+      internalID: 1628404675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Landing_1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f31cb1ef27d4b124cb9443244cd42a1b
+      internalID: -1755285127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Jump_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54fd4c1be7e52764f9314bd55a9db49a
+      internalID: -1863930919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Idle_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a93b5991797640246bd26ef5adab16aa
+      internalID: 8386833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Cannon_3
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d61998ee380677c48b68ef1b23138bc7
+      internalID: -784856256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Being_Thrown_2
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fed860f34f09664eba20abcb9f73a87
+      internalID: -1618851649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Landing_2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 661a61ecc51d6b849af13abd2cab55d2
+      internalID: -495474619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Idle_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 922b41395e78cea4bb8e8804e2ecd1b8
+      internalID: 577449505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Cannon_Legs_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0346bafc1fe876b4f8be871572b48e19
+      internalID: -1315820611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Being_Thrown_3
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95b696fe933476442a819dc01133d550
+      internalID: 1623706567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Run_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a90c76f8ae741842a3e4783e3428031
+      internalID: -2111852292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Idle_3
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee48acd5c4120c54994b3fca7a5070fb
+      internalID: -407558744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Launched_UP
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b480f0b60ccb79d498ef65693ec496e8
+      internalID: 846075169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Cannon_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6a6210c089a20146b48072a4fd7a571
+      internalID: -1585758040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Run_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73d75a5013c36194ea7e33fd01f263ed
+      internalID: -2089017604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Idle_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a2af46b369b3b548a1fe313697b1f88
+      internalID: 1707802576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyegg_sprite_Cannon_Legs_3
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7eb7a10fbba470499ca142eaa1e7d84
+      internalID: 1777506401
       vertices: []
       indices: 
       edges: []
       weights: []
     outline: []
+    customData: 
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
@@ -757,46 +701,41 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
     nameFileIdTable:
-      Eggcita Sprite Sheet2_0: -558657362
-      Eggcita Sprite Sheet2_1: -74273483
-      Eggcita Sprite Sheet2_10: 692391192
-      Eggcita Sprite Sheet2_11: 1759864909
-      Eggcita Sprite Sheet2_12: -1666644749
-      Eggcita Sprite Sheet2_13: -146167559
-      Eggcita Sprite Sheet2_14: 2064090419
-      Eggcita Sprite Sheet2_15: 803587705
-      Eggcita Sprite Sheet2_16: 1049336357
-      Eggcita Sprite Sheet2_17: -1031880838
-      Eggcita Sprite Sheet2_18: -1677595192
-      Eggcita Sprite Sheet2_19: -1563330998
-      Eggcita Sprite Sheet2_2: 358290274
-      Eggcita Sprite Sheet2_20: -741333786
-      Eggcita Sprite Sheet2_21: -1274586840
-      Eggcita Sprite Sheet2_22: 1137262660
-      Eggcita Sprite Sheet2_23: -370690895
-      Eggcita Sprite Sheet2_24: 2080221318
-      Eggcita Sprite Sheet2_25: 1119939658
-      Eggcita Sprite Sheet2_26: 949864902
-      Eggcita Sprite Sheet2_27: 1789508771
-      Eggcita Sprite Sheet2_28: -689906549
-      Eggcita Sprite Sheet2_29: -1938154458
-      Eggcita Sprite Sheet2_3: -1126437132
-      Eggcita Sprite Sheet2_30: 779883574
-      Eggcita Sprite Sheet2_31: -1154337717
-      Eggcita Sprite Sheet2_32: 217426915
-      Eggcita Sprite Sheet2_33: 315098963
-      Eggcita Sprite Sheet2_34: 876448835
-      Eggcita Sprite Sheet2_35: 2055424101
-      Eggcita Sprite Sheet2_36: -1433013732
-      Eggcita Sprite Sheet2_37: 481256191
-      Eggcita Sprite Sheet2_38: -1510696968
-      Eggcita Sprite Sheet2_4: 1960874855
-      Eggcita Sprite Sheet2_5: -1874478995
-      Eggcita Sprite Sheet2_6: -1178670114
-      Eggcita Sprite Sheet2_7: -274392107
-      Eggcita Sprite Sheet2_8: -955779817
-      Eggcita Sprite Sheet2_9: -1786635051
+      Eyegg Sprite Sheet_10: 155836634
+      Eyegg Sprite Sheet_15: -1823765146
+      Eyegg Sprite Sheet_20: -1417013663
+      Eyegg Sprite Sheet_22: 1722839371
+      Eyegg Sprite Sheet_31: -784185453
+      Eyegg_sprite_Being_Thrown_1: 1628404675
+      Eyegg_sprite_Being_Thrown_2: -1618851649
+      Eyegg_sprite_Being_Thrown_3: 1623706567
+      Eyegg_sprite_Cannon_1: -1519788758
+      Eyegg_sprite_Cannon_2: 1740889587
+      Eyegg_sprite_Cannon_3: -784856256
+      Eyegg_sprite_Cannon_4: -1585758040
+      Eyegg_sprite_Cannon_Legs_1: -852242003
+      Eyegg_sprite_Cannon_Legs_2: -1315820611
+      Eyegg_sprite_Cannon_Legs_3: 1777506401
+      Eyegg_sprite_Carried_Idle: -1972729049
+      Eyegg_sprite_Idle_1: 8386833
+      Eyegg_sprite_Idle_2: 577449505
+      Eyegg_sprite_Idle_3: -407558744
+      Eyegg_sprite_Idle_4: 1707802576
+      Eyegg_sprite_Jump_1: -1863930919
+      Eyegg_sprite_Jump_2: -499136517
+      Eyegg_sprite_Jump_3: 1037397115
+      Eyegg_sprite_Jump_4: -824770639
+      Eyegg_sprite_Landing_1: -1755285127
+      Eyegg_sprite_Landing_2: -495474619
+      Eyegg_sprite_Launched_SIDE: -1764661773
+      Eyegg_sprite_Launched_UP: 846075169
+      Eyegg_sprite_Run_1: -2111852292
+      Eyegg_sprite_Run_2: -2089017604
+      Eyegg_sprite_throwegg_1: 1340021420
+      Eyegg_sprite_throwegg_2: 2076442969
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

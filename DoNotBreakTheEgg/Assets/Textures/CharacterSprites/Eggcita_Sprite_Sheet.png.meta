@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f054ece8357ac03419f2ef672b64735a
+guid: f8824e3ba168c734490323b5bb2aec73
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -67,7 +67,7 @@ TextureImporter:
   swizzle: 50462976
   cookieLightType: 0
   platformSettings:
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 256
     resizeAlgorithm: 0
@@ -80,7 +80,7 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -97,657 +97,601 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_0
+      name: Eggcita_sprite_Cannon_1
       rect:
         serializedVersion: 2
-        x: 17
-        y: 198
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 34ba4f3c86eca954b9d86f80944405c2
-      internalID: 1327088689
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_1
-      rect:
-        serializedVersion: 2
-        x: 66
+        x: 128
         y: 192
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57a561cf62c18cb4892e5cb38ef24803
-      internalID: -263396673
+      spriteID: a005ec6d1e144174ba0743a81615dc64
+      internalID: -874482083
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_2
+      name: Eggcita_sprite_Jump_4
       rect:
         serializedVersion: 2
-        x: 112
-        y: 177
-        width: 30
-        height: 31
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 56693a63d7226e449a2719077e26534d
-      internalID: -567794778
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_3
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 164
+        x: 32
+        y: 192
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a014272e8cee0814ea299fed1b9fc0bf
-      internalID: -743324467
+      spriteID: 729e485ba3319e647b9b5e8034b90c3c
+      internalID: 1029063537
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_4
+      name: Eggcita_sprite_Jump_3
       rect:
         serializedVersion: 2
-        x: 64
-        y: 144
+        x: 32
+        y: 160
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 100b80a63e094a942950476433ed1cbc
-      internalID: 388443655
+      spriteID: 8c5bb86a186a87b4bbac35a75a379e50
+      internalID: 1534894451
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_5
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 144
-        width: 34
-        height: 28
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3194a5d502a274e4092b52cd7a7c5d67
-      internalID: 75906328
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_6
-      rect:
-        serializedVersion: 2
-        x: 17
-        y: 130
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f3a0195d3f36af04587beea0d445ba0b
-      internalID: 1370366412
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_7
-      rect:
-        serializedVersion: 2
-        x: 162
-        y: 128
-        width: 30
-        height: 29
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 19bf1db37ce36604e8300103f09e8566
-      internalID: 696408611
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_8
-      rect:
-        serializedVersion: 2
-        x: 212
-        y: 135
-        width: 28
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5a8b613d8b03c0147b596aa0174b2958
-      internalID: 1041436795
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_9
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 100
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6c41d172c2c0a51428caf412ed111829
-      internalID: -1831307258
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_10
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 96
-        width: 33
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dc1a88bc907c3cb4b938529315fa4253
-      internalID: -830132370
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_11
+      name: Eggcita_sprite_throwegg_2
       rect:
         serializedVersion: 2
         x: 96
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 027f8f5effda55e44ab700adddeccd55
+      internalID: 676151510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_Carried_Idle
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f41281d841fb2804fb9a09dbfe0d6d27
+      internalID: 1435608171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_Jump_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2afb68b71a7e1704cacba7b4ff464fc9
+      internalID: -813672152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_Cannon_Legs_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de180d3c54de419469aa8bfc00b7c90f
+      internalID: -1720603838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_throwegg_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ef87e10d6c34c84f83e68cd66a346a7
+      internalID: 628551688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_Cannon_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4c55d6d1644bdf43b73b4365c27b625
+      internalID: 1068037262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_Being_Thrown_1
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d78cc1cc80969e429d7d06b4cd91c22
+      internalID: 1038666298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_Landing_1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61ff6d2fdccb41d46878cb593718b57a
+      internalID: 1781837838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_Jump_1
+      rect:
+        serializedVersion: 2
+        x: 32
         y: 96
-        width: 33
-        height: 31
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 69519444dd633d24ea3e519717ff9830
-      internalID: -26371772
+      spriteID: aeeb3533cf9c82b4ebe71579c04ccebe
+      internalID: 1529674708
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_12
+      name: Eggcita_sprite_Idle_4
       rect:
         serializedVersion: 2
-        x: 145
-        y: 98
-        width: 26
-        height: 25
+        x: 64
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae0901f00fc5a6144a1b9ddd2c5b09a5
-      internalID: -1215486668
+      spriteID: 74ba1d107af72eb4fb20d2969ec59274
+      internalID: -1871331586
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_13
+      name: Eggcita_sprite_Cannon_3
       rect:
         serializedVersion: 2
-        x: 183
-        y: 102
-        width: 19
-        height: 21
+        x: 128
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 516953cc19a68cc4984e8471ff09270c
-      internalID: -1534466934
+      spriteID: 0fe7228a5b4686c4980f44dd74196e16
+      internalID: -88310929
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_14
+      name: Eggcita_sprite_Being_Thrown_2
       rect:
         serializedVersion: 2
-        x: 224
-        y: 80
-        width: 29
-        height: 24
+        x: 160
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1e09a91841f5c2449eefed0a60608bc
-      internalID: -495500225
+      spriteID: 6bf5e5f6c2843234f87ce001da065d6a
+      internalID: 2120743692
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_15
+      name: Eggcita_sprite_Landing_2
       rect:
         serializedVersion: 2
-        x: 63
+        x: 192
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2352b59584c42504f9a91d5b2b6f69e3
+      internalID: -1285848653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_Idle_3
+      rect:
+        serializedVersion: 2
+        x: 64
         y: 64
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81e7c5a5a6521cb429f19604d9dc9a36
-      internalID: 682955461
+      spriteID: f26372060cec53b4a8071ba42bddb3f4
+      internalID: -1535750565
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_16
+      name: Eggcita_sprite_Cannon_Legs_2
       rect:
         serializedVersion: 2
-        x: 147
-        y: 87
-        width: 23
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a2a7ea68e1444db4089a5e27195a3aab
-      internalID: -323959923
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_18
-      rect:
-        serializedVersion: 2
-        x: 182
-        y: 69
-        width: 19
-        height: 23
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3f0fbbdf780fc7047a81f24ba70777d9
-      internalID: -1976211535
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_19
-      rect:
-        serializedVersion: 2
-        x: 18
-        y: 48
+        x: 128
+        y: 64
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75e8718eafb64fa4bb543d386b1e7f6e
-      internalID: 356631832
+      spriteID: 3721f44b8fa6ab64d8c870f60c94f5e1
+      internalID: -1717192746
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_20
+      name: Eggcita_sprite_Being_Thrown_3
       rect:
         serializedVersion: 2
-        x: 65
+        x: 160
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42832ef7a5268e14785fa561ac9cd8e9
+      internalID: -1412420681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_Launched_SIDE
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20c000fbbb59af34c882f262dc6a2a38
+      internalID: -14070560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_run_2
+      rect:
+        serializedVersion: 2
+        x: 32
         y: 32
         width: 32
-        height: 25
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d16ed647322469489810151d05f2ca0
-      internalID: 1545462697
+      spriteID: 88352f98d9ef9424da653f8bfd6d7b93
+      internalID: 167028211
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_21
+      name: Eggcita_sprite_Idle_2
       rect:
         serializedVersion: 2
-        x: 100
-        y: 48
+        x: 64
+        y: 32
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23b3d664fc12e6d40bd36d330cae2807
-      internalID: 170995133
+      spriteID: 2e2b78ebe0ad5a142b20e68d26fb4d3f
+      internalID: -1444739268
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_22
+      name: Eggcita_sprite_Launched_UP
       rect:
         serializedVersion: 2
-        x: 138
-        y: 48
-        width: 34
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fb7af1cba74f062488f20fb20f2c8901
-      internalID: 169426665
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_23
-      rect:
-        serializedVersion: 2
-        x: 186
-        y: 37
-        width: 13
-        height: 20
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 53aef0a01f6c6c84bbd4b7deeca2969f
-      internalID: 909561457
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_24
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 48
-        width: 29
-        height: 25
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 10183febae26071428311e08b3a88862
-      internalID: -903460258
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_25
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 15
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c6bf1564daf51f64bb0ee2aca1a88343
-      internalID: -1041941388
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_26
-      rect:
-        serializedVersion: 2
-        x: 98
+        x: 96
         y: 16
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f9c0441a984f0d44b4c72028530a687
-      internalID: -2071428639
+      spriteID: 012c6be60d6d1aa4a9151ced892fda88
+      internalID: 29875530
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_27
+      name: Eggcita_sprite_Cannon_4
       rect:
         serializedVersion: 2
-        x: 148
-        y: 40
-        width: 23
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b332b61bc00090249b767bd8b73c143a
-      internalID: -652688531
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_29
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 19
-        width: 33
-        height: 28
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7af7591a182ed9248a792b788ee0c0c0
-      internalID: 1909813050
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_30
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 1
-        width: 33
-        height: 24
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a06cfc5981a88624b8993b11e775c250
-      internalID: -322085509
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_31
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 19
+        x: 128
+        y: 32
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af7c8b41b8a81b6458a70406a36c798b
-      internalID: -714272934
+      spriteID: d37bd8d7e2975a14fa56efd74c43b3ff
+      internalID: -1015306800
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Softboiled Sprite Sheet2_32
+      name: Eggcita_sprite_run_1
       rect:
         serializedVersion: 2
-        x: 148
-        y: 7
+        x: 32
+        y: 0
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9495e336c9cb59448da57fbf844ac0d
-      internalID: -1563484478
+      spriteID: c17acb3e3b91b2e489347d5bab8c7b58
+      internalID: 854409205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_Idle_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fb2bdfc139518544bd1f9e2ab600f73
+      internalID: 1157675031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eggcita_sprite_Cannon_Legs_3
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92759d52197e547429ea9601f583424e
+      internalID: 1700853297
       vertices: []
       indices: 
       edges: []
       weights: []
     outline: []
+    customData: 
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
@@ -757,41 +701,47 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
     nameFileIdTable:
-      Softboiled Sprite Sheet2_0: 1327088689
-      Softboiled Sprite Sheet2_1: -263396673
-      Softboiled Sprite Sheet2_10: -830132370
-      Softboiled Sprite Sheet2_11: -26371772
-      Softboiled Sprite Sheet2_12: -1215486668
-      Softboiled Sprite Sheet2_13: -1534466934
-      Softboiled Sprite Sheet2_14: -495500225
-      Softboiled Sprite Sheet2_15: 682955461
-      Softboiled Sprite Sheet2_16: -323959923
-      Softboiled Sprite Sheet2_17: 1059742058
-      Softboiled Sprite Sheet2_18: -1976211535
-      Softboiled Sprite Sheet2_19: 356631832
-      Softboiled Sprite Sheet2_2: -567794778
-      Softboiled Sprite Sheet2_20: 1545462697
-      Softboiled Sprite Sheet2_21: 170995133
-      Softboiled Sprite Sheet2_22: 169426665
-      Softboiled Sprite Sheet2_23: 909561457
-      Softboiled Sprite Sheet2_24: -903460258
-      Softboiled Sprite Sheet2_25: -1041941388
-      Softboiled Sprite Sheet2_26: -2071428639
-      Softboiled Sprite Sheet2_27: -652688531
-      Softboiled Sprite Sheet2_28: -155609277
-      Softboiled Sprite Sheet2_29: 1909813050
-      Softboiled Sprite Sheet2_3: -743324467
-      Softboiled Sprite Sheet2_30: -322085509
-      Softboiled Sprite Sheet2_31: -714272934
-      Softboiled Sprite Sheet2_32: -1563484478
-      Softboiled Sprite Sheet2_33: -525360820
-      Softboiled Sprite Sheet2_4: 388443655
-      Softboiled Sprite Sheet2_5: 75906328
-      Softboiled Sprite Sheet2_6: 1370366412
-      Softboiled Sprite Sheet2_7: 696408611
-      Softboiled Sprite Sheet2_8: 1041436795
-      Softboiled Sprite Sheet2_9: -1831307258
+      Eggcita Sprite Sheet 1_0: -837170283
+      Eggcita Sprite Sheet 1_1: -553119155
+      Eggcita Sprite Sheet 1_15: 1837544151
+      Eggcita Sprite Sheet 1_2: -1658469555
+      Eggcita Sprite Sheet 1_20: -1948600045
+      Eggcita Sprite Sheet 1_25: -170776507
+      Eggcita Sprite Sheet 1_27: -69942288
+      Eggcita Sprite Sheet 1_37: 1976326403
+      Eggcita Sprite Sheet 1_5: 1479067412
+      Eggcita Sprite Sheet 1_6: 1387535056
+      Eggcita Sprite Sheet 1_7: 2121639379
+      Eggcita_sprite_Being_Thrown_1: 1038666298
+      Eggcita_sprite_Being_Thrown_2: 2120743692
+      Eggcita_sprite_Being_Thrown_3: -1412420681
+      Eggcita_sprite_Cannon_1: -874482083
+      Eggcita_sprite_Cannon_2: 1068037262
+      Eggcita_sprite_Cannon_3: -88310929
+      Eggcita_sprite_Cannon_4: -1015306800
+      Eggcita_sprite_Cannon_Legs_1: -1720603838
+      Eggcita_sprite_Cannon_Legs_2: -1717192746
+      Eggcita_sprite_Cannon_Legs_3: 1700853297
+      Eggcita_sprite_Carried_Idle: 1435608171
+      Eggcita_sprite_Idle_1: 1157675031
+      Eggcita_sprite_Idle_2: -1444739268
+      Eggcita_sprite_Idle_3: -1535750565
+      Eggcita_sprite_Idle_4: -1871331586
+      Eggcita_sprite_Jump_1: 1529674708
+      Eggcita_sprite_Jump_2: -813672152
+      Eggcita_sprite_Jump_3: 1534894451
+      Eggcita_sprite_Jump_4: 1029063537
+      Eggcita_sprite_Landing_1: 1781837838
+      Eggcita_sprite_Landing_2: -1285848653
+      Eggcita_sprite_Launched_SIDE: -14070560
+      Eggcita_sprite_Launched_UP: 29875530
+      Eggcita_sprite_run_1: 854409205
+      Eggcita_sprite_run_2: 167028211
+      Eggcita_sprite_throwegg_1: 628551688
+      Eggcita_sprite_throwegg_2: 676151510
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
