@@ -8,7 +8,7 @@ public class PlayGame : MonoBehaviour
 
     [SerializeField] Button playButton;
 
-    [SerializeField] SceneReferenceScriptableObject sceneReferenceScriptableObject;
+    [SerializeField] SceneReferenceScriptableObject persistentScene;
 
     private IDisposable subscriptionBag; // use this if you have less than 8 disposables
 
@@ -21,7 +21,7 @@ public class PlayGame : MonoBehaviour
             .AsObservable()
             .Subscribe(_ =>
             {
-                SceneManagerService.LoadScene(sceneReferenceScriptableObject);
+                SceneManagerService.LoadScene(persistentScene);
             });
 
         subscriptionBag = Disposable.Combine(disposable1);

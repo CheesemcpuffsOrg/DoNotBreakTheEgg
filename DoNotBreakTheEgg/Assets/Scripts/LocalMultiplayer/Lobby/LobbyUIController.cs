@@ -1,9 +1,6 @@
-using R3;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class LobbyUIController : MonoBehaviour
 {
@@ -16,7 +13,9 @@ public class LobbyUIController : MonoBehaviour
 
         [SerializeField] GameObject playerPrompt;
 
-        public GameObject PlayerPrompt => playerPrompt;
+        public GameObject PlayerPrompt => playerPrompt; 
+
+        public bool InUse {  get; set; }
     }
 
     [SerializeField] List<UIPanelMapping> panelmappings = new List<UIPanelMapping>();
@@ -34,6 +33,7 @@ public class LobbyUIController : MonoBehaviour
 
         foreach (var mapping in panelmappings)
         {
+            mapping.InUse = false;
             mapping.PlayerPanel.SetActive(false);
             mapping.PlayerPrompt.SetActive(true);
         }
@@ -43,25 +43,38 @@ public class LobbyUIController : MonoBehaviour
 
     private void EnableUI(InputActionCollectionAndUserData data)
     {
-        var playerIndex = data.UserData.Index;
         var playerID = data.UserData.Id;
 
-        var mapping = panelmappings[playerIndex];
+        var mapping = panelmappings.Find(m => !m.InUse);
+
+        if (mapping == null)
+        {
+            Debug.LogError("No available panels for new player!");
+            return;
+        }
+
+        // Assign and mark as used
+        mapping.InUse = true;
+        playerPanelMapping[playerID] = mapping;
 
         mapping.PlayerPanel.SetActive(true);
         mapping.PlayerPrompt.SetActive(false);
-
-        playerPanelMapping.TryAdd(playerID, panelmappings[playerIndex]);
     }
 
     private void DisableUI(int playerID)
     {
-        var mapping = playerPanelMapping[playerID];
+        if (!playerPanelMapping.TryGetValue(playerID, out var mapping))
+        {
+            Debug.LogError($"No panel mapping found for PlayerID {playerID}");
+            return;
+        }
 
+        // Free and reset the panel
+        mapping.InUse = false;
         mapping.PlayerPanel.SetActive(false);
         mapping.PlayerPrompt.SetActive(true);
 
-        playerPanelMapping.Remove(playerID);    
+        playerPanelMapping.Remove(playerID);
     }
 
     void OnStartOrEnable()

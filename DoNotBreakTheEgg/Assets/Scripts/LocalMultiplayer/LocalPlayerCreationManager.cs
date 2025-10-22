@@ -188,4 +188,17 @@ public class LocalPlayerCreationManager : MonoBehaviour
             deviceActions.Remove(device);
         }
     }
+
+    //cleanup lobby actions so they do not persist between scenes
+    void OnDestroy()
+    {
+        InputSystem.onDeviceChange -= OnDeviceChange;
+
+        foreach (var kvp in deviceActions)
+        {
+            kvp.Value.CleanUp();
+        }
+
+        deviceActions.Clear();
+    }
 }

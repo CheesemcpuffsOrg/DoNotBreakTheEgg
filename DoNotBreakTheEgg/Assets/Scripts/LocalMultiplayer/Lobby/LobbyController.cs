@@ -4,15 +4,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 
 public class LobbyController : MonoBehaviour
 {
     [SerializeField] string startGameActionGamepad = "start";
     [SerializeField] string startGameActionKeyboard = "enter";
+    [SerializeField] string leaveLobbyActionGamepad = "buttonEast";
+    [SerializeField] string leaveLobbyActionKeyboard = "escape";
 
     [SerializeField] SceneReferenceScriptableObject sceneReferenceScriptableObject;
+    [SerializeField] SceneReferenceScriptableObject mainMenuSceneReferenceScriptableObject;
 
     InputAction startGameAction = new InputAction(type: InputActionType.Button);
+    InputAction leaveLobbyAction = new InputAction(type: InputActionType.Button);
 
     ReactiveProperty<int> playerCount = new ReactiveProperty<int>();
 
@@ -20,31 +25,34 @@ public class LobbyController : MonoBehaviour
 
     bool startCalled;
 
-    private Action<InputActionCollectionAndUserData> _onUserCreated;
-    private Action<int> _onUserDeleted;
-
     // Start is called before the first frame update
     void Start()
     {
-
         OnStartOrEnable();
 
         startGameAction.AddBinding($"<Gamepad>/{startGameActionGamepad}");
         startGameAction.AddBinding($"<Keyboard>/{startGameActionKeyboard}");
 
+        leaveLobbyAction.AddBinding($"<Gamepad>/{leaveLobbyActionGamepad}");
+        leaveLobbyAction.AddBinding($"<Keyboard>/{leaveLobbyActionKeyboard}");
+       
         startGameAction.started += StartGame;
+        leaveLobbyAction.started += LeaveLobby;
 
         var disposable1 = playerCount
+            .Append(0)
             .Select(count => count > 0)
             .Subscribe(enableStart =>
             {
                 if (enableStart)
                 {
                     startGameAction.Enable();
+                    leaveLobbyAction.Disable();
                 }
                 else
                 {
                     startGameAction.Disable();
+                    leaveLobbyAction.Enable();
                 }
             });
 
@@ -60,16 +68,22 @@ public class LobbyController : MonoBehaviour
         SceneManagerService.LoadScene(sceneReferenceScriptableObject);
     }
 
+    public void LeaveLobby(InputAction.CallbackContext context)
+    {
+        PlayerDataStorage.Instance.DestroyStorage();
+        SceneManagerService.LoadScene(mainMenuSceneReferenceScriptableObject);
+    }
+
     public void UserCreated(InputActionCollectionAndUserData data)
     {
         playerCount.Value++;
-        PlayerDataStorage.StorePlayerData(data.UserData.Id, data);
+        PlayerDataStorage.Instance.AddUser(data);
     }
 
     public void UserDeleted(int playerID)
     {
         playerCount.Value--;
-        PlayerDataStorage.RemovePlayerData(playerID);
+        PlayerDataStorage.Instance.RemoveUser(playerID);
     }
 
 
@@ -90,6 +104,17 @@ public class LobbyController : MonoBehaviour
     {
         LocalPlayerCreationManager.Instance.UserCreated -= UserCreated;
         LocalPlayerCreationManager.Instance.UserDeleted -= UserDeleted;
+    }
+
+    private void OnDestroy()
+    {
+        startGameAction.started -= StartGame;
+        startGameAction.Disable();
+        startGameAction.Dispose();
+
+        leaveLobbyAction.started -= LeaveLobby;
+        leaveLobbyAction.Disable();
+        leaveLobbyAction.Dispose();  
     }
 
 }

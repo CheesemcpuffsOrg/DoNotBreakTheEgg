@@ -1,35 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public static class PlayerDataStorage 
+public class PlayerDataStorage : MonoBehaviour
 {
-    public class PlayerData
+    public static PlayerDataStorage Instance { get; private set; }
+
+    private List<InputActionCollectionAndUserData> persistentUsers = new List<InputActionCollectionAndUserData>();
+
+    private void Awake()
     {
-        private int playerIndex;
-
-        public int PlayerIndex => playerIndex;
-
-        public PlayerData(int playerIndex)
+        if (Instance != null && Instance != this)
         {
-            this.playerIndex = playerIndex;
+            Destroy(gameObject);
+            return;
         }
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // Make the user data persist across scenes (user data automatically deletes on scene change)
     }
 
-    private static Dictionary<int, InputActionCollectionAndUserData> activePlayerData = new();
-
-    public static void StorePlayerData(int playerID, InputActionCollectionAndUserData data)
+    public void AddUser(InputActionCollectionAndUserData userData)
     {
-        activePlayerData.TryAdd(playerID, data);
+        persistentUsers.Add(userData);
     }
 
-    public static void RemovePlayerData(int playerID)
+    public void RemoveUser(int userID)
     {
-        activePlayerData.Remove(playerID);
+        persistentUsers.RemoveAll(data => data.UserData.Id == userID);
     }
 
-    public static Dictionary<int, InputActionCollectionAndUserData> GetAllPlayerData()
+    public IReadOnlyList<InputActionCollectionAndUserData> GetUsers()
     {
-        return activePlayerData;
+        return persistentUsers;
+    }
+
+    public void DestroyStorage()
+    {
+        Destroy(gameObject);
+        Instance = null;
     }
 }

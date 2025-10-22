@@ -1,8 +1,17 @@
 
+using UnityEngine.SceneManagement;
+
 public static class SceneManagerService
 {
-    public static void LoadScene(SceneReferenceScriptableObject scene)
+    public static void LoadScene(SceneReferenceScriptableObject scene, LoadSceneMode loadSceneMode = LoadSceneMode.Single)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(scene.GetSceneName());
+        SceneManager.LoadScene(scene.GetSceneName(), loadSceneMode);
     }
+
+    public static void UnloadScene(SceneReferenceScriptableObject scene)
+    {
+        SceneManager.UnloadSceneAsync(scene.GetSceneName());
+    }
+
+
 }
