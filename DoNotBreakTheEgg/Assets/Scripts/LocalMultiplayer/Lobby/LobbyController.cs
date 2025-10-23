@@ -70,7 +70,6 @@ public class LobbyController : MonoBehaviour
 
     public void LeaveLobby(InputAction.CallbackContext context)
     {
-        PlayerDataStorage.Instance.DestroyStorage();
         SceneManagerService.LoadScene(mainMenuSceneReferenceScriptableObject);
     }
 
