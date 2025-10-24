@@ -28,6 +28,8 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
         heldView.enabled = false;
     }
 
+    //update this at some point to have a held anchor?
+
     public void Hold(Transform anchor)
     {
         movementComponent.DisableMovement();
@@ -52,6 +54,6 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
 
         soundComponent.PlaySound(pickUpSound);
 
-        HoldEntityManager.Instance.AddHeldEntity(interactingEntity, entity, interactingEntity.GetEntityComponent<AnchoringComponent>().GetAnchor(holdAnchor));
+        HoldEntityManager.Instance.AddHeldEntity(interactingEntity, entity, interactingEntity.GetEntityComponent<IAnchoringComponent>().GetAnchor(holdAnchor));
     }
 }
