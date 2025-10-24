@@ -6,7 +6,7 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AnimOVR_Eyegg
+  m_Name: AnimControllerOVR_Eyegg
   m_Controller: {fileID: 9100000, guid: 581574e66dd995245934fe5a5699c660, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: 51bb8fd8e814c894ba1aae1283721736, type: 2}

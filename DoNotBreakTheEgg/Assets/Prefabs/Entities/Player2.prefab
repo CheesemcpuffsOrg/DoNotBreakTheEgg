@@ -8,46 +8,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2300842680858308593, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4848433930548909381, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 8386833, guid: e92712d9f1b98be478497665bda76d16, type: 3}
-    - target: {fileID: 4848433930548909381, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4848433930548909381, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4848433930548909381, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: -1871331586, guid: f8824e3ba168c734490323b5bb2aec73, type: 3}
     - target: {fileID: 5382001462561511537, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
       propertyPath: m_Name
-      value: Player4
+      value: Player2
       objectReference: {fileID: 0}
-    - target: {fileID: 6694469969121223086, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: maxChargeSoundData.followTransform
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6694469969121223086, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: chargeThrowSoundData.followTransform
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6694469969121223086, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: maxChargeSoundData.audioScriptableObject
-      value: 
-      objectReference: {fileID: 11400000, guid: 8fdae2c3da8baae4f8c00b6882fc40d1, type: 2}
-    - target: {fileID: 6694469969121223086, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
-      propertyPath: chargeThrowSoundData.audioScriptableObject
-      value: 
-      objectReference: {fileID: 11400000, guid: edcc8c1aef20d6c48b8cefebb22cd4f1, type: 2}
     - target: {fileID: 6809643049106577922, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: d6402f6693dab824694fa859b1b55940, type: 2}
+      objectReference: {fileID: 22100000, guid: 8a8a513deb8796e449af3a46533d3d43, type: 2}
+    - target: {fileID: 6873367719552133996, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1435608171, guid: f8824e3ba168c734490323b5bb2aec73, type: 3}
     - target: {fileID: 9064841143096759055, guid: 555f6b858af9def46a5d30be02b87e78, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
