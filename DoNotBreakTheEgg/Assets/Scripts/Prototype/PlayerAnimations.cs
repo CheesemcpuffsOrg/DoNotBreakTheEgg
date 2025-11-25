@@ -29,7 +29,7 @@ public class PlayerAnimations : MonoBehaviour
     }
 
 
-    private void Update()
+    private void LateUpdate()
     {
         isMoving = movementComponent.Velocity.magnitude > 2f;
 

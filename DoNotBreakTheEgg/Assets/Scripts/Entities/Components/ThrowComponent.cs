@@ -1,3 +1,5 @@
+using R3;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     [Header("Tags")]
     [SerializeField] TagScriptableObject isHeldTag;
     [SerializeField] TagScriptableObject isHoldingTag;
+    [SerializeField] TagScriptableObject chargingTag;
     [SerializeField] TagFilter catchableEntityFilter;
     [SerializeField] TagFilter catchingFilter;
     [SerializeField] TagFilter throwFilter;
@@ -40,16 +43,20 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
 
     IEntity entity;
     IEntitySoundComponent soundComponent;
+    ITagComponent tagComponent;
 
     float powerCurrent;
 
-    bool chargingShot;
+    ReactiveProperty<bool> chargingShot = new ReactiveProperty<bool>();
     bool maxPowerReached;
+
+    IDisposable subscriptionBag;
 
     private void Awake()
     {
         entity = GetComponent<IEntity>();
         soundComponent = entity.GetEntityComponent<IEntitySoundComponent>();
+        tagComponent = entity.GetEntityComponent<ITagComponent>();
     }
 
     private void Start()
@@ -58,6 +65,19 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
        // powerSlider.gameObject.SetActive(false);
         powerSlider.maxValue = powerMax;
         powerSlider.minValue = powerBase;
+
+        var disposable1 = chargingShot
+            .Subscribe(result =>
+            {
+                if (result)
+                    tagComponent.AddTag(chargingTag);
+                else
+                    tagComponent.RemoveTag(chargingTag);
+            });
+
+        subscriptionBag = Disposable.Combine(disposable1);
+
+        subscriptionBag.RegisterTo(this.destroyCancellationToken);
     }
 
     private void Update()
@@ -72,7 +92,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
 
       //  powerSlider.gameObject.SetActive(true);
         powerCurrent = powerBase; // Reset power to the base value
-        chargingShot = true; // Start charging
+        chargingShot.Value = true; // Start charging
         soundComponent.PlaySound(chargeThrowSoundData);
     }
 
@@ -84,7 +104,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         if (!HoldEntityManager.Instance.TryGetHeldEntity(entity, out var heldEntity)) 
             return;
 
-        chargingShot = false;
+        chargingShot.Value = false;
         maxPowerReached = false;
         
         HoldEntityManager.Instance.RemoveHeldEntity(entity);
@@ -99,7 +119,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
 
     private void ChargeShot()
     {
-        if (!chargingShot || maxPowerReached)
+        if (!chargingShot.Value || maxPowerReached)
         {
             return;
         }

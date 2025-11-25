@@ -50,7 +50,9 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     float jumpVelocity;
 
     Vector3 velocity;
-    public Vector3 Velocity => velocity;
+    Vector3 actualVelocity;
+    Vector3 normalizationCheck;
+    public Vector3 Velocity => actualVelocity;
     float VelocityXSmoothing;
 
     float jumpBufferTime = 0.2f;
@@ -127,18 +129,35 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         Gravity();
 
+        //I hate this
+        TerribleExposedVelocityCalculation();
+
+        if (!tagComponent.PassTagFilterCheck(moveFilter)) return;
+
         Move(velocity * Time.deltaTime);
 
         IsGrounded();
 
+
+    }
+
+    private void TerribleExposedVelocityCalculation()
+    {
+        if (normalizationCheck.normalized.x == 0 || !tagComponent.PassTagFilterCheck(moveFilter))
+        {
+            actualVelocity = new(0, 0, 0);
+        }
+        else
+        {
+            actualVelocity = velocity;
+        }
     }
 
     public void Jump()
     {
         if (!ignoreFilter)
         {
-            //Debug.Log(entity + "" + entity.GetEntityComponent<ITagComponent>() + "" + entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(jumpFilter));
-            if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(jumpFilter)) return;
+            if (!tagComponent.PassTagFilterCheck(jumpFilter)) return;
         }
 
 
@@ -148,8 +167,6 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     public void MoveToTarget(Vector2 target)
     {
-        if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(moveFilter)) return;
-
         input = target;
     }
 
@@ -297,6 +314,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         }
 
         VerticalCollisions(ref velocity);
+        normalizationCheck = velocity;
 
         transform.Translate(velocity);
         Physics2D.SyncTransforms(); //sync all child objects with parent object
