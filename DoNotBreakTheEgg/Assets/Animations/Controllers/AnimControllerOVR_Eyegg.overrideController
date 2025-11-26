@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AnimControllerOVR_Eyegg
+  m_Controller: {fileID: 9100000, guid: 581574e66dd995245934fe5a5699c660, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 51bb8fd8e814c894ba1aae1283721736, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3dfac04872848fe4aaf0ed916033ae04, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3b9f2f28c77b44f43a2740b6a2de479d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: fb8e637b8f2975d43a3ad3782b14611e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 5e016046a20e5f046b2f01e054d6c9a4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: beab374495724da49a464afcce0874f1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d608003ce60de274a89b675a8576ce1e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9599271b0e90428498b340cf4e87663a, type: 2}

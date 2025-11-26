@@ -6,6 +6,8 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
 {
 
     [SerializeField] AnchorScriptableObject holdAnchor;
+    [SerializeField] SpriteRenderer defaultView;
+    [SerializeField] SpriteRenderer heldView;
 
 
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData pickUpSound;
@@ -23,7 +25,10 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
     {
         movementComponent = entity.GetEntityComponent<IMovementComponent>();
         soundComponent = entity.GetEntityComponent<IEntitySoundComponent>();
+        heldView.enabled = false;
     }
+
+    //update this at some point to have a held anchor?
 
     public void Hold(Transform anchor)
     {
@@ -31,12 +36,16 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
 
         transform.position = anchor.position;
         transform.SetParent(anchor);
+        heldView.enabled = true;
+        defaultView.enabled = false;
     }
 
     public void Release()
     {
         transform.SetParent (null);
         movementComponent.EnableMovement();
+        heldView.enabled = false;
+        defaultView.enabled = true;    
     }
 
     public void Interact(IEntity interactingEntity)
@@ -45,6 +54,6 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
 
         soundComponent.PlaySound(pickUpSound);
 
-        HoldEntityManager.Instance.AddHeldEntity(interactingEntity, entity, interactingEntity.GetEntityComponent<AnchoringComponent>().GetAnchor(holdAnchor));
+        HoldEntityManager.Instance.AddHeldEntity(interactingEntity, entity, interactingEntity.GetEntityComponent<IAnchoringComponent>().GetAnchor(holdAnchor));
     }
 }
