@@ -35,7 +35,6 @@ public class DistanceFellEntityEmissionHandler : MonoBehaviour
             .GainedEntities
             .SelectMany(entity =>
             {
-              
                 var anchoring = entity.GetEntityComponent<IAnchoringComponent>();
 
                 var startPosition = anchoring.GetPosition();

@@ -66,7 +66,7 @@ public class TagBasedEntitySource : EntitySource
                 {
                     if (currentlyGainedEntities.Remove(entity))
                     {
-                        gainedSubject.OnNext(entity);
+                        lostSubject.OnNext(entity);
                         PassingSet.Remove(entity);
                     }
 
