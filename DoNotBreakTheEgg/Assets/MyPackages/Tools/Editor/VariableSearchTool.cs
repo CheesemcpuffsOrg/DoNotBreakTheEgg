@@ -196,7 +196,7 @@ public class VariableSearchTool : EditorWindow
         else
         {
             // We're in scene mode
-            var allObjects = FindObjectsOfType<GameObject>(true);
+            var allObjects = FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var obj in allObjects)
             {
                 obj.hideFlags = HideFlags.None;
@@ -218,7 +218,7 @@ public class VariableSearchTool : EditorWindow
             return GetPrefabObjects(prefabStage);
         }
 
-        return FindObjectsOfType<GameObject>(true);
+        return FindObjectsByType<GameObject>(FindObjectsInactive.Include, FindObjectsSortMode.None);
     }
 
     private GameObject[] GetPrefabObjects(PrefabStage prefabStage)

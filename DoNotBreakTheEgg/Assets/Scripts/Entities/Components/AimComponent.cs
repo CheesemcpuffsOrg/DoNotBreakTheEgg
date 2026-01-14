@@ -12,14 +12,33 @@ public class AimComponent : MonoBehaviour, IAimComponent
     }
 
     [SerializeField] Transform transformToRotate;
+    [SerializeField] TagScriptableObject chargingTag;
+
+    [Header("Visuals")] 
+    [SerializeField] SpriteRenderer cannonSpriteRight;
+    [SerializeField] SpriteRenderer cannonSpriteLeft;
+
     ControllerType controllerType;
 
 
     private Vector2 aimInput;
     private Quaternion targetRotation;
 
+    IEntity entity;
+    ITagComponent tagComponent;
+
+
+    private void Awake()
+    {
+        entity = GetComponent<IEntity>();
+        tagComponent = entity.GetEntityComponent<ITagComponent>();
+    }
+
     private void Update()
     {
+        if (!tagComponent.HasTag(chargingTag)) return;
+
+
         // For gamepad input (normalized vector)
         if (controllerType == ControllerType.Gamepad)
         {
@@ -49,6 +68,28 @@ public class AimComponent : MonoBehaviour, IAimComponent
             Vector3 direction = mousePosition - transformToRotate.position;
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transformToRotate.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
+        }
+
+        FlipCannonSprite();
+    }
+
+    private void FlipCannonSprite()
+    {
+        // --- Sprite flipping ---
+        float zRot = transformToRotate.eulerAngles.z;
+
+        // If turret is upside-down (0–180°), flip the sprite
+        bool flip = zRot > 0f && zRot < 180f;
+
+        if (flip)
+        {
+            cannonSpriteLeft.enabled = true;
+            cannonSpriteRight.enabled = false;
+        }
+        else
+        {
+            cannonSpriteLeft.enabled = false;
+            cannonSpriteRight.enabled = true;
         }
     }
 

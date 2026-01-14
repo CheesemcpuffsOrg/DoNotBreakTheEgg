@@ -16,6 +16,11 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     [SerializeField] float powerMax = 10f;
     [SerializeField] float powerIncrease = 0.02f;
 
+    [Header("Cannon Sprite")]
+    [SerializeField] GameObject cannonSprite;
+    [SerializeField] GameObject playerView;
+    [SerializeField] SpriteRenderer feet;
+
     [Header("Power Slider")]
     [SerializeField] Canvas canvas;
     [SerializeField] private Slider powerSlider;
@@ -57,6 +62,8 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         entity = GetComponent<IEntity>();
         soundComponent = entity.GetEntityComponent<IEntitySoundComponent>();
         tagComponent = entity.GetEntityComponent<ITagComponent>();
+        cannonSprite.SetActive(false);
+        feet.enabled = false;
     }
 
     private void Start()
@@ -90,6 +97,10 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
             return;
 
+        cannonSprite.SetActive(true);
+        feet.enabled = true;
+        playerView.SetActive(false);
+
       //  powerSlider.gameObject.SetActive(true);
         powerCurrent = powerBase; // Reset power to the base value
         chargingShot.Value = true; // Start charging
@@ -103,6 +114,10 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
 
         if (!HoldEntityManager.Instance.TryGetHeldEntity(entity, out var heldEntity)) 
             return;
+
+        cannonSprite.SetActive(false);
+        feet.enabled = false;
+        playerView.SetActive(true);
 
         chargingShot.Value = false;
         maxPowerReached = false;

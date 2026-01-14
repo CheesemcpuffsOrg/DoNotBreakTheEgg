@@ -33,7 +33,6 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
     public void Hold(Transform anchor)
     {
         movementComponent.DisableMovement();
-
         transform.position = anchor.position;
         transform.SetParent(anchor);
         heldView.enabled = true;
@@ -43,6 +42,7 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
     public void Release()
     {
         transform.SetParent (null);
+        transform.rotation = Quaternion.identity;
         movementComponent.EnableMovement();
         heldView.enabled = false;
         defaultView.enabled = true;    
