@@ -30,6 +30,8 @@ public class InputController : MonoBehaviour
         controls.PlayerControls.Aim.canceled += AimCanceled;
         controls.PlayerControls.Jump.performed += JumpPerformed;
         controls.PlayerControls.Interact.performed += InteractPerformed;
+
+        EnableAllInputs();
     }
 
     private void InteractPerformed(InputAction.CallbackContext context)
@@ -93,5 +95,19 @@ public class InputController : MonoBehaviour
     private void OnDisable()
     {
         DisableAllInputs();
+    }
+
+    private void OnDestroy()
+    {
+        if (controls == null) return;
+
+        controls.PlayerControls.Throw.started -= ThrowStarted;
+        controls.PlayerControls.Throw.performed -= ThrowPerformed;
+        controls.PlayerControls.Movement.performed -= MovePerformed;
+        controls.PlayerControls.Movement.canceled -= MoveCanceled;
+        controls.PlayerControls.Aim.performed -= AimPerformed;
+        controls.PlayerControls.Aim.canceled -= AimCanceled;
+        controls.PlayerControls.Jump.performed -= JumpPerformed;
+        controls.PlayerControls.Interact.performed -= InteractPerformed;
     }
 }

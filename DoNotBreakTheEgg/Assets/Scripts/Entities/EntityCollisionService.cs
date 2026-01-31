@@ -82,7 +82,7 @@ public static class EntityCollisionService
         {
             foreach (var collider2 in entity2Colliders)
             {
-                //Debug.Log($"Setting collision ignore between {collider1.name} and {collider2.name} to {setActive}");
+                Debug.Log($"Setting collision ignore between {collider1.name} and {collider2.name} to {setActive}");
                 Physics2D.IgnoreCollision(collider1, collider2, setActive);
             }
         }

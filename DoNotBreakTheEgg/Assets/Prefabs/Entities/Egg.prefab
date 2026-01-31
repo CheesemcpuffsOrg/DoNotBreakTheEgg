@@ -128,8 +128,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5081964290428512808}
-  - component: {fileID: 9040234461396159724}
   - component: {fileID: 2101802133023683639}
+  - component: {fileID: 8702279742604844070}
   m_Layer: 0
   m_Name: EggCollider
   m_TagString: Untagged
@@ -152,8 +152,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7968065028738994202}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &9040234461396159724
-CircleCollider2D:
+--- !u!114 &2101802133023683639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3621517791376640039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300fe20840486df40a8fd8e97d5d9599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!70 &8702279742604844070
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -186,20 +198,9 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
---- !u!114 &2101802133023683639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3621517791376640039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 300fe20840486df40a8fd8e97d5d9599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Offset: {x: 0, y: -0.03}
+  m_Size: {x: 1.22, y: 1.7}
+  m_Direction: 0
 --- !u!1 &4536430541653474291
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,9 +489,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e075f6552658b4e4295cab956280dff7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainEntityCollider: {fileID: 9040234461396159724}
+  mainEntityCollider: {fileID: 8702279742604844070}
   allEntityColliders:
-  - {fileID: 9040234461396159724}
+  - {fileID: 8702279742604844070}
 --- !u!114 &2092565735228315554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,6 +522,8 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
+  verticalRayOffset: {x: 0.25, y: 0.1}
+  skinWidth: 0
   jumpSoundData:
     audioScriptableObject: {fileID: 11400000, guid: b1aaa97b57897c54699698bd2a75d723, type: 2}
     playLocation: {fileID: 0}

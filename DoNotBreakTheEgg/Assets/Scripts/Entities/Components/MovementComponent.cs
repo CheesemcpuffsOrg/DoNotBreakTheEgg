@@ -35,8 +35,8 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
     private struct RaycastOrigins
     {
-        public Vector2 topleft;
-        public Vector2 topright;
+        public Vector2 topLeft;
+        public Vector2 topRight;
         public Vector2 bottomLeft;
         public Vector2 bottomRight;
     }
@@ -65,13 +65,17 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
     [SerializeField] int horizontalRayCount = 4;
     [SerializeField] int verticalRayCount = 4;
     [SerializeField] LayerMask collisionMask;
+    [SerializeField] Vector2 verticalRayOffset = new Vector2(0,0); // this works for the egg but isn't actually doing what is expcted
+
+    [SerializeField, Min(0)] float skinWidth = 0.01f;
     private readonly RaycastHit2D[] raycastBuffer = new RaycastHit2D[20]; // Tune size
+
 
     [Header("Audio")]
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData jumpSoundData;
     [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData jumpVocalSoundData;
 
-    const float skinWidth = 0.01f;
+   
     float horizontalRaySpacing;
     float verticalRaySpacing;
 
@@ -406,7 +410,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         for (int i = 0; i < verticalRayCount; i++)
         {
-            var rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topleft;
+            var rayOrigin = (directionY == -1) ? raycastOrigins.bottomLeft : raycastOrigins.topLeft;
             rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
             var hits = Physics2D.RaycastAll(rayOrigin, Vector2.up * directionY, rayLength, collisionMask);
 
@@ -529,7 +533,7 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
 
         horizontalRaySpacing = bounds.size.y / (horizontalRayCount - 1);
-        verticalRaySpacing = bounds.size.x / (verticalRayCount - 1);
+        verticalRaySpacing = (bounds.size.x - (verticalRayOffset.x * 2)) / (verticalRayCount - 1);
     }
 
     void UpdateRaycastOrigins()
@@ -538,8 +542,17 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
 
         raycastOrigins.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
         raycastOrigins.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
-        raycastOrigins.topleft = new Vector2(bounds.min.x, bounds.max.y);
-        raycastOrigins.topright = new Vector2(bounds.max.x, bounds.max.y);
+        raycastOrigins.topLeft = new Vector2(bounds.min.x, bounds.max.y);
+        raycastOrigins.topRight = new Vector2(bounds.max.x, bounds.max.y);
+
+
+        //ray offsetting is very patchy, needs to be looked at again
+
+        raycastOrigins.bottomLeft += new Vector2(verticalRayOffset.x, verticalRayOffset.y);
+        raycastOrigins.bottomRight += new Vector2(-verticalRayOffset.x, verticalRayOffset.y);
+
+        raycastOrigins.topLeft += new Vector2(verticalRayOffset.x, -verticalRayOffset.y);
+        raycastOrigins.topRight += new Vector2(-verticalRayOffset.x, -verticalRayOffset.y);
     }
 
     private Bounds GetBounds()

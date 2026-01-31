@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
@@ -23,6 +19,7 @@ public class PlayerSpawnManager : MonoBehaviour
 
     [SerializeField] List<PlayerPrefabMapping> playerPrefabs = new List<PlayerPrefabMapping>();
     [SerializeField] GameObject inputControllerPrefab;
+
 
     private void Start()
     {
@@ -52,6 +49,8 @@ public class PlayerSpawnManager : MonoBehaviour
             inputControllerObj.GetComponent<InputHandler>().SetEntity(entity);
 
             entity.GetEntityComponent<IAimComponent>().SetInputDevice(data.UserData.Device);
+
+            InputControllerManager.instance.AddController(data.UserData.Id, inputController);
         }
     }
 
@@ -63,6 +62,9 @@ public class PlayerSpawnManager : MonoBehaviour
         var playerPrefab = playerPrefabs[slotIndex];
 
         playerPrefab.SetPlayerId(id);
+
+        
+
         return Instantiate(playerPrefab.PlayerPrefab, playerPrefab.SpawnPoint.position, Quaternion.identity).GetComponent<IEntity>();
     }
 }

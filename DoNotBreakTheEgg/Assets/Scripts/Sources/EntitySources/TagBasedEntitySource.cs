@@ -10,17 +10,6 @@ public class TagBasedEntitySource : EntitySource
 {
     [SerializeField] private TagFilter filter;
 
-   /* // Strongly-typed observable for subscribers who know it's IEntity
-    public Observable<IEntity> GainedEntities => gainedSubject;
-    public Observable<IEntity> LostEntities => lostSubject;
-
-    // Optional: override base object observables if needed
-    public override Observable<object> Gained => gainedSubject.Select(e => (object)e);
-    public override Observable<object> Lost => lostSubject.Select(e => (object)e);
-
-    // Optional: strongly typed list
-    public List<IEntity> PassingEntities => passingSet;*/
-
     IDisposable subscriptionBag;
 
     private readonly HashSet<IEntity> currentlyGainedEntities = new();
