@@ -224,6 +224,7 @@ public static class UserDeviceMappingUtil
         }
 
         inputDevicesPairedWithUsers.Clear();
+        userSlots.Clear();
     }
 
     /// <summary>
@@ -253,6 +254,7 @@ public static class UserDeviceMappingUtil
         // No empty slot found — create a new one
         int newSlot = userSlots.Count;
         userSlots[newSlot] = newUserId;
+
         return newSlot;
     }
 

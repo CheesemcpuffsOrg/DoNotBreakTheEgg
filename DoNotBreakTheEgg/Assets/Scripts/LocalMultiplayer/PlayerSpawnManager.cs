@@ -63,8 +63,6 @@ public class PlayerSpawnManager : MonoBehaviour
 
         playerPrefab.SetPlayerId(id);
 
-        
-
         return Instantiate(playerPrefab.PlayerPrefab, playerPrefab.SpawnPoint.position, Quaternion.identity).GetComponent<IEntity>();
     }
 }

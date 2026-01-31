@@ -6,5 +6,6 @@ public class CleanUpInputUsers : MonoBehaviour
     private void Awake()
     {
         PlayerDataStorage.Instance?.DestroyStorage();
+        UserDeviceMappingUtil.DeleteAllUsers();
     }
 }
