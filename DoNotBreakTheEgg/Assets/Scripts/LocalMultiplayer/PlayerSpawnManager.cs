@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class PlayerSpawnManager : MonoBehaviour
     [SerializeField] List<PlayerPrefabMapping> playerPrefabs = new List<PlayerPrefabMapping>();
     [SerializeField] GameObject inputControllerPrefab;
 
+    [Header("UI")]
+    [SerializeField] GameObject root;
+    [SerializeField] GameObject firstSelected;
+
 
     private void Start()
     {
@@ -34,9 +39,16 @@ public class PlayerSpawnManager : MonoBehaviour
         {
             var inputControllerObj = Instantiate(inputControllerPrefab);
 
-            var inputController = inputControllerObj.GetComponent<InputController>();
+            var inputController = inputControllerObj.GetComponent<PlayerInputController>();
+            var inputSystemUIInputModule = inputControllerObj.GetComponent<InputSystemUIInputModule>();
+            var multiplayerEventSystem = inputControllerObj.GetComponent <MultiplayerEventSystem>();
 
-            inputController.InitializeControls(data.UserInputActions);
+            inputController.InitializeControls(data.UserInputActions, inputSystemUIInputModule);
+
+            //the UI should probably be handled elsewhere
+            multiplayerEventSystem.playerRoot = root;
+            multiplayerEventSystem.SetSelectedGameObject(null);//set to null for button highlighting bug???
+            multiplayerEventSystem.SetSelectedGameObject(firstSelected);
 
             var entity = GetEntity(data);
 

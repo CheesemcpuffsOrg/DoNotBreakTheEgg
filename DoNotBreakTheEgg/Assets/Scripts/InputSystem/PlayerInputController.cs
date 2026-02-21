@@ -1,10 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
-public class InputController : MonoBehaviour
+public class PlayerInputController : MonoBehaviour
 {
 
     Controls controls;
@@ -18,7 +17,7 @@ public class InputController : MonoBehaviour
     public event Action JumpEventPerformed;
     public event Action InteractEventPerformed;
 
-    public void InitializeControls(IInputActionCollection2 inputActions)
+    public void InitializeControls(IInputActionCollection2 inputActions, InputSystemUIInputModule inputSystemUIInputModule)
     {
         controls = (Controls)inputActions;
 
@@ -31,7 +30,15 @@ public class InputController : MonoBehaviour
         controls.PlayerControls.Jump.performed += JumpPerformed;
         controls.PlayerControls.Interact.performed += InteractPerformed;
 
-        EnableAllInputs();
+        inputSystemUIInputModule.submit = InputActionReference.Create(controls.UI.Submit);
+        inputSystemUIInputModule.move = InputActionReference.Create(controls.UI.Navigate);
+
+        //mouse and keyboard fight with each other, when menus are opened a tracker should activate which checks last device used to enable and disable.
+        /*inputSystemUIInputModule.point = InputActionReference.Create(controls.UI.Point);
+        inputSystemUIInputModule.leftClick = InputActionReference.Create(controls.UI.Click);*/
+
+        EnablePlayerInputs();
+        DisableUIInputs();
     }
 
     private void InteractPerformed(InputAction.CallbackContext context)
@@ -74,14 +81,36 @@ public class InputController : MonoBehaviour
         MoveEventCancelled?.Invoke();
     }
 
+    public void EnablePlayerInputs()
+    {
+        controls.PlayerControls.Enable();
+    }
+
+    public void DisablePlayerInputs()
+    {
+        controls.PlayerControls.Disable();
+    }
+
+    public void EnableUIInputs()
+    {
+        controls.UI.Enable();
+    }
+
+    public void DisableUIInputs()
+    {
+        controls.UI.Disable();
+    }
+
     public void EnableAllInputs()
     {
-        controls.Enable();
+        controls.PlayerControls.Enable();
+        controls.UI.Enable();
     }
 
     public void DisableAllInputs()
     {
-        controls.Disable();
+        controls.PlayerControls.Disable();
+        controls.UI.Disable();
     }
 
     private void OnEnable()

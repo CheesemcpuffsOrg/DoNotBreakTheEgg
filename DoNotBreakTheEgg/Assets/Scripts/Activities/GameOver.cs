@@ -1,6 +1,8 @@
 using UnityEngine;
 using R3;
 using System;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 
 public class GameOver : MonoBehaviour
 {
@@ -26,7 +28,8 @@ public class GameOver : MonoBehaviour
             {
                 endGameUI.SetActive(true);
 
-                InputControllerManager.instance.DisableAllControllers();
+                InputControllerManager.instance.DisableAllPlayerControllers();
+                InputControllerManager.instance.EnablePlayerUIControls((int)InputUser.all[0].id);
             });
 
         subscriptionBag = Disposable.Combine(disposable1);

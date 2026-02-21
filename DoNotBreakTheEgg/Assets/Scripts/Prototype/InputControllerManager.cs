@@ -4,7 +4,7 @@ using UnityEngine;
 public class InputControllerManager : MonoBehaviour
 {
 
-    Dictionary<int, InputController> inputControllers = new();
+    Dictionary<int, PlayerInputController> inputControllers = new();
 
 
     public static InputControllerManager instance;
@@ -14,9 +14,25 @@ public class InputControllerManager : MonoBehaviour
         instance = this;
     }
 
-    public void AddController(int id, InputController controller)
+    public void AddController(int id, PlayerInputController controller)
     {
         inputControllers.TryAdd(id, controller);
+    }
+
+    public void EnablePlayerUIControls(int index)
+    {
+        if (inputControllers.ContainsKey(index))
+        {
+            inputControllers[index].EnableUIInputs();
+        }
+    }
+
+    public void DisableAllPlayerControllers()
+    {
+        foreach (var controller in inputControllers.Values)
+        {
+            controller.DisablePlayerInputs();
+        }
     }
 
     public void DisableAllControllers()
