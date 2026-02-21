@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioClips:
   - obj:
-      audioClip: {fileID: 8300000, guid: 18fff12991d48e549af6e186e3b37f90, type: 3}
+      audioClip: {fileID: 8300000, guid: e7ca02d746615a44688d2e1b9087bcac, type: 3}
       volume: 1
       pitch: 1
     weight: 1

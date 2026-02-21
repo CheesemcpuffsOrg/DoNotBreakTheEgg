@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AnimControllerOVR_Softboiled
+  m_Controller: {fileID: 9100000, guid: 581574e66dd995245934fe5a5699c660, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: d608003ce60de274a89b675a8576ce1e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3c897d2498f05754c8e4b6f6063dfa02, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 5e016046a20e5f046b2f01e054d6c9a4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ab9ba473bf9bbb84f82ac8ea5644ac76, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 51bb8fd8e814c894ba1aae1283721736, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d8661080097e4204f9e92ddbb0833aad, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3b9f2f28c77b44f43a2740b6a2de479d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9406f9c24a7269546a182dcd891b5fe5, type: 2}
