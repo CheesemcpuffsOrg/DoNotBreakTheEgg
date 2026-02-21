@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-    [SerializeField] InputController controller;
+    [SerializeField] PlayerInputController controller;
 
     IEntity entity;
 

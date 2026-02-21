@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
+using UnityEngine.InputSystem.UI;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
@@ -24,6 +21,11 @@ public class PlayerSpawnManager : MonoBehaviour
     [SerializeField] List<PlayerPrefabMapping> playerPrefabs = new List<PlayerPrefabMapping>();
     [SerializeField] GameObject inputControllerPrefab;
 
+    [Header("UI")]
+    [SerializeField] GameObject root;
+    [SerializeField] GameObject firstSelected;
+
+
     private void Start()
     {
         RecreateAllPlayers();
@@ -37,9 +39,16 @@ public class PlayerSpawnManager : MonoBehaviour
         {
             var inputControllerObj = Instantiate(inputControllerPrefab);
 
-            var inputController = inputControllerObj.GetComponent<InputController>();
+            var inputController = inputControllerObj.GetComponent<PlayerInputController>();
+            var inputSystemUIInputModule = inputControllerObj.GetComponent<InputSystemUIInputModule>();
+            var multiplayerEventSystem = inputControllerObj.GetComponent <MultiplayerEventSystem>();
 
-            inputController.InitializeControls(data.UserInputActions);
+            inputController.InitializeControls(data.UserInputActions, inputSystemUIInputModule);
+
+            //the UI should probably be handled elsewhere
+            multiplayerEventSystem.playerRoot = root;
+            multiplayerEventSystem.SetSelectedGameObject(null);//set to null for button highlighting bug???
+            multiplayerEventSystem.SetSelectedGameObject(firstSelected);
 
             var entity = GetEntity(data);
 
@@ -52,6 +61,8 @@ public class PlayerSpawnManager : MonoBehaviour
             inputControllerObj.GetComponent<InputHandler>().SetEntity(entity);
 
             entity.GetEntityComponent<IAimComponent>().SetInputDevice(data.UserData.Device);
+
+            InputControllerManager.instance.AddController(data.UserData.Id, inputController);
         }
     }
 
@@ -63,6 +74,7 @@ public class PlayerSpawnManager : MonoBehaviour
         var playerPrefab = playerPrefabs[slotIndex];
 
         playerPrefab.SetPlayerId(id);
+
         return Instantiate(playerPrefab.PlayerPrefab, playerPrefab.SpawnPoint.position, Quaternion.identity).GetComponent<IEntity>();
     }
 }

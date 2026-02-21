@@ -85,6 +85,9 @@ public class HoldEntityManager : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         yield return new WaitForFixedUpdate(); // Wait for physics to resolve
 
+        if (heldEntity == null || holdingEntity == null)
+            yield break;
+
         var heldBounds = heldEntity.GetEntityComponent<ICollisionComponent>().GetEntityMainColliderBounds();
         var holdingBounds = holdingEntity.GetEntityComponent<ICollisionComponent>().GetEntityMainColliderBounds();
 

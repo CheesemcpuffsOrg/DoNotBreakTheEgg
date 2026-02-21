@@ -38,6 +38,7 @@ public class PlayerDataStorage : MonoBehaviour
 
     public void DestroyStorage()
     {
+        persistentUsers.Clear();
         Destroy(gameObject);
         Instance = null;
     }
