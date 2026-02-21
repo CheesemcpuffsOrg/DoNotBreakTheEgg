@@ -35,7 +35,7 @@ public class LobbyUIController : MonoBehaviour
         {
             mapping.InUse = false;
             mapping.PlayerPanel.SetActive(false);
-            mapping.PlayerPrompt.SetActive(true);
+            mapping.PlayerPrompt.SetActive(false);
         }
     }
 
@@ -58,7 +58,7 @@ public class LobbyUIController : MonoBehaviour
         playerPanelMapping[playerID] = mapping;
 
         mapping.PlayerPanel.SetActive(true);
-        mapping.PlayerPrompt.SetActive(false);
+        mapping.PlayerPrompt.SetActive(true);
     }
 
     private void DisableUI(int playerID)
@@ -72,7 +72,7 @@ public class LobbyUIController : MonoBehaviour
         // Free and reset the panel
         mapping.InUse = false;
         mapping.PlayerPanel.SetActive(false);
-        mapping.PlayerPrompt.SetActive(true);
+        mapping.PlayerPrompt.SetActive(false);
 
         playerPanelMapping.Remove(playerID);
     }
