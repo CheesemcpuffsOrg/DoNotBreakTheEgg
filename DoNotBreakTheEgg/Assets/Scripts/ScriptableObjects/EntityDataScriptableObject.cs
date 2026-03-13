@@ -14,5 +14,6 @@ public class EntityDataScriptableObject : ScriptableObject
     public float MaxDescendAngle = 80;
     public float AccelerationTimeAirborne = 0.2f;
     public float AccelerationTimeGrounded = 0.1f;
+    public float DecelerationTimeGrounded = 0.1f;
     public bool GravityEnabledOnStart = true;
 }

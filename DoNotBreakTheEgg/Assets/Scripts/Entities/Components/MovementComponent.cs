@@ -224,8 +224,31 @@ public class MovementComponent : MonoBehaviour, IMovementComponent
         if (throwFired)
             return;
 
-        var targetVelocityX = input.x * data.MoveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref VelocityXSmoothing, (collisionInfo.below) ? data.AccelerationTimeGrounded : data.AccelerationTimeAirborne);
+        float targetVelocityX = input.x * data.MoveSpeed;
+
+        float smoothTime;
+
+        bool accelerating = 
+            Mathf.Sign(targetVelocityX) == Mathf.Sign(velocity.x) &&
+            Mathf.Abs(targetVelocityX) > Mathf.Abs(velocity.x);
+
+        if (collisionInfo.below)
+        {
+            smoothTime = accelerating
+                ? data.AccelerationTimeGrounded
+                : data.DecelerationTimeGrounded;
+        }
+        else
+        { 
+            smoothTime = data.AccelerationTimeGrounded;
+        }
+
+        velocity.x = Mathf.SmoothDamp(
+            velocity.x,
+            targetVelocityX,
+            ref VelocityXSmoothing,
+            smoothTime
+        );
     }
 
     private void Gravity()

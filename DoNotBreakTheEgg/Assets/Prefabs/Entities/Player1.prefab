@@ -842,6 +842,8 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 768
+  verticalRayOffset: {x: 0, y: 0}
+  skinWidth: 0.01
   jumpSoundData:
     audioScriptableObject: {fileID: 11400000, guid: 4d93d938c95466b42aca64b1317cc847, type: 2}
     playLocation: {fileID: 0}

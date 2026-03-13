@@ -19,5 +19,6 @@ MonoBehaviour:
   MaxClimbAngle: 80
   MaxDescendAngle: 80
   AccelerationTimeAirborne: 0.2
-  AccelerationTimeGrounded: 0.1
+  AccelerationTimeGrounded: 0.2
+  DecelerationTimeGrounded: 0.1
   GravityEnabledOnStart: 1
