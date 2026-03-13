@@ -39,7 +39,7 @@ public class RespawnEntities : MonoBehaviour
                     .EveryUpdate()
                     .Scan(0f, (acc, _) => acc + Time.deltaTime * moveSpeed)
                     .Select(t => (transporterPad, spawnLocation, adjustedLandingZone, entity, t))
-                    .TakeUntil(destinationReached);
+                    .TakeUntil(destinationReached.Where(reachedTuple => reachedTuple.Item1 == tuple.Item4));
             })
             .Subscribe(tuple =>
             {
