@@ -15,6 +15,8 @@ public class SoundBasedEntityEmission : EmissionBase<IEntity>
         public TagScriptableObject TagScriptableObject => tagScriptableObject;
     }
 
+    [SerializeField] bool state;
+    
     [SerializeField] List<TagSoundDataMapping> mappings = new List<TagSoundDataMapping>();
 
     [Header("Default Fall Back")]
@@ -24,14 +26,24 @@ public class SoundBasedEntityEmission : EmissionBase<IEntity>
     {
         if (!mappings.Any(mapping => entity.GetEntityComponent<ITagComponent>().HasTag(mapping.TagScriptableObject)) && defaultSoundEmission.AudioScriptableObject != null)
         {
-            entity.GetEntityComponent<IEntitySoundComponent>().PlaySound(defaultSoundEmission);
+            var sound = entity.GetEntityComponent<IEntitySoundComponent>();
+
+            if (state)
+                sound.PlaySound(defaultSoundEmission);
+            else
+                sound.StopSound(defaultSoundEmission); 
         }
 
         foreach (var mapping in mappings)
         {
             if (entity.GetEntityComponent<ITagComponent>().HasTag(mapping.TagScriptableObject))
             {
-                entity.GetEntityComponent<IEntitySoundComponent>().PlaySound(mapping.SoundEmission);
+                var sound = entity.GetEntityComponent<IEntitySoundComponent>();
+
+                if (state)
+                    sound.PlaySound(mapping.SoundEmission);
+                else
+                    sound.StopSound(mapping.SoundEmission);
             }
         }
     }

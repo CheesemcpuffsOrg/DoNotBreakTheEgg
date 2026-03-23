@@ -1,13 +1,9 @@
 using R3;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class SourceBasedEmissionHandler : MonoBehaviour  
+public class SourceBasedDefaultEmissionHandler : MonoBehaviour
 {
-    
     [SerializeField] GameObject entitySourceObj;
     ISource entitySource => entitySourceObj.GetComponent<ISource>();
 
@@ -16,20 +12,20 @@ public class SourceBasedEmissionHandler : MonoBehaviour
 
     IEmission entityEmissionStrategy => entityEmissionStrategyObj.GetComponent<IEmission>();
 
+    IDisposable subscriptionBag;
+
     // Start is called before the first frame update
     void Start()
     {
-        
-        var subscriptionBag = Disposable.CreateBuilder();
 
-      
-        entitySource
+        var disposable1 = entitySource
             .Gained
             .Subscribe(entity =>
             {
-                entityEmissionStrategy.Emit(entity);
-            })
-            .AddTo(ref subscriptionBag);
+                entityEmissionStrategy.Emit(Unit.Default);
+            });
+
+        subscriptionBag = Disposable.Combine(disposable1);
 
         subscriptionBag.RegisterTo(this.destroyCancellationToken);
     }

@@ -28,7 +28,7 @@ MonoBehaviour:
   fadeControls:
     fadeIn: 0
     fadeInDuration: 1
-    fadeOut: 0
+    fadeOut: 1
     fadeOutDuration: 1
   spatialBlend: 0
   dopplerLevel: 0

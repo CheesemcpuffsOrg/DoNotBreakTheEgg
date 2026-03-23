@@ -9,11 +9,11 @@ public class SoundBasedDefaultEmission : EmissionBase<Unit>, ISoundComponent
 
     UniqueSoundID UUID = new UniqueSoundID();
 
-    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData soundEmission;
+    [SerializeField, ColoredField(ColoredFieldAttribute.PresetColors.Sound)] SoundData soundEmission; 
 
     public override void Emit(Unit obj)
     {
-        PlaySound(soundEmission);
+        PlaySound(soundEmission);    
     }
 
     public void PlaySound(SoundData data, Action onEndOfClip = null)
@@ -49,5 +49,6 @@ public class SoundBasedDefaultEmission : EmissionBase<Unit>, ISoundComponent
         AdvancedAudioSystemManager.Instance.StopSound(data.AudioScriptableObject, UUID);
     }
 
+    public void StopSound() => StopSound(soundEmission);
     
 }
