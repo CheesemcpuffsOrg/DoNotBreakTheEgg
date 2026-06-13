@@ -15,7 +15,7 @@ MonoBehaviour:
   weight: 5
   JumpHeight: 2.5
   TimeToJumpApex: 0.3
-  MoveSpeed: 8
+  MoveSpeed: 6
   MaxClimbAngle: 80
   MaxDescendAngle: 80
   AccelerationTimeAirborne: 0.2

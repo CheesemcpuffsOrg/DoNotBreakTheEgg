@@ -50,7 +50,7 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
 
     public void Interact(IEntity interactingEntity)
     {
-        if (HoldEntityManager.Instance.IsEntityHolding(entity)) return;
+        if (HoldEntityManager.Instance.IsEntityHolding(entity) || HoldEntityManager.Instance.IsEntityHeld(interactingEntity)) return; //added in check to make sure aheld entity cannot hold, it was causing too many bugs
 
         soundComponent.PlaySound(pickUpSound);
 
