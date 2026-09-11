@@ -6,18 +6,26 @@ using UnityEngine.UI;
 
 public class ThrowComponent : MonoBehaviour, IThrowComponent
 {
+    enum PowerCycle
+    {
+        PoweringUp,
+        PoweringDown
+    }
+
+
+
     [SerializeField] Transform holdAnchor;
 
     [SerializeField] Transform launchPoint;
 
     [SerializeField] float powerBase = 1f;
     [SerializeField] float powerMax = 10f;
-    [SerializeField] float powerIncrease = 0.02f;
+    [SerializeField] float chargeTime = 2f;
 
     [Header("Power Slider")]
-    [SerializeField] Canvas canvas;
+    //[SerializeField] Canvas canvas;
     [SerializeField] private Slider powerSlider;
-    [SerializeField] private SpriteRenderer fillImage;
+    [SerializeField] private Image fillImage;
     [SerializeField] private Gradient throwStrengthGradient;
 
     [Header("Tags")]
@@ -42,9 +50,10 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
     IEntitySoundComponent soundComponent;
 
     float powerCurrent;
+    float powerRate;
 
     bool chargingShot;
-    bool maxPowerReached;
+    PowerCycle powerCycle = PowerCycle.PoweringUp;
 
     private void Awake()
     {
@@ -54,10 +63,14 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
 
     private void Start()
     {
-        canvas.worldCamera = Camera.main;
+       // canvas.worldCamera = Camera.main;
        // powerSlider.gameObject.SetActive(false);
         powerSlider.maxValue = powerMax;
         powerSlider.minValue = powerBase;
+
+        powerRate = (powerMax - powerBase) / chargeTime;
+
+        powerCurrent = powerBase;
     }
 
     private void Update()
@@ -70,8 +83,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         if (!entity.GetEntityComponent<ITagComponent>().PassTagFilterCheck(throwFilter))
             return;
 
-      //  powerSlider.gameObject.SetActive(true);
-        powerCurrent = powerBase; // Reset power to the base value
+       
         chargingShot = true; // Start charging
         soundComponent.PlaySound(chargeThrowSoundData);
     }
@@ -84,9 +96,7 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         if (!HoldEntityManager.Instance.TryGetHeldEntity(entity, out var heldEntity)) 
             return;
 
-        chargingShot = false;
-        maxPowerReached = false;
-        
+       
         HoldEntityManager.Instance.RemoveHeldEntity(entity);
 
         heldEntity.GetEntityComponent<IMovementComponent>().Throw(powerCurrent, (Vector2)launchPoint.up.normalized);
@@ -94,75 +104,54 @@ public class ThrowComponent : MonoBehaviour, IThrowComponent
         soundComponent.StopSound(chargeThrowSoundData);
         soundComponent.PlaySound(throwSoundData);
 
-        powerSlider.gameObject.SetActive(false);
+       // powerSlider.gameObject.SetActive(false);
+
+        chargingShot = false;
+        powerCycle = PowerCycle.PoweringUp;
+        fillImage.color = Color.white;
+        powerCurrent = powerBase; // Reset power to the base value
+        powerSlider.value = powerCurrent;
     }
 
     private void ChargeShot()
     {
-        if (!chargingShot || maxPowerReached)
+        if (!chargingShot)
         {
             return;
         }
 
-        powerCurrent += powerIncrease;
 
-        // Cap the power at powerMax
+        powerCurrent += powerRate * Time.deltaTime;
+
         if (powerCurrent >= powerMax)
         {
-            powerCurrent = powerMax;
-            soundComponent.StopSound(chargeThrowSoundData);
-            soundComponent.PlaySound(maxChargeSoundData);
-            maxPowerReached = true;
+            powerCurrent = powerBase;
         }
+
+        /*if (powerCycle == PowerCycle.PoweringUp)
+        {
+            powerCurrent += powerRate * Time.deltaTime;
+
+            if (powerCurrent >= powerMax)
+            {
+                powerCurrent = powerMax;
+                powerCycle = PowerCycle.PoweringDown;
+            }
+        }
+        else
+        {
+            powerCurrent -= powerRate * Time.deltaTime;
+
+            if (powerCurrent <= powerBase)
+            {
+                powerCurrent = powerBase;
+                powerCycle = PowerCycle.PoweringUp;
+            }
+        }*/
 
         //slider
         powerSlider.value = powerCurrent;
         float normalizedPower = Mathf.InverseLerp(powerBase, powerMax, powerCurrent);
         fillImage.color = throwStrengthGradient.Evaluate(normalizedPower);
     }
-
-//I think this logic is invalid now
-#if UNITY_EDITOR
-
-    /*private void OnDrawGizmos()
-    {
-        if (chargingShot && launchPoint != null)
-        {
-            Gizmos.color = Color.red;
-            DrawTrajectory(launchPoint.position, powerCurrent);
-        }
-    }
-
-    private void DrawTrajectory(Vector3 startPosition, float power)
-    {
-        // Calculate initial velocity based on power and entity weight
-        Vector3 velocity = (power / entityWeight) * launchPoint.up;
-
-        // Get the Rigidbody2D's gravity scale and mass
-        float gravity = Physics2D.gravity.y * 1;
-
-        // Simulate the trajectory
-        Vector3 currentPosition = startPosition;
-        Vector3 currentVelocity = velocity;
-
-        for (int i = 0; i < trajectorySteps; i++)
-        {
-            // Apply gravity to the vertical velocity over time based on Rigidbody2D physics
-            currentVelocity.y += gravity * timeStep;
-
-            // Update position based on velocity
-            currentPosition += currentVelocity * timeStep;
-
-            // Draw spheres at each point
-            Gizmos.DrawSphere(currentPosition, 0.1f);
-
-            if (i > 0)
-            {
-                // Draw a line from the previous point to the current point
-                Gizmos.DrawLine(currentPosition, currentPosition - currentVelocity * timeStep);
-            }
-        }
-    }*/
-
-#endif 
 }
