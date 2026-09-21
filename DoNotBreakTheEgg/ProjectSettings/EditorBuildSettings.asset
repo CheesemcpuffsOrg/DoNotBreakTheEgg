@@ -20,4 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Prototypes/PrototypeLevel3.unity
     guid: c84125ac4cf66a94196a71e7492b74a0
+  - enabled: 1
+    path: Assets/Scenes/LandingScreen.unity
+    guid: f3a22c67dad54fb948884d1bf31f7ec1
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
