@@ -28,7 +28,7 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "0646e74e-6b26-4872-ad6b-763e4ed81597",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -764,6 +764,94 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "QuickTimeEvent",
+            "id": "079984b2-6e10-4825-a2f6-933e1a7cb9f5",
+            "actions": [
+                {
+                    "name": "ButtonOne",
+                    "type": "Button",
+                    "id": "b06e463f-a6cc-4250-8127-9012d94a00b9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ButtonTwo",
+                    "type": "Button",
+                    "id": "2f5d2eb0-49c2-4a91-9cbd-dbb56bd8ce06",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ButtonThree",
+                    "type": "Button",
+                    "id": "455a4669-2cbc-4985-a9e3-db1d238f630d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ButtonFour",
+                    "type": "Button",
+                    "id": "e037977f-e18d-425b-b73f-f5799c651b26",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d72d3086-509c-4905-bb1f-a300f86a0cd1",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "ButtonOne",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ee384e0b-8d80-4d90-9080-e337446d5b03",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "ButtonTwo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15d57d46-c4cc-46bb-94df-af1febb25cb3",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "ButtonThree",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2a0d9d71-2357-4c6c-8f5c-3dbe9b89adff",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "ButtonFour",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

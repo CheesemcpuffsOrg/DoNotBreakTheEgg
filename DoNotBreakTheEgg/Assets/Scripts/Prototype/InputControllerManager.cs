@@ -6,7 +6,6 @@ public class InputControllerManager : MonoBehaviour
 
     Dictionary<int, PlayerInputController> inputControllers = new();
 
-
     public static InputControllerManager instance;
 
     private void Awake()
@@ -24,6 +23,14 @@ public class InputControllerManager : MonoBehaviour
         if (inputControllers.ContainsKey(index))
         {
             inputControllers[index].EnableUIInputs();
+        }
+    }
+
+    public void EnablePlayerQuickTimeEventControls(int index)
+    {
+        if (inputControllers.ContainsKey(index))
+        {
+            inputControllers[index].EnableQuickTimeEventInputs();
         }
     }
 

@@ -114,7 +114,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""0646e74e-6b26-4872-ad6b-763e4ed81597"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -854,6 +854,94 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""QuickTimeEvent"",
+            ""id"": ""079984b2-6e10-4825-a2f6-933e1a7cb9f5"",
+            ""actions"": [
+                {
+                    ""name"": ""ButtonOne"",
+                    ""type"": ""Button"",
+                    ""id"": ""b06e463f-a6cc-4250-8127-9012d94a00b9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ButtonTwo"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f5d2eb0-49c2-4a91-9cbd-dbb56bd8ce06"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ButtonThree"",
+                    ""type"": ""Button"",
+                    ""id"": ""455a4669-2cbc-4985-a9e3-db1d238f630d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ButtonFour"",
+                    ""type"": ""Button"",
+                    ""id"": ""e037977f-e18d-425b-b73f-f5799c651b26"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d72d3086-509c-4905-bb1f-a300f86a0cd1"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ButtonOne"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee384e0b-8d80-4d90-9080-e337446d5b03"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ButtonTwo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15d57d46-c4cc-46bb-94df-af1febb25cb3"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ButtonThree"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a0d9d71-2357-4c6c-8f5c-3dbe9b89adff"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ButtonFour"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -905,12 +993,19 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // QuickTimeEvent
+        m_QuickTimeEvent = asset.FindActionMap("QuickTimeEvent", throwIfNotFound: true);
+        m_QuickTimeEvent_ButtonOne = m_QuickTimeEvent.FindAction("ButtonOne", throwIfNotFound: true);
+        m_QuickTimeEvent_ButtonTwo = m_QuickTimeEvent.FindAction("ButtonTwo", throwIfNotFound: true);
+        m_QuickTimeEvent_ButtonThree = m_QuickTimeEvent.FindAction("ButtonThree", throwIfNotFound: true);
+        m_QuickTimeEvent_ButtonFour = m_QuickTimeEvent.FindAction("ButtonFour", throwIfNotFound: true);
     }
 
     ~@Controls()
     {
         UnityEngine.Debug.Assert(!m_PlayerControls.enabled, "This will cause a leak and performance issues, Controls.PlayerControls.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, Controls.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_QuickTimeEvent.enabled, "This will cause a leak and performance issues, Controls.QuickTimeEvent.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1317,6 +1412,135 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="UIActions" /> instance referencing this action map.
     /// </summary>
     public UIActions @UI => new UIActions(this);
+
+    // QuickTimeEvent
+    private readonly InputActionMap m_QuickTimeEvent;
+    private List<IQuickTimeEventActions> m_QuickTimeEventActionsCallbackInterfaces = new List<IQuickTimeEventActions>();
+    private readonly InputAction m_QuickTimeEvent_ButtonOne;
+    private readonly InputAction m_QuickTimeEvent_ButtonTwo;
+    private readonly InputAction m_QuickTimeEvent_ButtonThree;
+    private readonly InputAction m_QuickTimeEvent_ButtonFour;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "QuickTimeEvent".
+    /// </summary>
+    public struct QuickTimeEventActions
+    {
+        private @Controls m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public QuickTimeEventActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "QuickTimeEvent/ButtonOne".
+        /// </summary>
+        public InputAction @ButtonOne => m_Wrapper.m_QuickTimeEvent_ButtonOne;
+        /// <summary>
+        /// Provides access to the underlying input action "QuickTimeEvent/ButtonTwo".
+        /// </summary>
+        public InputAction @ButtonTwo => m_Wrapper.m_QuickTimeEvent_ButtonTwo;
+        /// <summary>
+        /// Provides access to the underlying input action "QuickTimeEvent/ButtonThree".
+        /// </summary>
+        public InputAction @ButtonThree => m_Wrapper.m_QuickTimeEvent_ButtonThree;
+        /// <summary>
+        /// Provides access to the underlying input action "QuickTimeEvent/ButtonFour".
+        /// </summary>
+        public InputAction @ButtonFour => m_Wrapper.m_QuickTimeEvent_ButtonFour;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_QuickTimeEvent; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="QuickTimeEventActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(QuickTimeEventActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="QuickTimeEventActions" />
+        public void AddCallbacks(IQuickTimeEventActions instance)
+        {
+            if (instance == null || m_Wrapper.m_QuickTimeEventActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_QuickTimeEventActionsCallbackInterfaces.Add(instance);
+            @ButtonOne.started += instance.OnButtonOne;
+            @ButtonOne.performed += instance.OnButtonOne;
+            @ButtonOne.canceled += instance.OnButtonOne;
+            @ButtonTwo.started += instance.OnButtonTwo;
+            @ButtonTwo.performed += instance.OnButtonTwo;
+            @ButtonTwo.canceled += instance.OnButtonTwo;
+            @ButtonThree.started += instance.OnButtonThree;
+            @ButtonThree.performed += instance.OnButtonThree;
+            @ButtonThree.canceled += instance.OnButtonThree;
+            @ButtonFour.started += instance.OnButtonFour;
+            @ButtonFour.performed += instance.OnButtonFour;
+            @ButtonFour.canceled += instance.OnButtonFour;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="QuickTimeEventActions" />
+        private void UnregisterCallbacks(IQuickTimeEventActions instance)
+        {
+            @ButtonOne.started -= instance.OnButtonOne;
+            @ButtonOne.performed -= instance.OnButtonOne;
+            @ButtonOne.canceled -= instance.OnButtonOne;
+            @ButtonTwo.started -= instance.OnButtonTwo;
+            @ButtonTwo.performed -= instance.OnButtonTwo;
+            @ButtonTwo.canceled -= instance.OnButtonTwo;
+            @ButtonThree.started -= instance.OnButtonThree;
+            @ButtonThree.performed -= instance.OnButtonThree;
+            @ButtonThree.canceled -= instance.OnButtonThree;
+            @ButtonFour.started -= instance.OnButtonFour;
+            @ButtonFour.performed -= instance.OnButtonFour;
+            @ButtonFour.canceled -= instance.OnButtonFour;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="QuickTimeEventActions.UnregisterCallbacks(IQuickTimeEventActions)" />.
+        /// </summary>
+        /// <seealso cref="QuickTimeEventActions.UnregisterCallbacks(IQuickTimeEventActions)" />
+        public void RemoveCallbacks(IQuickTimeEventActions instance)
+        {
+            if (m_Wrapper.m_QuickTimeEventActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="QuickTimeEventActions.AddCallbacks(IQuickTimeEventActions)" />
+        /// <seealso cref="QuickTimeEventActions.RemoveCallbacks(IQuickTimeEventActions)" />
+        /// <seealso cref="QuickTimeEventActions.UnregisterCallbacks(IQuickTimeEventActions)" />
+        public void SetCallbacks(IQuickTimeEventActions instance)
+        {
+            foreach (var item in m_Wrapper.m_QuickTimeEventActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_QuickTimeEventActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="QuickTimeEventActions" /> instance referencing this action map.
+    /// </summary>
+    public QuickTimeEventActions @QuickTimeEvent => new QuickTimeEventActions(this);
     private int m_GamepadSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -1463,5 +1687,41 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "QuickTimeEvent" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="QuickTimeEventActions.AddCallbacks(IQuickTimeEventActions)" />
+    /// <seealso cref="QuickTimeEventActions.RemoveCallbacks(IQuickTimeEventActions)" />
+    public interface IQuickTimeEventActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "ButtonOne" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnButtonOne(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ButtonTwo" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnButtonTwo(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ButtonThree" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnButtonThree(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ButtonFour" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnButtonFour(InputAction.CallbackContext context);
     }
 }

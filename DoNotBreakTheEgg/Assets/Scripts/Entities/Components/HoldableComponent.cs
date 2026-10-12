@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractableComponent
 {
 
     [SerializeField] AnchorScriptableObject holdAnchor;
+    [SerializeField] TagScriptableObject eggTag;
     [SerializeField] SpriteRenderer defaultView;
     [SerializeField] SpriteRenderer heldView;
 
@@ -52,6 +54,29 @@ public class HoldableComponent : MonoBehaviour, IHoldableComponent, IInteractabl
     {
         if (HoldEntityManager.Instance.IsEntityHolding(entity) || HoldEntityManager.Instance.IsEntityHeld(interactingEntity)) return; //added in check to make sure aheld entity cannot hold, it was causing too many bugs
 
+        if (entity.GetEntityComponent<ITagComponent>().HasTag(eggTag))
+        {
+            QuickTimeEventActivator(interactingEntity);
+            return;
+        }
+
+        ActivateHold(interactingEntity);
+    }
+
+    private async Task QuickTimeEventActivator(IEntity interactingEntity)
+    {
+        
+        var success = await QuickTimeEvent.Instance.StartEvent(interactingEntity);
+
+        if (success)
+        {
+            ActivateHold(interactingEntity);
+            return;
+        }
+    }
+
+    private void ActivateHold(IEntity interactingEntity)
+    {
         soundComponent.PlaySound(pickUpSound);
 
         HoldEntityManager.Instance.AddHeldEntity(interactingEntity, entity, interactingEntity.GetEntityComponent<IAnchoringComponent>().GetAnchor(holdAnchor));

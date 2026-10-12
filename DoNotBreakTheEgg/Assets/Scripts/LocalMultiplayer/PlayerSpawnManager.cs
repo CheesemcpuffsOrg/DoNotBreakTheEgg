@@ -59,10 +59,12 @@ public class PlayerSpawnManager : MonoBehaviour
             }
 
             inputControllerObj.GetComponent<InputHandler>().SetEntity(entity);
-
+            
             entity.GetEntityComponent<IAimComponent>().SetInputDevice(data.UserData.Device);
 
             InputControllerManager.instance.AddController(data.UserData.Id, inputController);
+
+            PlayerRegistry.Instance.SetPlayerIdEntityMapping(data.UserData.Id, entity);
         }
     }
 

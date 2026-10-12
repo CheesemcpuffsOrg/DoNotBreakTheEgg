@@ -17,6 +17,11 @@ public class PlayerInputController : MonoBehaviour
     public event Action JumpEventPerformed;
     public event Action InteractEventPerformed;
 
+    public event Action buttonOneEventPerformed;
+    public event Action buttonTwoEventPerformed;
+    public event Action buttonThreeEventPerformed;
+    public event Action buttonFourEventPerformed;
+
     public void InitializeControls(IInputActionCollection2 inputActions, InputSystemUIInputModule inputSystemUIInputModule)
     {
         controls = (Controls)inputActions;
@@ -30,6 +35,12 @@ public class PlayerInputController : MonoBehaviour
         controls.PlayerControls.Jump.performed += JumpPerformed;
         controls.PlayerControls.Interact.performed += InteractPerformed;
 
+        //QuickTimeEvent
+        controls.QuickTimeEvent.ButtonOne.performed += ButtonOneEventPerformed;
+        controls.QuickTimeEvent.ButtonTwo.performed += ButtonTwoEventPerformed;
+        controls.QuickTimeEvent.ButtonThree.performed += ButtonThreeEventPerformed;
+        controls.QuickTimeEvent.ButtonFour.performed += ButtonFourEventPerformed;
+
         inputSystemUIInputModule.submit = InputActionReference.Create(controls.UI.Submit);
         inputSystemUIInputModule.move = InputActionReference.Create(controls.UI.Navigate);
 
@@ -39,7 +50,31 @@ public class PlayerInputController : MonoBehaviour
 
         EnablePlayerInputs();
         DisableUIInputs();
+        DisableQuickTimeEventInputs();
     }
+
+#region -- QuickTimeEvent --
+
+    private void ButtonOneEventPerformed(InputAction.CallbackContext context)
+    {
+        buttonOneEventPerformed.Invoke();
+    }
+
+    private void ButtonTwoEventPerformed(InputAction.CallbackContext context)
+    {
+        buttonOneEventPerformed.Invoke();
+    }
+    private void ButtonThreeEventPerformed(InputAction.CallbackContext context)
+    {
+        buttonOneEventPerformed.Invoke();
+    }
+
+    private void ButtonFourEventPerformed(InputAction.CallbackContext context)
+    {
+        buttonOneEventPerformed.Invoke();
+    }
+
+#endregion
 
     private void InteractPerformed(InputAction.CallbackContext context)
     {
@@ -99,6 +134,16 @@ public class PlayerInputController : MonoBehaviour
     public void DisableUIInputs()
     {
         controls.UI.Disable();
+    }
+
+    public void EnableQuickTimeEventInputs()
+    {
+        controls.QuickTimeEvent.Enable();
+    }
+
+    public void DisableQuickTimeEventInputs()
+    {
+        controls.QuickTimeEvent.Disable();
     }
 
     public void EnableAllInputs()
