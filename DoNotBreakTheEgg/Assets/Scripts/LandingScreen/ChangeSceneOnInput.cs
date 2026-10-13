@@ -5,8 +5,6 @@ using UnityEngine.InputSystem.Utilities;
 
 public class ChangeSceneOnInput : MonoBehaviour
 {
-    [SerializeField] private string sceneName;
-
     private bool sceneChanging = false;
 
     private void OnEnable()
@@ -26,6 +24,6 @@ public class ChangeSceneOnInput : MonoBehaviour
 
         sceneChanging = true;
 
-        SceneManager.LoadScene(sceneName);
+        GetComponent<SimpleSceneLoader>().LoadScene();
     }
 }
